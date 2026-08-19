@@ -11,6 +11,8 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
 
     steps:
       - name: Check out repository
@@ -32,10 +34,16 @@ jobs:
         run: python -m ruff check .
 
       - name: Type check
-        run: python -m mypy src
+        run: python -m mypy src tests
 
       - name: Test
-        run: python -m pytest
+        run: python -m pytest -q
+
+      - name: Run M1 Workspace smoke test
+        run: >-
+          python -m agent_learning_loop run-workspace
+          --task all
+          --output-dir "$RUNNER_TEMP/m1-smoke"
 
       - name: Build distributions
-        run: python -m build
+        run: python -m build --no-isolation

@@ -1,0 +1,27 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.build-summary",
+    "environment_kind": "workspace",
+    "instruction": "Read the release title and item list, then write the deterministic summary to output/summary.txt.",
+    "allowed_tools": ["read_text", "write_text"],
+    "fixture_id": "workspace.build-summary.v1",
+    "provenance": "Project-authored synthetic M1 fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "input/title.txt": "M1\n",
+        "input/items.txt": "schema\nworkspace\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "output/summary.txt": "Release: M1\nItems:\n- schema\n- workspace\n"
+      },
+      "unchanged_files": ["input/title.txt", "input/items.txt"],
+      "allowed_mutations": ["output/summary.txt"],
+      "forbidden_paths": ["output/draft.txt"]
+    }
+  }
+}

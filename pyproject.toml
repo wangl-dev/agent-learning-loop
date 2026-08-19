@@ -17,7 +17,9 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
-dependencies = []
+dependencies = [
+  "pydantic>=2.10,<3",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -25,6 +27,7 @@ dev = [
   "mypy>=1.11,<2",
   "pytest>=8.3,<9",
   "ruff>=0.6,<1",
+  "setuptools>=77",
 ]
 
 [project.scripts]
@@ -32,6 +35,9 @@ agent-learning-loop = "agent_learning_loop.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+agent_learning_loop = ["py.typed", "task_fixtures/workspace/*.json"]
 
 [tool.pytest.ini_options]
 addopts = "-ra"

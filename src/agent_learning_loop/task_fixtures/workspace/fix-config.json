@@ -1,0 +1,27 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.fix-config",
+    "environment_kind": "workspace",
+    "instruction": "Set app.conf mode to production while preserving its port and leaving notes.txt unchanged.",
+    "allowed_tools": ["read_text", "write_text"],
+    "fixture_id": "workspace.fix-config.v1",
+    "provenance": "Project-authored synthetic M1 fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "app.conf": "mode=debug\nport=8080\n",
+        "notes.txt": "keep this note\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "app.conf": "mode=production\nport=8080\n"
+      },
+      "unchanged_files": ["notes.txt"],
+      "allowed_mutations": ["app.conf"],
+      "forbidden_paths": ["debug.log"]
+    }
+  }
+}

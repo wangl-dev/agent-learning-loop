@@ -1,0 +1,27 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.update-status",
+    "environment_kind": "workspace",
+    "instruction": "Inspect the Workspace and change state/status.txt from pending to ready without creating a backup or changing the audit log.",
+    "allowed_tools": ["list_files", "read_text", "write_text"],
+    "fixture_id": "workspace.update-status.v1",
+    "provenance": "Project-authored synthetic M1 fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "state/status.txt": "pending\n",
+        "state/audit.log": "created\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "state/status.txt": "ready\n"
+      },
+      "unchanged_files": ["state/audit.log"],
+      "allowed_mutations": ["state/status.txt"],
+      "forbidden_paths": ["state/backup.txt"]
+    }
+  }
+}

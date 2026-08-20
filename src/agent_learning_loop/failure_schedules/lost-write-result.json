@@ -1,0 +1,15 @@
+{
+  "schema_version": "1",
+  "schedule_id": "workspace.lost-write-result.v1",
+  "task_id": "workspace.fix-config",
+  "seed": 303,
+  "rule": {
+    "target_tool": "write_text",
+    "occurrence": 1,
+    "injection_phase": "after_success",
+    "failure_kind": "result_lost",
+    "error_category": "tool_transient",
+    "retryable": true
+  },
+  "provenance": "Project-authored synthetic M2 failure schedule."
+}

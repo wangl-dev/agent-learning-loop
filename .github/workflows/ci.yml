@@ -45,5 +45,13 @@ jobs:
           --task all
           --output-dir "$RUNNER_TEMP/m1-smoke"
 
+      - name: Run M2 safeguarded failure smoke test
+        run: >-
+          python -m agent_learning_loop run-runtime
+          --task workspace.build-summary
+          --mode safeguarded
+          --failure-schedule workspace.transient-read.v1
+          --output-dir "$RUNNER_TEMP/m2-smoke"
+
       - name: Build distributions
         run: python -m build --no-isolation

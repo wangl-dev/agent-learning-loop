@@ -1,0 +1,15 @@
+{
+  "schema_version": "1",
+  "schedule_id": "workspace.transient-read.v1",
+  "task_id": "workspace.build-summary",
+  "seed": 101,
+  "rule": {
+    "target_tool": "read_text",
+    "occurrence": 1,
+    "injection_phase": "before_execution",
+    "failure_kind": "transient",
+    "error_category": "tool_transient",
+    "retryable": true
+  },
+  "provenance": "Project-authored synthetic M2 failure schedule."
+}

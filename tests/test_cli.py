@@ -126,3 +126,93 @@ def test_workspace_command_returns_nonzero_when_verifier_fails(tmp_path: Path) -
     assert result.returncode != 0
     stored = json.loads(next((tmp_path / "runs").glob("*/result.json")).read_text(encoding="utf-8"))
     assert stored["outcome"] == "failed"
+
+
+def run_runtime_cli(
+    tmp_path: Path,
+    *,
+    task: str,
+    mode: str,
+    schedule: str,
+    extra: list[str] | None = None,
+) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "agent_learning_loop",
+            "run-runtime",
+            "--task",
+            task,
+            "--mode",
+            mode,
+            "--failure-schedule",
+            schedule,
+            "--output-dir",
+            str(tmp_path / "runtime-run"),
+            *(extra or []),
+        ],
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+
+
+def test_runtime_command_writes_v2_safeguarded_artifacts(tmp_path: Path) -> None:
+    result = run_runtime_cli(
+        tmp_path,
+        task="workspace.build-summary",
+        mode="safeguarded",
+        schedule="workspace.transient-read.v1",
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert result.stderr == ""
+    stored = json.loads((tmp_path / "runtime-run" / "result.json").read_text(encoding="utf-8"))
+    assert stored["schema_version"] == "2"
+    assert stored["terminal_state"] == "SUCCEEDED"
+    assert stored["config"]["retry_enabled"] is True
+    assert stored["config"]["idempotency_enabled"] is True
+
+
+def test_runtime_command_preserves_expected_naive_failure_artifact(tmp_path: Path) -> None:
+    result = run_runtime_cli(
+        tmp_path,
+        task="workspace.build-summary",
+        mode="naive",
+        schedule="workspace.transient-read.v1",
+    )
+
+    assert result.returncode == 1
+    stored = json.loads((tmp_path / "runtime-run" / "result.json").read_text(encoding="utf-8"))
+    assert stored["terminal_state"] == "FAILED"
+    assert stored["error"]["category"] == "tool_transient"
+
+
+def test_runtime_command_distinguishes_timeout_budget_and_validation_exit_codes(
+    tmp_path: Path,
+) -> None:
+    timeout = run_runtime_cli(
+        tmp_path / "timeout",
+        task="workspace.update-status",
+        mode="naive",
+        schedule="workspace.logical-timeout.v1",
+    )
+    budget = run_runtime_cli(
+        tmp_path / "budget",
+        task="workspace.build-summary",
+        mode="safeguarded",
+        schedule="workspace.transient-read.v1",
+        extra=["--max-tool-calls", "1"],
+    )
+    invalid = run_runtime_cli(
+        tmp_path / "invalid",
+        task="workspace.fix-config",
+        mode="safeguarded",
+        schedule="workspace.transient-read.v1",
+    )
+
+    assert timeout.returncode == 5
+    assert budget.returncode == 4
+    assert invalid.returncode == 2
+    assert "validation" in invalid.stderr.lower()

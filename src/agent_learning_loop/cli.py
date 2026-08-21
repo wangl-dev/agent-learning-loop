@@ -1,4 +1,4 @@
-"""Command-line entry points for version, M1, and the bounded M2 Runtime."""
+"""Command-line entry points for version and the bounded M1-M3A slices."""
 
 from __future__ import annotations
 
@@ -60,6 +60,30 @@ def build_parser() -> argparse.ArgumentParser:
     runtime.add_argument("--max-tool-calls", type=int, default=12)
     runtime.add_argument("--timeout-seconds", type=float, default=30.0)
     runtime.add_argument("--retry-backoff-seconds", type=float, default=0.0)
+    durable = subparsers.add_parser(
+        "run-durable",
+        help="run the fixed M3A durable-journal experiment",
+    )
+    durable.add_argument("--task", required=True)
+    durable.add_argument("--mode", required=True, choices=("safeguarded",))
+    durable.add_argument("--failure-schedule", required=True)
+    durable.add_argument("--interruption-schedule")
+    durable.add_argument("--checkpointing", required=True, choices=("on", "off"))
+    durable.add_argument("--output-dir", required=True, type=Path)
+    durable.add_argument("--max-steps", type=int, default=8)
+    durable.add_argument("--max-tool-calls", type=int, default=12)
+    durable.add_argument("--timeout-seconds", type=float, default=30.0)
+    durable.add_argument("--retry-backoff-seconds", type=float, default=0.0)
+    resume = subparsers.add_parser(
+        "resume-runtime",
+        help="resume one validated M3A checkpoint in its existing run directory",
+    )
+    resume.add_argument("--run-dir", required=True, type=Path)
+    validate = subparsers.add_parser(
+        "validate-trajectory",
+        help="read-only validation of an M3A journal/checkpoint/result",
+    )
+    validate.add_argument("--run-dir", required=True, type=Path)
     return parser
 
 
@@ -74,6 +98,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _run_workspace(arguments)
     if arguments.command == "run-runtime":
         return _run_runtime(arguments)
+    if arguments.command == "run-durable":
+        return _run_durable(arguments)
+    if arguments.command == "resume-runtime":
+        return _resume_runtime(arguments)
+    if arguments.command == "validate-trajectory":
+        return _validate_trajectory(arguments)
     return 0
 
 
@@ -168,4 +198,113 @@ def _run_runtime(arguments: argparse.Namespace) -> int:
         ValueError,
     ) as exc:
         print(f"run-runtime validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _run_durable(arguments: argparse.Namespace) -> int:
+    from pydantic import ValidationError
+
+    from agent_learning_loop.durable_runtime import (
+        ControlledInterruption,
+        DurableValidationError,
+        execute_durable_task,
+    )
+    from agent_learning_loop.durable_schemas import CheckpointingMode
+    from agent_learning_loop.failure_schedules import (
+        FailureScheduleMismatchError,
+        FailureScheduleNotFoundError,
+        load_failure_schedule,
+    )
+    from agent_learning_loop.interruption_schedules import (
+        InterruptionScheduleMismatchError,
+        InterruptionScheduleNotFoundError,
+        load_interruption_schedule,
+    )
+    from agent_learning_loop.runtime_schemas import RuntimeConfig, RuntimeMode, RuntimeState
+    from agent_learning_loop.tasks import TaskNotFoundError, load_task
+    from agent_learning_loop.vertical_slice import OutputExistsError
+
+    try:
+        fixture = load_task(arguments.task)
+        failure = load_failure_schedule(arguments.failure_schedule)
+        interruption = (
+            load_interruption_schedule(arguments.interruption_schedule)
+            if arguments.interruption_schedule is not None
+            else None
+        )
+        config = RuntimeConfig.for_mode(
+            RuntimeMode(arguments.mode),
+            schedule_id=failure.schedule_id,
+            seed=failure.seed,
+            max_steps=arguments.max_steps,
+            max_tool_calls=arguments.max_tool_calls,
+            timeout_seconds=arguments.timeout_seconds,
+            retry_backoff_seconds=[arguments.retry_backoff_seconds],
+        )
+        result = execute_durable_task(
+            fixture,
+            arguments.output_dir,
+            run_id=uuid4().hex,
+            config=config,
+            failure_schedule=failure,
+            checkpointing=CheckpointingMode(arguments.checkpointing),
+            interruption_schedule=interruption,
+        )
+        print(
+            f"{result.task_id}: {result.terminal_state.value} "
+            f"(result: {arguments.output_dir / 'result.json'})"
+        )
+        return 0 if result.terminal_state is RuntimeState.SUCCEEDED else 1
+    except ControlledInterruption as exc:
+        print(f"run-durable interrupted: {exc}", file=sys.stderr)
+        return 6
+    except (
+        DurableValidationError,
+        FailureScheduleMismatchError,
+        FailureScheduleNotFoundError,
+        InterruptionScheduleMismatchError,
+        InterruptionScheduleNotFoundError,
+        OSError,
+        OutputExistsError,
+        TaskNotFoundError,
+        ValidationError,
+        ValueError,
+    ) as exc:
+        print(f"run-durable validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _resume_runtime(arguments: argparse.Namespace) -> int:
+    from pydantic import ValidationError
+
+    from agent_learning_loop.durable_runtime import (
+        DurableValidationError,
+        resume_durable_task,
+    )
+    from agent_learning_loop.runtime_schemas import RuntimeState
+
+    try:
+        result = resume_durable_task(arguments.run_dir)
+        print(
+            f"{result.task_id}: {result.terminal_state.value} resumed "
+            f"(result: {arguments.run_dir / 'result.json'})"
+        )
+        return 0 if result.terminal_state is RuntimeState.SUCCEEDED else 1
+    except (DurableValidationError, OSError, ValidationError, ValueError) as exc:
+        print(f"resume-runtime validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _validate_trajectory(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.event_replay import (
+        TrajectoryValidationError,
+        validate_trajectory,
+    )
+
+    try:
+        result = validate_trajectory(arguments.run_dir)
+        print(result.model_dump_json())
+        return 0
+    except (OSError, TrajectoryValidationError, ValueError) as exc:
+        print(f"validate-trajectory validation error: {exc}", file=sys.stderr)
         return 2

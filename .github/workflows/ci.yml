@@ -53,5 +53,24 @@ jobs:
           --failure-schedule workspace.transient-read.v1
           --output-dir "$RUNNER_TEMP/m2-smoke"
 
+      - name: Run M3A interrupt and resume smoke test
+        shell: bash
+        run: |
+          set +e
+          python -m agent_learning_loop run-durable \
+            --task workspace.fix-config \
+            --mode safeguarded \
+            --failure-schedule workspace.lost-write-result.v1 \
+            --interruption-schedule workspace.post-write-boundary.v1 \
+            --checkpointing on \
+            --output-dir "$RUNNER_TEMP/m3a-smoke"
+          interrupted=$?
+          set -e
+          test "$interrupted" -eq 6
+          python -m agent_learning_loop resume-runtime \
+            --run-dir "$RUNNER_TEMP/m3a-smoke"
+          python -m agent_learning_loop validate-trajectory \
+            --run-dir "$RUNNER_TEMP/m3a-smoke"
+
       - name: Build distributions
         run: python -m build --no-isolation

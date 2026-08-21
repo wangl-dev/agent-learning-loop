@@ -1,9 +1,8 @@
 # Agent Learning Loop
 
-> Status: **M2 controlled Runtime failures / pre-alpha (`0.1.0.dev0`)**. The repository runs three
-> deterministic file tasks through an explicit, budgeted Runtime and compares fixed transient,
-> logical-timeout, and lost-result failures. These are system regression cases, not a model or
-> production reliability benchmark.
+> Status: **M3A safe-boundary recovery / pre-alpha (`0.1.0.dev0`)**. The repository now pairs a
+> durable event journal with one fixed post-Observation checkpoint/resume experiment. It does not
+> claim arbitrary-crash recovery, action replay, or production exactly-once execution.
 
 Agent Learning Loop studies a narrow question: under the same task, actions, seed, and injected
 failure schedule, which Runtime safeguards improve recovery without causing duplicate side
@@ -15,7 +14,7 @@ Task v1 + scripted Action → Runtime config and state machine → fixed failure
                           → Runtime Event JSONL v2 + Runtime Result JSON v2
 ```
 
-The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.4 in the separate planning
+The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.5 in the separate planning
 repository. Milestones are reviewed against fresh evidence; contract, task, or metric changes are
 versioned instead of being silently absorbed.
 
@@ -79,6 +78,53 @@ contains state changes, attempts, injected failures, retry scheduling, and idemp
 uses `attempt=0` for events outside a tool attempt. Attempt events carry the same attempt number in
 their top-level field and payload; retry events name both the failed and next attempt. M2 still
 writes the full JSONL only when the run ends; it is not crash-safe append-only storage.
+
+Run the fixed M3A pair. Both first commands intentionally stop after step 2 with exit code 6. The
+checkpoint-off resume is expected to return validation error 2 without changing its journal or
+Workspace:
+
+```powershell
+python -m agent_learning_loop run-durable `
+  --task workspace.fix-config `
+  --mode safeguarded `
+  --failure-schedule workspace.lost-write-result.v1 `
+  --interruption-schedule workspace.post-write-boundary.v1 `
+  --checkpointing off `
+  --output-dir run-output/m3a-off
+
+python -m agent_learning_loop resume-runtime --run-dir run-output/m3a-off
+python -m agent_learning_loop validate-trajectory --run-dir run-output/m3a-off
+```
+
+With checkpointing on, run `resume-runtime` as a second Python process. It validates the saved
+identity, journal prefix, counters, idempotency entry, and Workspace digest before constructing an
+Environment, Policy, Tool, or Verifier. The second command should exit 0 and append segment 1 to
+the same run:
+
+```powershell
+python -m agent_learning_loop run-durable `
+  --task workspace.fix-config `
+  --mode safeguarded `
+  --failure-schedule workspace.lost-write-result.v1 `
+  --interruption-schedule workspace.post-write-boundary.v1 `
+  --checkpointing on `
+  --output-dir run-output/m3a-on
+
+python -m agent_learning_loop resume-runtime --run-dir run-output/m3a-on
+python -m agent_learning_loop validate-trajectory --run-dir run-output/m3a-on
+```
+
+The uninterrupted reference omits `--interruption-schedule` and uses `--checkpointing off`. Its
+final Workspace and Verifier result should match the resumed run:
+
+```powershell
+python -m agent_learning_loop run-durable `
+  --task workspace.fix-config `
+  --mode safeguarded `
+  --failure-schedule workspace.lost-write-result.v1 `
+  --checkpointing off `
+  --output-dir run-output/m3a-reference
+```
 
 No model, GPU, API key, database, container, or network service is used after Python dependencies
 are installed.
@@ -145,6 +191,33 @@ arbitrary blocking Python call; threads, processes, async cancellation, and prod
 claims remain outside this milestone. [ADR 0003](docs/decisions/0003-m2-runtime-failure-boundary.md)
 records the error, schedule, clock, lost-result, idempotency, and schema-v2 decisions.
 
+## What M3A adds
+
+`run-durable` is a deliberately narrow v3 path for `workspace.fix-config`, safeguarded mode, and
+the lost-write-result schedule. It appends and flushes each JSONL record as it occurs. Every record
+contains a continuous sequence number, segment, previous hash, and its own canonical SHA-256 hash.
+
+The one packaged interruption fires after the step-2 write result has been observed. With the
+checkpoint switch on, the Runtime first writes a field-minimized checkpoint to a temporary file,
+flushes it, atomically replaces `checkpoint.json`, appends and flushes `checkpoint_committed`, and
+only then appends the interruption record. Resume continues with the same run ID and accumulated
+step, tool-call, failure, retry, idempotency, and elapsed counters. In the accepted success path,
+the physical write and side effect each remain one and the duplicate counter remains zero.
+The checkpoint ID is a canonical SHA-256 digest of every checkpoint field except the ID itself.
+Creation, validation, and resume use the same calculation, so a changed counter, elapsed value,
+idempotency entry, Workspace digest, or journal prefix no longer remains attached to the old ID.
+This unkeyed digest detects damage and cross-artifact mismatch; it is not a signature or proof that
+someone with write access did not replace all related files and hashes.
+
+`validate-trajectory` is event replay, not action replay. It reads schemas, sequence/hash links,
+state transitions, exact segment-0/interruption/segment-1 ordering, checkpoint relationships, and
+a journal-bound digest of the full Verifier and usage summary. It never reruns an action and
+reports action replay match rate as `N/A`. The durable path also reuses M2's injectable monotonic
+clock checks: an expired boundary or backoff that would consume the remaining deadline cannot
+publish an accepted partial checkpoint or a successful result.
+[ADR 0004](docs/decisions/0004-m3a-safe-boundary-recovery.md) records the write ordering, identity
+checks, and crash window.
+
 ## Workspace boundary
 
 M1 exposes only three UTF-8 text tools: list files, read a file, and write a file. Each user path
@@ -168,17 +241,26 @@ $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'; python -m pytest -q
 python -m build --no-isolation
 ```
 
-Tests cover strict v1/v2 schemas, legal and illegal Runtime transitions, deadline return boundaries,
+Tests cover strict v1/v2/v3 schemas, legal and illegal Runtime transitions, deadline return boundaries,
 three budgets, canonical failure fingerprints and injection count, retry/non-retry rules,
 idempotency hit/conflict behavior, step/attempt event association, paired scenarios, deterministic
-reruns, private expected-state separation, M1 path attacks, and subprocess exit codes. The build
+reruns, durable hash-chain tampering, safe-boundary resume, private expected-state separation, M1
+path attacks, and subprocess exit codes. The build
 command creates ignored wheel and source distributions under `dist/`.
 
 ## Current limitations
 
-- Runtime and idempotency state exist only inside one synchronous run. There is no persistence,
-  checkpoint, resume, replay, distributed lock, or crash recovery; those belong to M3 or later.
-- JSONL is written once at the end of the run. It is not yet an append-only trajectory store.
+- M3A recovers only from its committed step-2 post-Observation checkpoint. A kill before the
+  checkpoint, between side effect and checkpoint, during the checkpoint protocol, or after resume
+  begins is not promised to recover exactly once. Directory-level fsync, distributed locking,
+  cross-machine recovery, and arbitrary `kill -9`/power-loss guarantees are outside this slice.
+- The v3 field allowlists minimize persisted data for the fixed experiment. They are not general
+  secret detection, log DLP, encryption, or permission hardening.
+- Journal and checkpoint SHA-256 digests are unkeyed consistency checks, not signatures,
+  authentication, or protection from an actor who can rewrite every related artifact.
+- Event replay validates recorded structure; it does not execute actions or calculate an action
+  replay match rate. Action replay belongs to M3B and is not implemented here.
+- Existing `run-runtime` remains the M2 v2 path and still writes its JSONL at normal run end.
 - The Policy is scripted; there is no model adapter or model-quality claim.
 - The three paired cases are regression evidence, not an M5 batch experiment, statistical report,
   p50/p95 benchmark, or train/dev/test split.

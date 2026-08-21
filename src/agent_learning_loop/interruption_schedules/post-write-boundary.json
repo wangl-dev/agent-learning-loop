@@ -1,0 +1,10 @@
+{
+  "schema_version": "1",
+  "schedule_version": 1,
+  "schedule_id": "workspace.post-write-boundary.v1",
+  "task_id": "workspace.fix-config",
+  "step_index": 2,
+  "boundary": "post_observation",
+  "provenance": "Project-authored synthetic M3A interruption schedule.",
+  "golden_fingerprint": "4e419fb3f5514acd130f1a08e6ee5e5b7b48ecc187f43cd7aeabd595a1ad5db5"
+}

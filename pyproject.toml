@@ -41,6 +41,7 @@ agent_learning_loop = [
   "py.typed",
   "task_fixtures/workspace/*.json",
   "failure_schedules/*.json",
+  "interruption_schedules/*.json",
 ]
 
 [tool.pytest.ini_options]

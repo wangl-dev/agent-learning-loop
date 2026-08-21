@@ -10,6 +10,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
+from agent_learning_loop.action_catalog import (
+    ActionCatalog,
+    CatalogAction,
+    action_fingerprint,
+    catalog_fingerprint,
+    load_action_catalog,
+)
+from agent_learning_loop.action_journal import ActionJournalWriter
 from agent_learning_loop.checkpoint import (
     checkpoint_id,
     read_checkpoint,
@@ -159,6 +167,7 @@ def execute_durable_task(
     checkpointing: CheckpointingMode,
     interruption_schedule: InterruptionSchedule | None,
     clock: ClockProtocol | None = None,
+    record_actions: bool = False,
 ) -> DurableResult:
     """Execute the one M3A slice; a configured interruption deliberately raises."""
     if run_directory.exists() and any(run_directory.iterdir()):
@@ -170,11 +179,22 @@ def execute_durable_task(
         checkpointing,
         interruption_schedule,
     )
+    action_catalog: ActionCatalog | None = None
+    if record_actions:
+        if (
+            checkpointing is not CheckpointingMode.OFF
+            or interruption_schedule is not None
+        ):
+            raise DurableValidationError(
+                "action recording requires an uninterrupted checkpoint-off source"
+            )
+        action_catalog = load_action_catalog(fixture.task.task_id)
     run_directory.mkdir(parents=True, exist_ok=True)
     journal = AppendOnlyJournal.create(
         run_directory / "events.jsonl", run_id=run_id, task_id=fixture.task.task_id
     )
     environment: WorkspaceEnvironment | None = None
+    action_journal: ActionJournalWriter | None = None
     runtime_clock = clock or SystemClock()
     segment_start = runtime_clock.monotonic()
     try:
@@ -184,6 +204,15 @@ def execute_durable_task(
             attempt=0,
             payload=_identity_payload(identity, mode="safeguarded"),
         )
+        if action_catalog is not None:
+            action_journal = ActionJournalWriter.create(
+                run_directory / "actions.jsonl",
+                source_run_id=run_id,
+                task_id=fixture.task.task_id,
+                catalog_id=action_catalog.catalog_id,
+                catalog_fingerprint=catalog_fingerprint(action_catalog),
+            )
+            action_journal.append("source_started")
         environment = WorkspaceEnvironment(run_directory / "workspace")
         policy = ScriptedPolicy()
         verifier = WorkspaceStateVerifier()
@@ -193,6 +222,7 @@ def execute_durable_task(
         counters = _Counters()
         tracker = _FailureTracker({})
         store = _IdempotencyStore()
+        recorded_action_count = 0
 
         _transition(machine, RuntimeState.RESETTING, journal, counters.steps)
         observation = environment.reset(
@@ -211,7 +241,7 @@ def execute_durable_task(
             action = policy.decide(fixture.task, observation)
             _require_deadline(counters, effective_config, segment_start, runtime_clock)
             if action is None:
-                return _finish_success(
+                durable_result = _finish_success(
                     fixture=fixture,
                     run_directory=run_directory,
                     journal=journal,
@@ -227,9 +257,40 @@ def execute_durable_task(
                     segment_start=segment_start,
                     clock=runtime_clock,
                 )
+                if action_journal is not None and action_catalog is not None:
+                    if recorded_action_count != len(action_catalog.actions):
+                        raise DurableValidationError(
+                            "recorded logical action count does not match catalog"
+                        )
+                    action_journal.append(
+                        "source_finished",
+                        source_event_final_hash=durable_result.journal_final_hash,
+                        source_result_summary_digest=durable_result_summary_digest(
+                            durable_result.summary()
+                        ),
+                        source_final_workspace_digest=workspace_digest(
+                            run_directory / "workspace"
+                        ),
+                        source_verifier_digest=verifier_summary_digest(
+                            durable_result.verifier
+                        ),
+                        action_count=recorded_action_count,
+                    )
+                return durable_result
             _transition(machine, RuntimeState.VALIDATING_ACTION, journal, counters.steps)
             if action.tool_name not in fixture.task.allowed_tools:
                 raise DurableValidationError("scripted action is outside the task allowlist")
+            catalog_entry = _catalog_entry_for_recording(
+                action_catalog, step_index=counters.steps, action=action
+            )
+            if action_journal is not None and catalog_entry is not None:
+                action_journal.append(
+                    "action_started",
+                    step_index=catalog_entry.step_index,
+                    action_ref=catalog_entry.action_ref,
+                    tool_name=catalog_entry.tool_name,
+                    action_fingerprint=action_fingerprint(catalog_entry.action),
+                )
             _transition(machine, RuntimeState.EXECUTING_TOOL, journal, counters.steps)
             result, attempt = _execute_action(
                 action=action,
@@ -254,6 +315,19 @@ def execute_durable_task(
                 last_tool_result=result,
             )
             _require_deadline(counters, effective_config, segment_start, runtime_clock)
+            if action_journal is not None and catalog_entry is not None:
+                action_journal.append(
+                    "action_finished",
+                    step_index=catalog_entry.step_index,
+                    action_ref=catalog_entry.action_ref,
+                    tool_name=catalog_entry.tool_name,
+                    action_fingerprint=action_fingerprint(catalog_entry.action),
+                    attempt_count=attempt,
+                    post_action_workspace_digest=workspace_digest(
+                        run_directory / "workspace"
+                    ),
+                )
+                recorded_action_count += 1
             if interruption_schedule is not None and counters.steps == 2:
                 _require_deadline(
                     counters, effective_config, segment_start, runtime_clock
@@ -318,6 +392,8 @@ def execute_durable_task(
     finally:
         if environment is not None:
             environment.close()
+        if action_journal is not None:
+            action_journal.close()
         journal.close()
 
 
@@ -426,6 +502,22 @@ def resume_durable_task(
     finally:
         environment.close()
         journal.close()
+
+
+def _catalog_entry_for_recording(
+    catalog: ActionCatalog | None,
+    *,
+    step_index: int,
+    action: Action,
+) -> CatalogAction | None:
+    if catalog is None:
+        return None
+    if step_index > len(catalog.actions):
+        raise DurableValidationError("scripted action is missing from the action catalog")
+    entry = catalog.actions[step_index - 1]
+    if entry.step_index != step_index or entry.action != action:
+        raise DurableValidationError("scripted action does not match the action catalog")
+    return entry
 
 
 def _validated_identity(

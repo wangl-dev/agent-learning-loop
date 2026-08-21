@@ -1,0 +1,45 @@
+{
+  "schema_version": "1",
+  "catalog_id": "workspace.update-status.actions.v1",
+  "task_id": "workspace.update-status",
+  "actions": [
+    {
+      "step_index": 1,
+      "action_ref": "workspace.update-status.step-1.v1",
+      "tool_name": "list_files",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "list_files",
+        "arguments": {
+          "path": "."
+        }
+      }
+    },
+    {
+      "step_index": 2,
+      "action_ref": "workspace.update-status.step-2.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {
+          "path": "state/status.txt"
+        }
+      }
+    },
+    {
+      "step_index": 3,
+      "action_ref": "workspace.update-status.step-3.v1",
+      "tool_name": "write_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "write_text",
+        "arguments": {
+          "path": "state/status.txt",
+          "content": "ready\n"
+        }
+      }
+    }
+  ],
+  "provenance": "Project-authored deterministic action catalog."
+}

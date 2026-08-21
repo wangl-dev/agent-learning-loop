@@ -1,0 +1,33 @@
+{
+  "schema_version": "1",
+  "catalog_id": "workspace.fix-config.actions.v1",
+  "task_id": "workspace.fix-config",
+  "actions": [
+    {
+      "step_index": 1,
+      "action_ref": "workspace.fix-config.step-1.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {
+          "path": "app.conf"
+        }
+      }
+    },
+    {
+      "step_index": 2,
+      "action_ref": "workspace.fix-config.step-2.v1",
+      "tool_name": "write_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "write_text",
+        "arguments": {
+          "path": "app.conf",
+          "content": "mode=production\nport=8080\n"
+        }
+      }
+    }
+  ],
+  "provenance": "Project-authored deterministic action catalog."
+}

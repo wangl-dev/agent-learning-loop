@@ -1,4 +1,4 @@
-"""Command-line entry points for version and the bounded M1-M3A slices."""
+"""Command-line entry points for version and the bounded M1-M3B slices."""
 
 from __future__ import annotations
 
@@ -69,6 +69,7 @@ def build_parser() -> argparse.ArgumentParser:
     durable.add_argument("--failure-schedule", required=True)
     durable.add_argument("--interruption-schedule")
     durable.add_argument("--checkpointing", required=True, choices=("on", "off"))
+    durable.add_argument("--record-actions", choices=("on", "off"), default="off")
     durable.add_argument("--output-dir", required=True, type=Path)
     durable.add_argument("--max-steps", type=int, default=8)
     durable.add_argument("--max-tool-calls", type=int, default=12)
@@ -84,6 +85,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="read-only validation of an M3A journal/checkpoint/result",
     )
     validate.add_argument("--run-dir", required=True, type=Path)
+    replay = subparsers.add_parser(
+        "replay-actions",
+        help="replay validated M3B action refs in a new Workspace",
+    )
+    replay.add_argument("--source-run-dir", required=True, type=Path)
+    replay.add_argument("--output-dir", required=True, type=Path)
     return parser
 
 
@@ -104,6 +111,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _resume_runtime(arguments)
     if arguments.command == "validate-trajectory":
         return _validate_trajectory(arguments)
+    if arguments.command == "replay-actions":
+        return _replay_actions(arguments)
     return 0
 
 
@@ -249,11 +258,18 @@ def _run_durable(arguments: argparse.Namespace) -> int:
             failure_schedule=failure,
             checkpointing=CheckpointingMode(arguments.checkpointing),
             interruption_schedule=interruption,
+            record_actions=arguments.record_actions == "on",
         )
-        print(
-            f"{result.task_id}: {result.terminal_state.value} "
-            f"(result: {arguments.output_dir / 'result.json'})"
-        )
+        if arguments.record_actions == "on":
+            print(
+                f"{result.task_id}: {result.terminal_state.value} "
+                "(result: result.json, actions: actions.jsonl)"
+            )
+        else:
+            print(
+                f"{result.task_id}: {result.terminal_state.value} "
+                f"(result: {arguments.output_dir / 'result.json'})"
+            )
         return 0 if result.terminal_state is RuntimeState.SUCCEEDED else 1
     except ControlledInterruption as exc:
         print(f"run-durable interrupted: {exc}", file=sys.stderr)
@@ -307,4 +323,25 @@ def _validate_trajectory(arguments: argparse.Namespace) -> int:
         return 0
     except (OSError, TrajectoryValidationError, ValueError) as exc:
         print(f"validate-trajectory validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _replay_actions(arguments: argparse.Namespace) -> int:
+    from pydantic import ValidationError
+
+    from agent_learning_loop.action_replay import (
+        ActionReplayValidationError,
+        replay_actions,
+    )
+
+    try:
+        result = replay_actions(arguments.source_run_dir, arguments.output_dir)
+        print("replay result: replay-result.json")
+        print(
+            f"{result.vertical_slice_matches}/{result.vertical_slice_total} "
+            "vertical-slice smoke"
+        )
+        return 0 if result.action_replay_match_rate == 1.0 else 1
+    except (ActionReplayValidationError, OSError, ValidationError, ValueError) as exc:
+        print(f"replay-actions validation error: {exc}", file=sys.stderr)
         return 2

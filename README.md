@@ -1,8 +1,8 @@
 # Agent Learning Loop
 
-> Status: **M3A safe-boundary recovery / pre-alpha (`0.1.0.dev0`)**. The repository now pairs a
-> durable event journal with one fixed post-Observation checkpoint/resume experiment. It does not
-> claim arbitrary-crash recovery, action replay, or production exactly-once execution.
+> Status: **M3B reference-based action replay / pre-alpha (`0.1.0.dev0`)**. One fixed durable run
+> can now record safe action references and replay them in a new Workspace without calling Policy.
+> This is a single-task smoke test, not arbitrary action replay or a production recovery guarantee.
 
 Agent Learning Loop studies a narrow question: under the same task, actions, seed, and injected
 failure schedule, which Runtime safeguards improve recovery without causing duplicate side
@@ -14,7 +14,7 @@ Task v1 + scripted Action → Runtime config and state machine → fixed failure
                           → Runtime Event JSONL v2 + Runtime Result JSON v2
 ```
 
-The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.5 in the separate planning
+The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.6 in the separate planning
 repository. Milestones are reviewed against fresh evidence; contract, task, or metric changes are
 versioned instead of being silently absorbed.
 
@@ -126,6 +126,28 @@ python -m agent_learning_loop run-durable `
   --output-dir run-output/m3a-reference
 ```
 
+For the fixed M3B smoke test, explicitly record action references on an uninterrupted source,
+then replay them into a different, empty directory:
+
+```powershell
+python -m agent_learning_loop run-durable `
+  --task workspace.fix-config `
+  --mode safeguarded `
+  --failure-schedule workspace.lost-write-result.v1 `
+  --checkpointing off `
+  --record-actions on `
+  --output-dir run-output/m3b-source
+
+python -m agent_learning_loop replay-actions `
+  --source-run-dir run-output/m3b-source `
+  --output-dir run-output/m3b-replay
+```
+
+The second command prints `1/1 vertical-slice smoke` on a complete match. Its result should show
+action and step counts `2/2`, matching final state and Verifier, Policy calls `0`, and physical
+write/side-effect/duplicate counts `1/1/0`. `--record-actions` defaults to `off`; it is rejected for
+an interrupted or checkpoint-on source.
+
 No model, GPU, API key, database, container, or network service is used after Python dependencies
 are installed.
 
@@ -139,9 +161,9 @@ The three project-authored synthetic fixtures cover different final-state rules:
 | `workspace.build-summary` | Read two inputs and write a fixed summary | Exact artifact; inputs unchanged |
 | `workspace.update-status` | List, read, and update one status file | Target state; audit log unchanged; no backup |
 
-The scripted Policy contains finite actions keyed by task ID. It never receives the fixture's
-private setup or expected-state object. Its passing result means the modules fit together and the
-fixtures are solvable; it does not measure Agent intelligence.
+The scripted Policy selects from project-authored, versioned action catalogs keyed by task ID. It
+never receives the fixture's private setup or expected-state object. Its passing result means the
+modules fit together and the fixtures are solvable; it does not measure Agent intelligence.
 
 Task, Observation, Action, Tool Result, Event, and Run Result use strict Pydantic v2 schemas.
 Unknown critical fields, missing fields, and wrong types fail validation. Environment, Tool,
@@ -218,6 +240,25 @@ publish an accepted partial checkpoint or a successful result.
 [ADR 0004](docs/decisions/0004-m3a-safe-boundary-recovery.md) records the write ordering, identity
 checks, and crash window.
 
+## What M3B adds
+
+The fixed source can append a separate `actions.jsonl` v1 without changing the accepted M3A event,
+checkpoint, or result schemas. Each logical action record contains a catalog reference and
+canonical fingerprints, not raw arguments, file content, Observation, or Tool Result. The
+lost-result write still has two Runtime attempts, but it remains one logical action.
+
+`replay-actions` validates the complete M3A trajectory, source identity, action hash chain,
+catalog golden fingerprint, step/tool/attempt relationships, final Workspace, and Verifier binding
+before it constructs an execution component. It then resolves the two references against the
+packaged catalog and executes each Action once in a new Workspace. It neither asks Policy for a
+new decision nor reproduces the source retry, injected failure, idempotency hit, or checkpoint.
+
+After every Action, replay compares the Workspace digest recorded by the source. It also compares
+the final snapshot and complete Verifier digest, and checks that the source directory's file list,
+sizes, and bytes did not change. A valid execution mismatch is kept as a structured result with
+match rate `0.0`; malformed or overlapping input is rejected before execution. [ADR 0005](docs/decisions/0005-m3b-reference-action-replay.md)
+records the reference, isolation, privacy, and match boundaries.
+
 ## Workspace boundary
 
 M1 exposes only three UTF-8 text tools: list files, read a file, and write a file. Each user path
@@ -244,8 +285,9 @@ python -m build --no-isolation
 Tests cover strict v1/v2/v3 schemas, legal and illegal Runtime transitions, deadline return boundaries,
 three budgets, canonical failure fingerprints and injection count, retry/non-retry rules,
 idempotency hit/conflict behavior, step/attempt event association, paired scenarios, deterministic
-reruns, durable hash-chain tampering, safe-boundary resume, private expected-state separation, M1
-path attacks, and subprocess exit codes. The build
+reruns, durable hash-chain tampering, safe-boundary resume, action-catalog and action-journal
+tampering, reference-only replay, source immutability, private expected-state separation, M1 path
+attacks, and subprocess exit codes. The build
 command creates ignored wheel and source distributions under `dist/`.
 
 ## Current limitations
@@ -258,15 +300,18 @@ command creates ignored wheel and source distributions under `dist/`.
   secret detection, log DLP, encryption, or permission hardening.
 - Journal and checkpoint SHA-256 digests are unkeyed consistency checks, not signatures,
   authentication, or protection from an actor who can rewrite every related artifact.
-- Event replay validates recorded structure; it does not execute actions or calculate an action
-  replay match rate. Action replay belongs to M3B and is not implemented here.
+- M3B replays only two project-authored references for one uninterrupted, checkpoint-off source.
+  It does not accept arbitrary action JSON, rerun Policy, reproduce attempt/failure history, replay
+  resumed sources, or establish model determinism. The reported `1/1` is not a cross-task rate.
+- Action and journal SHA-256 fingerprints expose no raw arguments, but they are still unkeyed
+  consistency checks, not signatures, secret protection, or proof against full-artifact rewriting.
 - Existing `run-runtime` remains the M2 v2 path and still writes its JSONL at normal run end.
 - The Policy is scripted; there is no model adapter or model-quality claim.
 - The three paired cases are regression evidence, not an M5 batch experiment, statistical report,
   p50/p95 benchmark, or train/dev/test split.
 - CI configuration exists, but there is no remote Actions run because this repository has no
   remote yet.
-- Incident, DataOps, post-training export, training, and the simulated FDE case are not part of M2.
+- Incident, DataOps, post-training export, training, and the simulated FDE case are not part of M3B.
 
 ## Project background and evidence boundary
 

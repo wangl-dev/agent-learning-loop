@@ -72,5 +72,18 @@ jobs:
           python -m agent_learning_loop validate-trajectory \
             --run-dir "$RUNNER_TEMP/m3a-smoke"
 
+      - name: Run M3B reference replay smoke test
+        run: |
+          python -m agent_learning_loop run-durable \
+            --task workspace.fix-config \
+            --mode safeguarded \
+            --failure-schedule workspace.lost-write-result.v1 \
+            --checkpointing off \
+            --record-actions on \
+            --output-dir "$RUNNER_TEMP/m3b-source"
+          python -m agent_learning_loop replay-actions \
+            --source-run-dir "$RUNNER_TEMP/m3b-source" \
+            --output-dir "$RUNNER_TEMP/m3b-replay"
+
       - name: Build distributions
         run: python -m build --no-isolation

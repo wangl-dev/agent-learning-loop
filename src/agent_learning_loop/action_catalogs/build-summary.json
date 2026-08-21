@@ -1,0 +1,45 @@
+{
+  "schema_version": "1",
+  "catalog_id": "workspace.build-summary.actions.v1",
+  "task_id": "workspace.build-summary",
+  "actions": [
+    {
+      "step_index": 1,
+      "action_ref": "workspace.build-summary.step-1.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {
+          "path": "input/title.txt"
+        }
+      }
+    },
+    {
+      "step_index": 2,
+      "action_ref": "workspace.build-summary.step-2.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {
+          "path": "input/items.txt"
+        }
+      }
+    },
+    {
+      "step_index": 3,
+      "action_ref": "workspace.build-summary.step-3.v1",
+      "tool_name": "write_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "write_text",
+        "arguments": {
+          "path": "output/summary.txt",
+          "content": "Release: M1\nItems:\n- schema\n- workspace\n"
+        }
+      }
+    }
+  ],
+  "provenance": "Project-authored deterministic action catalog."
+}

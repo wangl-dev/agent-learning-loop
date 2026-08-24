@@ -40,10 +40,13 @@ where = ["src"]
 agent_learning_loop = [
   "py.typed",
   "task_fixtures/workspace/*.json",
+  "task_fixtures/incident/*.json",
   "failure_schedules/*.json",
   "interruption_schedules/*.json",
   "action_catalogs/*.json",
+  "action_catalogs/incident/*.json",
   "task_manifests/workspace/*.json",
+  "task_manifests/incident/*.json",
 ]
 
 [tool.pytest.ini_options]

@@ -1,8 +1,8 @@
 # Agent Learning Loop
 
-> Status: **M4A Workspace corpus / pre-alpha (`0.1.0.dev0`)**. Ten project-authored synthetic
-> tasks now have strict manifests, a fixed `6/2/2` split, and content fingerprints checked before
-> execution. This is corpus and system-correctness work, not a model benchmark.
+> Status: **M4B Incident simulation / pre-alpha (`0.1.0.dev0`)**. Workspace and Incident each have
+> ten project-authored synthetic tasks with a fixed `6/2/2` split. Scripted runs check system
+> contracts; they are not model benchmarks.
 
 Agent Learning Loop studies a narrow question: under the same task, actions, seed, and injected
 failure schedule, which Runtime safeguards improve recovery without causing duplicate side
@@ -14,7 +14,7 @@ Task v1 + scripted Action → Runtime config and state machine → fixed failure
                           → Runtime Event JSONL v2 + Runtime Result JSON v2
 ```
 
-The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.7 in the separate planning
+The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.8 in the separate planning
 repository. Milestones are reviewed against fresh evidence; contract, task, or metric changes are
 versioned instead of being silently absorbed.
 
@@ -60,6 +60,34 @@ python -m agent_learning_loop run-workspace `
   --task workspace.build-summary `
   --output-dir run-output/one-task
 ```
+
+The separate Incident simulator is a resettable in-memory service state. It never starts a
+process, calls a network service, or asks a real person for approval. Its two high-impact tools
+(`set_feature_flag` and `restart_simulated_service`) need approval bound to the task, tool,
+target, and canonical action fingerprint. The private fixture predeclares the exact restart target
+or feature-flag value; the requester cannot redefine what is approved. Each of the eight tools has
+its own strict argument schema. A repeated `operation_id` returns its first result without a second
+physical mutation; changing the request under that ID is rejected. Audit JSONL requires matching
+run/task/tool/target/approval/operation/fingerprint references and records whether an execution was
+the physical mutation or an idempotency hit, without private fixture expectations.
+The verifier result is anchored to the runner's run/task identity. Its checks are non-empty and
+uniquely named; the top-level pass flag and fixed 1.0/0.0 score must agree with every check. An
+audit-only verdict can contain the audit subset, while a final Incident run result requires the
+complete fixed full-check set. Private expectations require exact per-target restart and
+flag-mutation counts, and the final state must have exactly one matching successful
+acknowledgement or escalation audit record.
+Incident log observations mask fixed key/token/password assignments and Bearer-token shapes before
+they enter runner events.
+
+```powershell
+python -m agent_learning_loop validate-corpus --environment incident
+python -m agent_learning_loop run-incident --task all --output-dir run-output/incident
+```
+
+An Incident result can be `acknowledged` after a verified simulated recovery, or `escalated` when
+approval is denied or evidence is ambiguous. Neither outcome is a claim about real incident
+operations, human approval, production safety, or model reasoning. [ADR 0007](docs/decisions/0007-m4b-incident-contract.md)
+explains why this v1 contract is kept separate from the frozen Workspace Runtime.
 
 Run the same transient-read schedule first with the fail-fast baseline, then with bounded retry
 and idempotency. The naive command is expected to return a nonzero exit code and still write a
@@ -340,7 +368,11 @@ command creates ignored wheel and source distributions under `dist/`.
 - The three paired cases are regression evidence, not an M5 batch experiment, statistical report,
   p50/p95 benchmark, or model evaluation.
 - GitHub Actions checks pushes and pull requests; it is a project gate, not deployment evidence.
-- Incident, DataOps, post-training export, training, and the simulated FDE case are not part of M4A.
+- Incident v1 is a deterministic in-memory safety contract, not a production runbook, real
+  authorization system, or model Incident evaluation. DataOps, post-training export, training,
+  and the simulated FDE case remain out of scope.
+- Incident log masking covers a small reviewed set of assignment and Bearer-token patterns. It is
+  a regression guard for the synthetic corpus, not general secret detection or log DLP.
 
 ## Project background and evidence boundary
 

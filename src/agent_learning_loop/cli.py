@@ -40,6 +40,12 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         help="new or empty directory for per-task artifacts",
     )
+    incident = subparsers.add_parser(
+        "run-incident",
+        help="run one or all ten validated Incident simulation tasks",
+    )
+    incident.add_argument("--task", default="all", help="fixed Incident task ID or 'all'")
+    incident.add_argument("--output-dir", required=True, type=Path)
     runtime = subparsers.add_parser(
         "run-runtime",
         help="run one fixed M2 Workspace failure scenario",
@@ -97,7 +103,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     corpus.add_argument(
         "--environment",
-        choices=("workspace",),
+        choices=("workspace", "incident"),
         default="workspace",
     )
     return parser
@@ -112,6 +118,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
     if arguments.command == "run-workspace":
         return _run_workspace(arguments)
+    if arguments.command == "run-incident":
+        return _run_incident(arguments)
     if arguments.command == "run-runtime":
         return _run_runtime(arguments)
     if arguments.command == "run-durable":
@@ -123,7 +131,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if arguments.command == "replay-actions":
         return _replay_actions(arguments)
     if arguments.command == "validate-corpus":
-        return _validate_corpus()
+        return _validate_corpus(arguments.environment)
     return 0
 
 
@@ -369,15 +377,42 @@ def _replay_actions(arguments: argparse.Namespace) -> int:
         return 2
 
 
-def _validate_corpus() -> int:
+def _run_incident(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.incident_corpus import validate_incident_corpus
+    from agent_learning_loop.incident_runner import run_all_incident_tasks, run_incident_task
+    from agent_learning_loop.vertical_slice import OutputExistsError
+
+    try:
+        corpus = validate_incident_corpus()
+        if arguments.task == "all":
+            results = run_all_incident_tasks(arguments.output_dir)
+        else:
+            results = [
+                run_incident_task(
+                    corpus, arguments.task, arguments.output_dir, run_id="incident-cli"
+                )
+            ]
+        for result in results:
+            print(f"{result.task_id}: {result.outcome} (result: result.json)")
+        return 0 if all(result.outcome == "passed" for result in results) else 1
+    except (OSError, OutputExistsError, ValueError) as exc:
+        print(f"run-incident validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _validate_corpus(environment: str) -> int:
     from agent_learning_loop.corpus import (
         CorpusValidationError,
         validate_workspace_corpus,
     )
 
     try:
-        corpus = validate_workspace_corpus()
-        print(corpus.summary.model_dump_json())
+        if environment == "workspace":
+            print(validate_workspace_corpus().summary.model_dump_json())
+            return 0
+        from agent_learning_loop.incident_corpus import validate_incident_corpus
+
+        print(validate_incident_corpus().summary.model_dump_json())
         return 0
     except (CorpusValidationError, OSError, ValueError) as exc:
         print(f"validate-corpus validation error: {exc}", file=sys.stderr)

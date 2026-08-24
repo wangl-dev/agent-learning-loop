@@ -42,11 +42,20 @@ jobs:
       - name: Validate packaged corpus
         run: python -m agent_learning_loop validate-corpus
 
+      - name: Validate packaged Incident corpus
+        run: python -m agent_learning_loop validate-corpus --environment incident
+
       - name: Run Workspace corpus smoke test
         run: >-
           python -m agent_learning_loop run-workspace
           --task all
           --output-dir "$RUNNER_TEMP/m1-smoke"
+
+      - name: Run Incident corpus smoke test
+        run: >-
+          python -m agent_learning_loop run-incident
+          --task all
+          --output-dir "$RUNNER_TEMP/m4b-incident-smoke"
 
       - name: Run M2 safeguarded failure smoke test
         run: >-

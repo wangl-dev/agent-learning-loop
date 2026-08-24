@@ -39,7 +39,10 @@ jobs:
       - name: Test
         run: python -m pytest -q
 
-      - name: Run M1 Workspace smoke test
+      - name: Validate packaged corpus
+        run: python -m agent_learning_loop validate-corpus
+
+      - name: Run Workspace corpus smoke test
         run: >-
           python -m agent_learning_loop run-workspace
           --task all

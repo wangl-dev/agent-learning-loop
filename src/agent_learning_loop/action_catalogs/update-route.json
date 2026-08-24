@@ -1,0 +1,31 @@
+{
+  "schema_version": "1",
+  "catalog_id": "workspace.update-route.actions.v1",
+  "task_id": "workspace.update-route",
+  "actions": [
+    {
+      "step_index": 1,
+      "action_ref": "workspace.update-route.step-1.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "routes.conf"}
+      }
+    },
+    {
+      "step_index": 2,
+      "action_ref": "workspace.update-route.step-2.v1",
+      "tool_name": "write_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "write_text",
+        "arguments": {
+          "path": "routes.conf",
+          "content": "/health -> health-v1\n/orders -> orders-v2\nfallback -> legacy\n"
+        }
+      }
+    }
+  ],
+  "provenance": "Project-authored deterministic action catalog."
+}

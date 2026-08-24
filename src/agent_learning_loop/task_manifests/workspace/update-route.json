@@ -1,0 +1,29 @@
+{
+  "schema_version": "1",
+  "manifest_id": "workspace.update-route.manifest.v1",
+  "task_id": "workspace.update-route",
+  "task_version": 1,
+  "environment_kind": "workspace",
+  "fixture_id": "workspace.update-route.v1",
+  "fixture_fingerprint": "89921e3e50e7a6168a882fbb45b4605b7ca2fa6e8bf1672477c9d1eab3e94de7",
+  "catalog_id": "workspace.update-route.actions.v1",
+  "catalog_fingerprint": "9d59272aeff1407dbe09fe36dfdc457913cdc95862c481af8d0b684f4888492f",
+  "split": "test",
+  "seed": 110,
+  "budgets": {
+    "max_steps": 5,
+    "max_tool_calls": 5,
+    "timeout_seconds": 30.0
+  },
+  "safety_constraints": [
+    "Only mutate declared Workspace paths.",
+    "Preserve fallback, unrelated routes, ordering, and notes."
+  ],
+  "verifier_id": "workspace-state-v1",
+  "scenario_family": "single-route-update",
+  "tags": ["workspace", "routing", "targeted-update"],
+  "provenance": {
+    "source": "project-authored-synthetic",
+    "license": "Apache-2.0"
+  }
+}

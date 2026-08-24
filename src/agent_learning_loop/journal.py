@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -11,6 +10,10 @@ from typing import IO, Any, Self
 
 from pydantic import ValidationError
 
+from agent_learning_loop.canonical import (
+    canonical_json_bytes as canonical_json_bytes,
+)
+from agent_learning_loop.canonical import canonical_sha256
 from agent_learning_loop.durable_schemas import (
     DurableEvent,
     DurableEventKind,
@@ -22,14 +25,8 @@ class JournalValidationError(ValueError):
     pass
 
 
-def canonical_json_bytes(payload: object) -> bytes:
-    return json.dumps(
-        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
-    ).encode("utf-8")
-
-
 def record_hash(event_without_hash: dict[str, object]) -> str:
-    return hashlib.sha256(canonical_json_bytes(event_without_hash)).hexdigest()
+    return canonical_sha256(event_without_hash)
 
 
 def event_hash_payload(event: DurableEvent) -> dict[str, object]:

@@ -1,8 +1,8 @@
 # Agent Learning Loop
 
-> Status: **M3B reference-based action replay / pre-alpha (`0.1.0.dev0`)**. One fixed durable run
-> can now record safe action references and replay them in a new Workspace without calling Policy.
-> This is a single-task smoke test, not arbitrary action replay or a production recovery guarantee.
+> Status: **M4A Workspace corpus / pre-alpha (`0.1.0.dev0`)**. Ten project-authored synthetic
+> tasks now have strict manifests, a fixed `6/2/2` split, and content fingerprints checked before
+> execution. This is corpus and system-correctness work, not a model benchmark.
 
 Agent Learning Loop studies a narrow question: under the same task, actions, seed, and injected
 failure schedule, which Runtime safeguards improve recovery without causing duplicate side
@@ -14,7 +14,7 @@ Task v1 + scripted Action → Runtime config and state machine → fixed failure
                           → Runtime Event JSONL v2 + Runtime Result JSON v2
 ```
 
-The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.6 in the separate planning
+The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.7 in the separate planning
 repository. Milestones are reviewed against fresh evidence; contract, task, or metric changes are
 versioned instead of being silently absorbed.
 
@@ -31,7 +31,14 @@ python -m pip install -e ".[dev]"
 
 On macOS or Linux, activation is `source .venv/bin/activate`.
 
-Run all three M1 tasks:
+Validate the packaged corpus before running it:
+
+```powershell
+python -m agent_learning_loop validate-corpus
+```
+
+The command reports only schema, environment, total task count, and split counts. It does not print
+fixture file bodies or private expected state. Run all ten Workspace tasks:
 
 ```powershell
 python -m agent_learning_loop run-workspace --task all --output-dir run-output/m1
@@ -151,19 +158,36 @@ an interrupted or checkpoint-on source.
 No model, GPU, API key, database, container, or network service is used after Python dependencies
 are installed.
 
-## What M1 actually checks
+## Workspace corpus and the M1 execution path
 
-The three project-authored synthetic fixtures cover different final-state rules:
+M1 introduced the first three fault-free fixtures. M4A keeps their behavior and brings the same
+execution path to ten tasks:
 
-| Task ID | Action | Verifier boundary |
+| Split | Task ID | State contract |
 |---|---|---|
-| `workspace.fix-config` | Read and correct `app.conf` | Correct content; unrelated note unchanged |
-| `workspace.build-summary` | Read two inputs and write a fixed summary | Exact artifact; inputs unchanged |
-| `workspace.update-status` | List, read, and update one status file | Target state; audit log unchanged; no backup |
+| train | `workspace.build-summary` | Build an exact summary; preserve both inputs |
+| train | `workspace.merge-changelog` | Merge ordered fragments; preserve source fragments |
+| train | `workspace.repair-service-map` | Repair one mapping; preserve unrelated entries and note |
+| train | `workspace.create-owner-record` | Create a missing record; preserve its sources |
+| train | `workspace.build-deploy-manifest` | Build an exact multi-input manifest; create no draft |
+| train | `workspace.reconcile-inventory` | Reconcile controlled counts; preserve audit inputs |
+| validation | `workspace.update-status` | Update status; preserve audit log and create no backup |
+| validation | `workspace.normalize-checklist` | Normalize checklist text; preserve comment and archive |
+| test | `workspace.fix-config` | Correct one config field; preserve port and note |
+| test | `workspace.update-route` | Update one route; preserve fallback, ordering, and note |
 
 The scripted Policy selects from project-authored, versioned action catalogs keyed by task ID. It
 never receives the fixture's private setup or expected-state object. Its passing result means the
 modules fit together and the fixtures are solvable; it does not measure Agent intelligence.
+
+Each task has a separate manifest that binds its task, fixture, catalog, split, seed, budgets,
+safety constraints, verifier, scenario family, tags, provenance, and Apache-2.0 license. Fixture
+and catalog identities are SHA-256 digests of sorted, whitespace-free UTF-8 canonical JSON.
+`validate-corpus` checks strict schemas, the fixed task/split mapping, one-to-one resource coverage,
+identities, fingerprints, tool allowlists, and scenario-family split isolation before execution.
+These unkeyed digests catch silent replacement or mismatched package data; they are not signatures.
+[ADR 0006](docs/decisions/0006-m4a-corpus-governance.md) records why governance metadata stays
+outside the Policy-visible Task and private fixture.
 
 Task, Observation, Action, Tool Result, Event, and Run Result use strict Pydantic v2 schemas.
 Unknown critical fields, missing fields, and wrong types fail validation. Environment, Tool,
@@ -279,11 +303,14 @@ python -m agent_learning_loop --version
 python -m ruff check .
 python -m mypy src tests
 $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'; python -m pytest -q
+python -m agent_learning_loop validate-corpus
+python -m agent_learning_loop run-workspace --task all --output-dir run-output/corpus
 python -m build --no-isolation
 ```
 
-Tests cover strict v1/v2/v3 schemas, legal and illegal Runtime transitions, deadline return boundaries,
-three budgets, canonical failure fingerprints and injection count, retry/non-retry rules,
+Tests cover strict corpus and v1/v2/v3 schemas, manifest identity/fingerprint/split/resource failures,
+legal and illegal Runtime transitions, deadline return boundaries, three budgets, canonical failure
+fingerprints and injection count, retry/non-retry rules,
 idempotency hit/conflict behavior, step/attempt event association, paired scenarios, deterministic
 reruns, durable hash-chain tampering, safe-boundary resume, action-catalog and action-journal
 tampering, reference-only replay, source immutability, private expected-state separation, M1 path
@@ -305,13 +332,15 @@ command creates ignored wheel and source distributions under `dist/`.
   resumed sources, or establish model determinism. The reported `1/1` is not a cross-task rate.
 - Action and journal SHA-256 fingerprints expose no raw arguments, but they are still unkeyed
   consistency checks, not signatures, secret protection, or proof against full-artifact rewriting.
+- The ten-task `6/2/2` corpus is fixed, synthetic, and small. The scripted Policy may run every task
+  to test the system pipeline, but that does not estimate model quality or prevent a future model
+  development process from misusing the split.
 - Existing `run-runtime` remains the M2 v2 path and still writes its JSONL at normal run end.
 - The Policy is scripted; there is no model adapter or model-quality claim.
 - The three paired cases are regression evidence, not an M5 batch experiment, statistical report,
-  p50/p95 benchmark, or train/dev/test split.
-- CI configuration exists, but there is no remote Actions run because this repository has no
-  remote yet.
-- Incident, DataOps, post-training export, training, and the simulated FDE case are not part of M3B.
+  p50/p95 benchmark, or model evaluation.
+- GitHub Actions checks pushes and pull requests; it is a project gate, not deployment evidence.
+- Incident, DataOps, post-training export, training, and the simulated FDE case are not part of M4A.
 
 ## Project background and evidence boundary
 

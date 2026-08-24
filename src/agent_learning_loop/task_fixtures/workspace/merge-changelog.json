@@ -1,0 +1,32 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.merge-changelog",
+    "environment_kind": "workspace",
+    "instruction": "Read both release fragments and merge them into CHANGELOG.md with the newer release first, without changing either source fragment.",
+    "allowed_tools": ["read_text", "write_text"],
+    "fixture_id": "workspace.merge-changelog.v1",
+    "provenance": "Project-authored synthetic M4A fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "fragments/v1.4.md": "## 1.4\n- Add runtime retry.\n",
+        "fragments/v1.5.md": "## 1.5\n- Add safe-boundary resume.\n",
+        "notes/release-owner.txt": "release-team\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "CHANGELOG.md": "# Changelog\n\n## 1.5\n- Add safe-boundary resume.\n\n## 1.4\n- Add runtime retry.\n"
+      },
+      "unchanged_files": [
+        "fragments/v1.4.md",
+        "fragments/v1.5.md",
+        "notes/release-owner.txt"
+      ],
+      "allowed_mutations": ["CHANGELOG.md"],
+      "forbidden_paths": ["CHANGELOG.draft.md"]
+    }
+  }
+}

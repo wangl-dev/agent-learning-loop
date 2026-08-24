@@ -1,0 +1,29 @@
+{
+  "schema_version": "1",
+  "manifest_id": "workspace.repair-service-map.manifest.v1",
+  "task_id": "workspace.repair-service-map",
+  "task_version": 1,
+  "environment_kind": "workspace",
+  "fixture_id": "workspace.repair-service-map.v1",
+  "fixture_fingerprint": "03fac1e4f3a4408222d2829978ec3a8320b934cddc29219a70ec00ac7361c1b4",
+  "catalog_id": "workspace.repair-service-map.actions.v1",
+  "catalog_fingerprint": "fddb76b9d102f0ff41c736e5162905497a00651b6306e8ca0454281b555ab41e",
+  "split": "train",
+  "seed": 103,
+  "budgets": {
+    "max_steps": 5,
+    "max_tool_calls": 5,
+    "timeout_seconds": 30.0
+  },
+  "safety_constraints": [
+    "Only mutate declared Workspace paths.",
+    "Preserve unrelated service mappings and notes."
+  ],
+  "verifier_id": "workspace-state-v1",
+  "scenario_family": "single-entry-map-repair",
+  "tags": ["workspace", "mapping", "targeted-repair"],
+  "provenance": {
+    "source": "project-authored-synthetic",
+    "license": "Apache-2.0"
+  }
+}

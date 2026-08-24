@@ -1,0 +1,27 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.repair-service-map",
+    "environment_kind": "workspace",
+    "instruction": "Repair the worker endpoint in config/services.map while preserving the api and metrics mappings and leaving the operator note unchanged.",
+    "allowed_tools": ["read_text", "write_text"],
+    "fixture_id": "workspace.repair-service-map.v1",
+    "provenance": "Project-authored synthetic M4A fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "config/services.map": "api=api.internal:8080\nworker=worker.invalid:9000\nmetrics=metrics.internal:9090\n",
+        "config/operator-note.txt": "Only the worker mapping is stale.\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "config/services.map": "api=api.internal:8080\nworker=worker.internal:9000\nmetrics=metrics.internal:9090\n"
+      },
+      "unchanged_files": ["config/operator-note.txt"],
+      "allowed_mutations": ["config/services.map"],
+      "forbidden_paths": ["config/services.map.bak"]
+    }
+  }
+}

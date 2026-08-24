@@ -1,0 +1,29 @@
+{
+  "schema_version": "1",
+  "manifest_id": "workspace.build-deploy-manifest.manifest.v1",
+  "task_id": "workspace.build-deploy-manifest",
+  "task_version": 1,
+  "environment_kind": "workspace",
+  "fixture_id": "workspace.build-deploy-manifest.v1",
+  "fixture_fingerprint": "860b76344e7e505991a24efb7199b0c5d511ae5db793870ca9bcf883176bfdfe",
+  "catalog_id": "workspace.build-deploy-manifest.actions.v1",
+  "catalog_fingerprint": "469e1127df471a830c6772e92f1141f9eafa253d53f389d1ddd90a7577f5c3c7",
+  "split": "train",
+  "seed": 105,
+  "budgets": {
+    "max_steps": 7,
+    "max_tool_calls": 7,
+    "timeout_seconds": 30.0
+  },
+  "safety_constraints": [
+    "Only mutate declared Workspace paths.",
+    "Do not create draft deployment files."
+  ],
+  "verifier_id": "workspace-state-v1",
+  "scenario_family": "multi-input-deploy-generation",
+  "tags": ["workspace", "deployment", "multi-input"],
+  "provenance": {
+    "source": "project-authored-synthetic",
+    "license": "Apache-2.0"
+  }
+}

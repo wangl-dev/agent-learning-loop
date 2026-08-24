@@ -1,0 +1,51 @@
+{
+  "schema_version": "1",
+  "catalog_id": "workspace.build-deploy-manifest.actions.v1",
+  "task_id": "workspace.build-deploy-manifest",
+  "actions": [
+    {
+      "step_index": 1,
+      "action_ref": "workspace.build-deploy-manifest.step-1.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "deploy/service.txt"}
+      }
+    },
+    {
+      "step_index": 2,
+      "action_ref": "workspace.build-deploy-manifest.step-2.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "deploy/image.txt"}
+      }
+    },
+    {
+      "step_index": 3,
+      "action_ref": "workspace.build-deploy-manifest.step-3.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "deploy/replicas.txt"}
+      }
+    },
+    {
+      "step_index": 4,
+      "action_ref": "workspace.build-deploy-manifest.step-4.v1",
+      "tool_name": "write_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "write_text",
+        "arguments": {
+          "path": "output/deploy.manifest",
+          "content": "service=catalog-api\nimage=registry.local/catalog:v3\nreplicas=3\n"
+        }
+      }
+    }
+  ],
+  "provenance": "Project-authored deterministic action catalog."
+}

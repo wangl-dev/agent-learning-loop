@@ -1,10 +1,10 @@
-"""Load the three packaged M1 Workspace task fixtures."""
+"""Load custom fixtures or tasks from the validated Workspace corpus."""
 
 from __future__ import annotations
 
-from importlib.resources import files
 from pathlib import Path
 
+from agent_learning_loop.corpus import validate_workspace_corpus
 from agent_learning_loop.schemas import WorkspaceTaskFixture
 
 
@@ -18,14 +18,8 @@ def load_task_file(path: Path) -> WorkspaceTaskFixture:
 
 
 def load_all_tasks() -> list[WorkspaceTaskFixture]:
-    """Return all packaged Workspace fixtures in stable task-ID order."""
-    fixture_root = files("agent_learning_loop").joinpath("task_fixtures", "workspace")
-    fixtures = [
-        WorkspaceTaskFixture.model_validate_json(resource.read_text(encoding="utf-8"))
-        for resource in fixture_root.iterdir()
-        if resource.name.endswith(".json")
-    ]
-    return sorted(fixtures, key=lambda fixture: fixture.task.task_id)
+    """Return validated packaged Workspace fixtures in stable task-ID order."""
+    return list(validate_workspace_corpus().fixtures)
 
 
 def load_task(task_id: str) -> WorkspaceTaskFixture:
@@ -33,4 +27,4 @@ def load_task(task_id: str) -> WorkspaceTaskFixture:
     for fixture in load_all_tasks():
         if fixture.task.task_id == task_id:
             return fixture
-    raise TaskNotFoundError(f"unknown M1 Workspace task: {task_id}")
+    raise TaskNotFoundError(f"unknown Workspace corpus task: {task_id}")

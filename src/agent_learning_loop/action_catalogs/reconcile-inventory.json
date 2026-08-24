@@ -1,0 +1,41 @@
+{
+  "schema_version": "1",
+  "catalog_id": "workspace.reconcile-inventory.actions.v1",
+  "task_id": "workspace.reconcile-inventory",
+  "actions": [
+    {
+      "step_index": 1,
+      "action_ref": "workspace.reconcile-inventory.step-1.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "inventory/counts.csv"}
+      }
+    },
+    {
+      "step_index": 2,
+      "action_ref": "workspace.reconcile-inventory.step-2.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "inventory/adjustments.csv"}
+      }
+    },
+    {
+      "step_index": 3,
+      "action_ref": "workspace.reconcile-inventory.step-3.v1",
+      "tool_name": "write_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "write_text",
+        "arguments": {
+          "path": "output/reconciled.csv",
+          "content": "item,final\nwidget,8\ngadget,7\n"
+        }
+      }
+    }
+  ],
+  "provenance": "Project-authored deterministic action catalog."
+}

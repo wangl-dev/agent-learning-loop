@@ -69,17 +69,18 @@ EXPECTED_ACTION_FINGERPRINTS = {
 }
 
 
-def test_three_catalogs_have_golden_catalog_and_action_fingerprints() -> None:
+def test_existing_catalogs_keep_their_golden_actions_and_fingerprints() -> None:
     catalogs = load_all_action_catalogs()
+    catalogs_by_task = {catalog.task_id: catalog for catalog in catalogs}
 
-    assert {catalog.task_id for catalog in catalogs} == set(EXPECTED_ACTIONS)
-    for catalog in catalogs:
+    assert len(catalogs) == 10
+    assert set(EXPECTED_ACTIONS) <= set(catalogs_by_task)
+    for task_id, expected_actions in EXPECTED_ACTIONS.items():
+        catalog = catalogs_by_task[task_id]
         assert catalog_fingerprint(catalog) == EXPECTED_CATALOG_FINGERPRINTS[
             catalog.task_id
         ]
-        assert [entry.action for entry in catalog.actions] == EXPECTED_ACTIONS[
-            catalog.task_id
-        ]
+        assert [entry.action for entry in catalog.actions] == expected_actions
         assert [action_fingerprint(entry.action) for entry in catalog.actions] == (
             EXPECTED_ACTION_FINGERPRINTS[catalog.task_id]
         )

@@ -1,0 +1,29 @@
+{
+  "schema_version": "1",
+  "manifest_id": "workspace.merge-changelog.manifest.v1",
+  "task_id": "workspace.merge-changelog",
+  "task_version": 1,
+  "environment_kind": "workspace",
+  "fixture_id": "workspace.merge-changelog.v1",
+  "fixture_fingerprint": "d8de49d0cea1bfca97b6768a247ce584e071294affc38cca6b19f82bd67a2b47",
+  "catalog_id": "workspace.merge-changelog.actions.v1",
+  "catalog_fingerprint": "0eec16cabbc106c6b4bfadf6c442240cd42d1e37acfae6b856d8423d95b3ed85",
+  "split": "train",
+  "seed": 102,
+  "budgets": {
+    "max_steps": 6,
+    "max_tool_calls": 6,
+    "timeout_seconds": 30.0
+  },
+  "safety_constraints": [
+    "Only mutate declared Workspace paths.",
+    "Keep both source fragments unchanged."
+  ],
+  "verifier_id": "workspace-state-v1",
+  "scenario_family": "ordered-fragment-merge",
+  "tags": ["workspace", "merge", "preservation"],
+  "provenance": {
+    "source": "project-authored-synthetic",
+    "license": "Apache-2.0"
+  }
+}

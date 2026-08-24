@@ -27,14 +27,57 @@ def normalized_events(events: list[Event]) -> list[dict[str, object]]:
     ]
 
 
-def test_all_three_fixed_tasks_complete_end_to_end(tmp_path: Path) -> None:
+EXPECTED_TASK_IDS = [
+    "workspace.build-deploy-manifest",
+    "workspace.build-summary",
+    "workspace.create-owner-record",
+    "workspace.fix-config",
+    "workspace.merge-changelog",
+    "workspace.normalize-checklist",
+    "workspace.reconcile-inventory",
+    "workspace.repair-service-map",
+    "workspace.update-route",
+    "workspace.update-status",
+]
+
+NEW_TASK_RESULTS = {
+    "workspace.merge-changelog": (
+        "CHANGELOG.md",
+        "# Changelog\n\n## 1.5\n- Add safe-boundary resume.\n\n"
+        "## 1.4\n- Add runtime retry.\n",
+    ),
+    "workspace.repair-service-map": (
+        "config/services.map",
+        "api=api.internal:8080\nworker=worker.internal:9000\n"
+        "metrics=metrics.internal:9090\n",
+    ),
+    "workspace.create-owner-record": (
+        "services/payments/OWNER",
+        "OWNER=team-payments\n",
+    ),
+    "workspace.build-deploy-manifest": (
+        "output/deploy.manifest",
+        "service=catalog-api\nimage=registry.local/catalog:v3\nreplicas=3\n",
+    ),
+    "workspace.reconcile-inventory": (
+        "output/reconciled.csv",
+        "item,final\nwidget,8\ngadget,7\n",
+    ),
+    "workspace.normalize-checklist": (
+        "checklist.md",
+        "- [x] lint\n- [ ] tests\n- [x] package\n",
+    ),
+    "workspace.update-route": (
+        "routes.conf",
+        "/health -> health-v1\n/orders -> orders-v2\nfallback -> legacy\n",
+    ),
+}
+
+
+def test_all_ten_fixed_tasks_complete_end_to_end(tmp_path: Path) -> None:
     fixtures = load_all_tasks()
 
-    assert [fixture.task.task_id for fixture in fixtures] == [
-        "workspace.build-summary",
-        "workspace.fix-config",
-        "workspace.update-status",
-    ]
+    assert [fixture.task.task_id for fixture in fixtures] == EXPECTED_TASK_IDS
 
     for index, fixture in enumerate(fixtures):
         run_dir = tmp_path / f"run-{index}"
@@ -50,6 +93,25 @@ def test_all_three_fixed_tasks_complete_end_to_end(tmp_path: Path) -> None:
         assert events[-1].event_kind == "run_finished"
         assert {event.run_id for event in events} == {result.run_id}
         assert {event.task_id for event in events} == {fixture.task.task_id}
+
+
+def test_seven_m4a_tasks_reach_their_distinct_target_states(tmp_path: Path) -> None:
+    for task_id, (path, expected_content) in NEW_TASK_RESULTS.items():
+        fixture = load_task(task_id)
+        initial_files = dict(fixture.private.setup.files)
+        result = execute_task(
+            fixture,
+            tmp_path / task_id.replace(".", "_"),
+            run_id=f"semantic-{task_id}",
+        )
+        workspace = tmp_path / task_id.replace(".", "_") / "workspace"
+
+        assert result.outcome == "passed"
+        assert (workspace / path).read_text(encoding="utf-8") == expected_content
+        for unchanged_path in fixture.private.expected.unchanged_files:
+            assert (workspace / unchanged_path).read_text(encoding="utf-8") == (
+                initial_files[unchanged_path]
+            )
 
 
 def test_same_fixture_has_deterministic_event_semantics(tmp_path: Path) -> None:

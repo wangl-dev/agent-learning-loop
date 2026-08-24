@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-import hashlib
-import json
-from importlib.resources import files
 from typing import Literal, Self
 
-from pydantic import Field, ValidationError, model_validator
+from pydantic import Field, model_validator
 
+from agent_learning_loop.canonical import canonical_sha256
 from agent_learning_loop.schemas import Action, StrictModel, ToolName
 
 
@@ -63,12 +61,6 @@ class ActionCatalog(StrictModel):
         return self
 
 
-_CATALOG_FILES = {
-    "workspace.build-summary": "build-summary.json",
-    "workspace.fix-config": "fix-config.json",
-    "workspace.update-status": "update-status.json",
-}
-
 GOLDEN_CATALOG_FINGERPRINTS = {
     "workspace.build-summary": "79a52f1f6cef8f91bfdc47e3398b71f7f9a7430bb0f086783e58e5acab79d8af",
     "workspace.fix-config": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
@@ -87,27 +79,27 @@ def catalog_fingerprint(catalog: ActionCatalog) -> str:
 
 
 def load_action_catalog(task_id: str) -> ActionCatalog:
-    """Load one reviewed packaged catalog by its fixed task identity."""
-    filename = _CATALOG_FILES.get(task_id)
-    if filename is None:
-        raise ActionCatalogNotFoundError(f"unknown action catalog task: {task_id}")
-    resource = files("agent_learning_loop").joinpath("action_catalogs", filename)
+    """Load one catalog from the validated packaged corpus."""
+    from agent_learning_loop.corpus import (
+        CorpusValidationError,
+        validate_workspace_corpus,
+    )
+
     try:
-        catalog = ActionCatalog.model_validate_json(resource.read_text(encoding="utf-8"))
-    except (OSError, UnicodeError, ValidationError) as exc:
+        catalogs = validate_workspace_corpus().catalogs
+    except CorpusValidationError as exc:
         raise ActionCatalogMismatchError("packaged action catalog is invalid") from exc
-    expected = GOLDEN_CATALOG_FINGERPRINTS[task_id]
-    if catalog.task_id != task_id or catalog_fingerprint(catalog) != expected:
-        raise ActionCatalogMismatchError("packaged action catalog fingerprint changed")
-    return catalog
+    for catalog in catalogs:
+        if catalog.task_id == task_id:
+            return catalog
+    raise ActionCatalogNotFoundError(f"unknown action catalog task: {task_id}")
 
 
 def load_all_action_catalogs() -> list[ActionCatalog]:
-    return [load_action_catalog(task_id) for task_id in sorted(_CATALOG_FILES)]
+    from agent_learning_loop.corpus import validate_workspace_corpus
+
+    return list(validate_workspace_corpus().catalogs)
 
 
 def _fingerprint(payload: object) -> str:
-    canonical = json.dumps(
-        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
-    ).encode("utf-8")
-    return hashlib.sha256(canonical).hexdigest()
+    return canonical_sha256(payload)

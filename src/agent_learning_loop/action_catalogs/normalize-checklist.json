@@ -1,0 +1,31 @@
+{
+  "schema_version": "1",
+  "catalog_id": "workspace.normalize-checklist.actions.v1",
+  "task_id": "workspace.normalize-checklist",
+  "actions": [
+    {
+      "step_index": 1,
+      "action_ref": "workspace.normalize-checklist.step-1.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "checklist.md"}
+      }
+    },
+    {
+      "step_index": 2,
+      "action_ref": "workspace.normalize-checklist.step-2.v1",
+      "tool_name": "write_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "write_text",
+        "arguments": {
+          "path": "checklist.md",
+          "content": "- [x] lint\n- [ ] tests\n- [x] package\n"
+        }
+      }
+    }
+  ],
+  "provenance": "Project-authored deterministic action catalog."
+}

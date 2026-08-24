@@ -19,7 +19,7 @@ def test_module_version_command_reports_project_version() -> None:
     assert result.stderr == ""
 
 
-def test_workspace_command_runs_three_tasks_and_writes_machine_outputs(tmp_path: Path) -> None:
+def test_workspace_command_runs_ten_tasks_and_writes_machine_outputs(tmp_path: Path) -> None:
     output_dir = tmp_path / "runs"
 
     result = subprocess.run(
@@ -40,10 +40,10 @@ def test_workspace_command_runs_three_tasks_and_writes_machine_outputs(tmp_path:
 
     assert result.returncode == 0, result.stderr
     assert result.stderr == ""
-    assert result.stdout.count("passed") == 3
-    assert len(list(output_dir.glob("*/events.jsonl"))) == 3
+    assert result.stdout.count("passed") == 10
+    assert len(list(output_dir.glob("*/events.jsonl"))) == 10
     result_files = list(output_dir.glob("*/result.json"))
-    assert len(result_files) == 3
+    assert len(result_files) == 10
     assert all(
         json.loads(path.read_text(encoding="utf-8"))["outcome"] == "passed"
         for path in result_files

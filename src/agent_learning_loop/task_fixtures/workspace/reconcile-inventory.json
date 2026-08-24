@@ -1,0 +1,32 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.reconcile-inventory",
+    "environment_kind": "workspace",
+    "instruction": "Read the inventory counts and adjustments and write the reconciled item totals, preserving both inputs and the audit record.",
+    "allowed_tools": ["read_text", "write_text"],
+    "fixture_id": "workspace.reconcile-inventory.v1",
+    "provenance": "Project-authored synthetic M4A fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "inventory/counts.csv": "widget,10\ngadget,4\n",
+        "inventory/adjustments.csv": "widget,-2\ngadget,3\n",
+        "inventory/audit.txt": "batch=synthetic-01\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "output/reconciled.csv": "item,final\nwidget,8\ngadget,7\n"
+      },
+      "unchanged_files": [
+        "inventory/counts.csv",
+        "inventory/adjustments.csv",
+        "inventory/audit.txt"
+      ],
+      "allowed_mutations": ["output/reconciled.csv"],
+      "forbidden_paths": ["output/reconciled.tmp"]
+    }
+  }
+}

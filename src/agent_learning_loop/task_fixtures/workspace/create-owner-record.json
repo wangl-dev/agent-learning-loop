@@ -1,0 +1,30 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.create-owner-record",
+    "environment_kind": "workspace",
+    "instruction": "Read the payments team record and owner format, then create services/payments/OWNER without changing either source file.",
+    "allowed_tools": ["read_text", "write_text"],
+    "fixture_id": "workspace.create-owner-record.v1",
+    "provenance": "Project-authored synthetic M4A fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "teams/payments.txt": "owner=team-payments\nchannel=#payments-ops\n",
+        "policy/owner-format.txt": "OWNER=<team>\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "services/payments/OWNER": "OWNER=team-payments\n"
+      },
+      "unchanged_files": [
+        "teams/payments.txt",
+        "policy/owner-format.txt"
+      ],
+      "allowed_mutations": ["services/payments/OWNER"],
+      "forbidden_paths": ["services/payments/OWNER.tmp"]
+    }
+  }
+}

@@ -35,11 +35,11 @@ def execute_task(
     run_id: str,
 ) -> RunResult:
     """Execute one finite scripted task and write JSONL plus terminal JSON."""
+    policy = ScriptedPolicy()
     if run_directory.exists() and any(run_directory.iterdir()):
         raise OutputExistsError(f"run directory is not empty: {run_directory}")
     run_directory.mkdir(parents=True, exist_ok=True)
     environment = WorkspaceEnvironment(run_directory / "workspace")
-    policy = ScriptedPolicy()
     verifier = WorkspaceStateVerifier()
     tools: dict[str, ToolProtocol] = {
         "list_files": ListFilesTool(),

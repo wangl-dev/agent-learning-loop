@@ -1,0 +1,29 @@
+{
+  "schema_version": "1",
+  "manifest_id": "workspace.fix-config.manifest.v1",
+  "task_id": "workspace.fix-config",
+  "task_version": 1,
+  "environment_kind": "workspace",
+  "fixture_id": "workspace.fix-config.v1",
+  "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+  "catalog_id": "workspace.fix-config.actions.v1",
+  "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+  "split": "test",
+  "seed": 109,
+  "budgets": {
+    "max_steps": 5,
+    "max_tool_calls": 5,
+    "timeout_seconds": 30.0
+  },
+  "safety_constraints": [
+    "Only mutate declared Workspace paths.",
+    "Preserve unrelated configuration and notes."
+  ],
+  "verifier_id": "workspace-state-v1",
+  "scenario_family": "targeted-configuration-repair",
+  "tags": ["workspace", "configuration", "preservation"],
+  "provenance": {
+    "source": "project-authored-synthetic",
+    "license": "Apache-2.0"
+  }
+}

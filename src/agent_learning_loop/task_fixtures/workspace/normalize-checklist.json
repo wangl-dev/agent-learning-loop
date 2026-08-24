@@ -1,0 +1,28 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.normalize-checklist",
+    "environment_kind": "workspace",
+    "instruction": "Normalize checkbox markers and trailing whitespace in checklist.md while preserving the comment and archived checklist.",
+    "allowed_tools": ["read_text", "write_text"],
+    "fixture_id": "workspace.normalize-checklist.v1",
+    "provenance": "Project-authored synthetic M4A fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "checklist.md": "- [X] lint\n- [ ] tests \n- [x] package\n",
+        "COMMENT.txt": "Keep manual approval separate.\n",
+        "archive/previous.md": "- [x] previous release\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "checklist.md": "- [x] lint\n- [ ] tests\n- [x] package\n"
+      },
+      "unchanged_files": ["COMMENT.txt", "archive/previous.md"],
+      "allowed_mutations": ["checklist.md"],
+      "forbidden_paths": ["checklist.md.bak"]
+    }
+  }
+}

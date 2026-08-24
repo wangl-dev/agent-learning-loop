@@ -1,0 +1,41 @@
+{
+  "schema_version": "1",
+  "catalog_id": "workspace.create-owner-record.actions.v1",
+  "task_id": "workspace.create-owner-record",
+  "actions": [
+    {
+      "step_index": 1,
+      "action_ref": "workspace.create-owner-record.step-1.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "teams/payments.txt"}
+      }
+    },
+    {
+      "step_index": 2,
+      "action_ref": "workspace.create-owner-record.step-2.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "policy/owner-format.txt"}
+      }
+    },
+    {
+      "step_index": 3,
+      "action_ref": "workspace.create-owner-record.step-3.v1",
+      "tool_name": "write_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "write_text",
+        "arguments": {
+          "path": "services/payments/OWNER",
+          "content": "OWNER=team-payments\n"
+        }
+      }
+    }
+  ],
+  "provenance": "Project-authored deterministic action catalog."
+}

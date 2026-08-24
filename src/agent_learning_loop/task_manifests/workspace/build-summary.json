@@ -1,0 +1,29 @@
+{
+  "schema_version": "1",
+  "manifest_id": "workspace.build-summary.manifest.v1",
+  "task_id": "workspace.build-summary",
+  "task_version": 1,
+  "environment_kind": "workspace",
+  "fixture_id": "workspace.build-summary.v1",
+  "fixture_fingerprint": "dd91e35a93fb8a3f860fe439f7a026287b068f6063f59097442608951b8c9158",
+  "catalog_id": "workspace.build-summary.actions.v1",
+  "catalog_fingerprint": "79a52f1f6cef8f91bfdc47e3398b71f7f9a7430bb0f086783e58e5acab79d8af",
+  "split": "train",
+  "seed": 101,
+  "budgets": {
+    "max_steps": 6,
+    "max_tool_calls": 6,
+    "timeout_seconds": 30.0
+  },
+  "safety_constraints": [
+    "Only mutate declared Workspace paths.",
+    "Keep source inputs unchanged."
+  ],
+  "verifier_id": "workspace-state-v1",
+  "scenario_family": "deterministic-summary-generation",
+  "tags": ["workspace", "generation", "multi-input"],
+  "provenance": {
+    "source": "project-authored-synthetic",
+    "license": "Apache-2.0"
+  }
+}

@@ -1,4 +1,4 @@
-"""Command-line entry points for version and the bounded M1-M3B slices."""
+"""Command-line entry points for the bounded M1-M4A slices."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command")
     workspace = subparsers.add_parser(
         "run-workspace",
-        help="run one or all three fault-free M1 Workspace fixtures",
+        help="run one or all ten validated Workspace corpus tasks",
     )
     selection = workspace.add_mutually_exclusive_group()
     selection.add_argument(
@@ -91,6 +91,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     replay.add_argument("--source-run-dir", required=True, type=Path)
     replay.add_argument("--output-dir", required=True, type=Path)
+    corpus = subparsers.add_parser(
+        "validate-corpus",
+        help="validate packaged corpus identities without executing a task",
+    )
+    corpus.add_argument(
+        "--environment",
+        choices=("workspace",),
+        default="workspace",
+    )
     return parser
 
 
@@ -113,12 +122,18 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _validate_trajectory(arguments)
     if arguments.command == "replay-actions":
         return _replay_actions(arguments)
+    if arguments.command == "validate-corpus":
+        return _validate_corpus()
     return 0
 
 
 def _run_workspace(arguments: argparse.Namespace) -> int:
     from pydantic import ValidationError
 
+    from agent_learning_loop.corpus import (
+        CorpusValidationError,
+        validate_workspace_corpus,
+    )
     from agent_learning_loop.tasks import (
         TaskNotFoundError,
         load_all_tasks,
@@ -128,6 +143,7 @@ def _run_workspace(arguments: argparse.Namespace) -> int:
     from agent_learning_loop.vertical_slice import OutputExistsError, execute_task
 
     try:
+        validate_workspace_corpus()
         if arguments.task_file is not None:
             fixtures = [load_task_file(arguments.task_file)]
         elif arguments.task in (None, "all"):
@@ -148,7 +164,13 @@ def _run_workspace(arguments: argparse.Namespace) -> int:
                 f"(result: {run_directory / 'result.json'})"
             )
         return 0 if all(result.outcome == "passed" for result in results) else 1
-    except (OSError, OutputExistsError, TaskNotFoundError, ValidationError) as exc:
+    except (
+        CorpusValidationError,
+        OSError,
+        OutputExistsError,
+        TaskNotFoundError,
+        ValidationError,
+    ) as exc:
         print(f"run-workspace validation error: {exc}", file=sys.stderr)
         return 2
 
@@ -344,4 +366,19 @@ def _replay_actions(arguments: argparse.Namespace) -> int:
         return 0 if result.action_replay_match_rate == 1.0 else 1
     except (ActionReplayValidationError, OSError, ValidationError, ValueError) as exc:
         print(f"replay-actions validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _validate_corpus() -> int:
+    from agent_learning_loop.corpus import (
+        CorpusValidationError,
+        validate_workspace_corpus,
+    )
+
+    try:
+        corpus = validate_workspace_corpus()
+        print(corpus.summary.model_dump_json())
+        return 0
+    except (CorpusValidationError, OSError, ValueError) as exc:
+        print(f"validate-corpus validation error: {exc}", file=sys.stderr)
         return 2

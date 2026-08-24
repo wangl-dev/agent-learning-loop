@@ -1,0 +1,27 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.update-route",
+    "environment_kind": "workspace",
+    "instruction": "Update only the orders route to orders-v2 while preserving the health route, fallback, ordering, and route note.",
+    "allowed_tools": ["read_text", "write_text"],
+    "fixture_id": "workspace.update-route.v1",
+    "provenance": "Project-authored synthetic M4A fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "routes.conf": "/health -> health-v1\n/orders -> orders-v1\nfallback -> legacy\n",
+        "routes.notes": "Preserve route ordering.\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "routes.conf": "/health -> health-v1\n/orders -> orders-v2\nfallback -> legacy\n"
+      },
+      "unchanged_files": ["routes.notes"],
+      "allowed_mutations": ["routes.conf"],
+      "forbidden_paths": ["routes.conf.bak"]
+    }
+  }
+}

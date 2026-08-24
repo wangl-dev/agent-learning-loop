@@ -1,0 +1,34 @@
+{
+  "task": {
+    "schema_version": "1",
+    "task_id": "workspace.build-deploy-manifest",
+    "environment_kind": "workspace",
+    "instruction": "Read the service, image, and replica inputs and write output/deploy.manifest in deterministic key order without creating a draft.",
+    "allowed_tools": ["read_text", "write_text"],
+    "fixture_id": "workspace.build-deploy-manifest.v1",
+    "provenance": "Project-authored synthetic M4A fixture."
+  },
+  "private": {
+    "setup": {
+      "files": {
+        "deploy/service.txt": "catalog-api\n",
+        "deploy/image.txt": "registry.local/catalog:v3\n",
+        "deploy/replicas.txt": "3\n",
+        "deploy/notes.txt": "Do not copy this note into the manifest.\n"
+      }
+    },
+    "expected": {
+      "required_files": {
+        "output/deploy.manifest": "service=catalog-api\nimage=registry.local/catalog:v3\nreplicas=3\n"
+      },
+      "unchanged_files": [
+        "deploy/service.txt",
+        "deploy/image.txt",
+        "deploy/replicas.txt",
+        "deploy/notes.txt"
+      ],
+      "allowed_mutations": ["output/deploy.manifest"],
+      "forbidden_paths": ["output/deploy.draft"]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "1",
+  "catalog_id": "workspace.repair-service-map.actions.v1",
+  "task_id": "workspace.repair-service-map",
+  "actions": [
+    {
+      "step_index": 1,
+      "action_ref": "workspace.repair-service-map.step-1.v1",
+      "tool_name": "read_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "read_text",
+        "arguments": {"path": "config/services.map"}
+      }
+    },
+    {
+      "step_index": 2,
+      "action_ref": "workspace.repair-service-map.step-2.v1",
+      "tool_name": "write_text",
+      "action": {
+        "schema_version": "1",
+        "tool_name": "write_text",
+        "arguments": {
+          "path": "config/services.map",
+          "content": "api=api.internal:8080\nworker=worker.internal:9000\nmetrics=metrics.internal:9090\n"
+        }
+      }
+    }
+  ],
+  "provenance": "Project-authored deterministic action catalog."
+}

@@ -1,4 +1,4 @@
-"""Command-line entry points for the bounded M1-M4A slices."""
+"""Command-line entry points for the bounded M1-M4C slices."""
 
 from __future__ import annotations
 
@@ -46,6 +46,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     incident.add_argument("--task", default="all", help="fixed Incident task ID or 'all'")
     incident.add_argument("--output-dir", required=True, type=Path)
+    dataops = subparsers.add_parser(
+        "run-dataops",
+        help="run one or all ten validated DataOps SQLite tasks",
+    )
+    dataops.add_argument("--task", default="all", help="fixed DataOps task ID or 'all'")
+    dataops.add_argument("--output-dir", required=True, type=Path)
     runtime = subparsers.add_parser(
         "run-runtime",
         help="run one fixed M2 Workspace failure scenario",
@@ -103,7 +109,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     corpus.add_argument(
         "--environment",
-        choices=("workspace", "incident"),
+        choices=("workspace", "incident", "dataops", "all"),
         default="workspace",
     )
     return parser
@@ -120,6 +126,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _run_workspace(arguments)
     if arguments.command == "run-incident":
         return _run_incident(arguments)
+    if arguments.command == "run-dataops":
+        return _run_dataops(arguments)
     if arguments.command == "run-runtime":
         return _run_runtime(arguments)
     if arguments.command == "run-durable":
@@ -167,10 +175,7 @@ def _run_workspace(arguments: argparse.Namespace) -> int:
             run_directory = output_root / fixture.task.task_id.replace(".", "_")
             result = execute_task(fixture, run_directory, run_id=uuid4().hex)
             results.append(result)
-            print(
-                f"{result.task_id}: {result.outcome} "
-                f"(result: {run_directory / 'result.json'})"
-            )
+            print(f"{result.task_id}: {result.outcome} (result: {run_directory / 'result.json'})")
         return 0 if all(result.outcome == "passed" for result in results) else 1
     except (
         CorpusValidationError,
@@ -367,10 +372,7 @@ def _replay_actions(arguments: argparse.Namespace) -> int:
     try:
         result = replay_actions(arguments.source_run_dir, arguments.output_dir)
         print("replay result: replay-result.json")
-        print(
-            f"{result.vertical_slice_matches}/{result.vertical_slice_total} "
-            "vertical-slice smoke"
-        )
+        print(f"{result.vertical_slice_matches}/{result.vertical_slice_total} vertical-slice smoke")
         return 0 if result.action_replay_match_rate == 1.0 else 1
     except (ActionReplayValidationError, OSError, ValidationError, ValueError) as exc:
         print(f"replay-actions validation error: {exc}", file=sys.stderr)
@@ -400,6 +402,31 @@ def _run_incident(arguments: argparse.Namespace) -> int:
         return 2
 
 
+def _run_dataops(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.dataops_corpus import validate_dataops_corpus
+    from agent_learning_loop.dataops_runner import run_all_dataops_tasks, run_dataops_task
+    from agent_learning_loop.vertical_slice import OutputExistsError
+
+    try:
+        corpus = validate_dataops_corpus()
+        if arguments.task == "all":
+            results = run_all_dataops_tasks(arguments.output_dir)
+        else:
+            results = [
+                run_dataops_task(corpus, arguments.task, arguments.output_dir, run_id="dataops-cli")
+            ]
+        for result in results:
+            print(
+                f"{result.task_id}: {result.outcome} "
+                f"({result.terminal_state}, attempted={result.attempted_row_count}, "
+                f"committed={result.committed_row_count}, result: result.json)"
+            )
+        return 0 if all(result.outcome == "passed" for result in results) else 1
+    except (OSError, OutputExistsError, ValueError) as exc:
+        print(f"run-dataops validation error: {exc}", file=sys.stderr)
+        return 2
+
+
 def _validate_corpus(environment: str) -> int:
     from agent_learning_loop.corpus import (
         CorpusValidationError,
@@ -409,6 +436,17 @@ def _validate_corpus(environment: str) -> int:
     try:
         if environment == "workspace":
             print(validate_workspace_corpus().summary.model_dump_json())
+            return 0
+        from agent_learning_loop.dataops_corpus import (
+            validate_all_corpora,
+            validate_dataops_corpus,
+        )
+
+        if environment == "dataops":
+            print(validate_dataops_corpus().summary.model_dump_json())
+            return 0
+        if environment == "all":
+            print(validate_all_corpora().model_dump_json())
             return 0
         from agent_learning_loop.incident_corpus import validate_incident_corpus
 

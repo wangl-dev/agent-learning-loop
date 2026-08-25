@@ -45,6 +45,11 @@ jobs:
       - name: Validate packaged Incident corpus
         run: python -m agent_learning_loop validate-corpus --environment incident
 
+      - name: Validate packaged DataOps and all corpora
+        run: |
+          python -m agent_learning_loop validate-corpus --environment dataops
+          python -m agent_learning_loop validate-corpus --environment all
+
       - name: Run Workspace corpus smoke test
         run: >-
           python -m agent_learning_loop run-workspace
@@ -56,6 +61,12 @@ jobs:
           python -m agent_learning_loop run-incident
           --task all
           --output-dir "$RUNNER_TEMP/m4b-incident-smoke"
+
+      - name: Run DataOps corpus smoke test
+        run: >-
+          python -m agent_learning_loop run-dataops
+          --task all
+          --output-dir "$RUNNER_TEMP/m4c-dataops-smoke"
 
       - name: Run M2 safeguarded failure smoke test
         run: >-

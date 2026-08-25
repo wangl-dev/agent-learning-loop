@@ -1,8 +1,8 @@
 # Agent Learning Loop
 
-> Status: **M4B Incident simulation / pre-alpha (`0.1.0.dev0`)**. Workspace and Incident each have
-> ten project-authored synthetic tasks with a fixed `6/2/2` split. Scripted runs check system
-> contracts; they are not model benchmarks.
+> Status: **M4C DataOps environment / pre-alpha (`0.1.0.dev0`)**. Workspace, Incident, and DataOps
+> each have ten project-authored synthetic tasks with a fixed `6/2/2` split. Scripted runs check
+> system contracts; they are not model benchmarks.
 
 Agent Learning Loop studies a narrow question: under the same task, actions, seed, and injected
 failure schedule, which Runtime safeguards improve recovery without causing duplicate side
@@ -14,7 +14,7 @@ Task v1 + scripted Action → Runtime config and state machine → fixed failure
                           → Runtime Event JSONL v2 + Runtime Result JSON v2
 ```
 
-The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.8 in the separate planning
+The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.9 in the separate planning
 repository. Milestones are reviewed against fresh evidence; contract, task, or metric changes are
 versioned instead of being silently absorbed.
 
@@ -88,6 +88,48 @@ An Incident result can be `acknowledged` after a verified simulated recovery, or
 approval is denied or evidence is ambiguous. Neither outcome is a claim about real incident
 operations, human approval, production safety, or model reasoning. [ADR 0007](docs/decisions/0007-m4b-incident-contract.md)
 explains why this v1 contract is kept separate from the frozen Workspace Runtime.
+
+DataOps v1 creates one disposable SQLite database per task. The database path is owned by the
+runner and never appears in a Task, tool argument, result, or package resource. Its eight tools
+accept only structured arguments: describe/query, begin, update/insert, validate, and explicit
+commit/rollback. There is no raw SQL, database-path, delete, DDL, join, subquery, or real-database
+entry point.
+
+Every write belongs to one transaction. `update_rows` counts matching rows before issuing an
+update; an empty predicate, wrong count, broad match, unknown table/column, or protected scope is
+rejected with zero changed rows. A successful mutation invalidates an earlier validation, so a
+commit needs a new successful constraint check after the last mutation. Reusing an operation ID
+with the same canonical request returns the saved result without a second physical effect; a
+different request under that ID is rejected.
+
+```powershell
+python -m agent_learning_loop validate-corpus --environment dataops
+python -m agent_learning_loop validate-corpus --environment all
+python -m agent_learning_loop run-dataops --task all --output-dir run-output/dataops
+```
+
+The fixed DataOps corpus includes commit and rollback outcomes. A correct rollback may report an
+attempted row mutation while committing zero rows; its final database digest must equal the
+initial digest and its audit must contain exactly one matching rollback record. The full verifier
+uses 14 fixed checks covering trusted context, transaction identity, final/protected state,
+scope, exact attempted and committed effects, audit order, validation, rollback, idempotency,
+cardinality-before-write, terminal evidence, and result consistency. It independently replays the
+fixed actions from the trusted private fixture in a second disposable database. The presented
+audit must match that projection field by field, including its initial/final digest anchors,
+transaction and operation IDs, exact mutation columns, matched/changed row counts, and
+primary-key digest. A full verifier result also carries the trusted split, terminal state, and exact
+effect counts; the public run result must match that summary.
+
+The DataOps corpus validator binds each resource filename to its task identity and requires exact
+fixture/catalog/manifest/action references. Seeds and scenario families are unique across all ten
+tasks. Catalog actions must stay inside declared table/column scope, use one transaction, and cover
+the exact operation-count maps. Initial and expected rows must match the declared columns, SQLite
+types, nullability, primary key, and unique constraints. Every non-null foreign-key value must name
+an existing target row in the corresponding initial or expected tables; every protected filter
+must name typed columns and select at least one initial row. The `all` validator only
+aggregates the three independent corpus validators as `30/18-6-6`; it does not execute tasks or
+compute a model success rate. [ADR 0008](docs/decisions/0008-m4c-dataops-transaction-contract.md)
+records why this SQLite contract remains separate from Workspace and Incident.
 
 Run the same transient-read schedule first with the fail-fast baseline, then with bounded retry
 and idempotency. The naive command is expected to return a nonzero exit code and still write a
@@ -332,7 +374,9 @@ python -m ruff check .
 python -m mypy src tests
 $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'; python -m pytest -q
 python -m agent_learning_loop validate-corpus
+python -m agent_learning_loop validate-corpus --environment all
 python -m agent_learning_loop run-workspace --task all --output-dir run-output/corpus
+python -m agent_learning_loop run-dataops --task all --output-dir run-output/dataops
 python -m build --no-isolation
 ```
 
@@ -369,8 +413,11 @@ command creates ignored wheel and source distributions under `dist/`.
   p50/p95 benchmark, or model evaluation.
 - GitHub Actions checks pushes and pull requests; it is a project gate, not deployment evidence.
 - Incident v1 is a deterministic in-memory safety contract, not a production runbook, real
-  authorization system, or model Incident evaluation. DataOps, post-training export, training,
-  and the simulated FDE case remain out of scope.
+  authorization system, or model Incident evaluation.
+- DataOps v1 uses task-local temporary SQLite and project-authored fixtures. It is not a production
+  database integration, SQL agent, performance benchmark, privacy system, or model DataOps
+  evaluation. It does not connect to a real database or retain database files.
+- Post-training export, training, M5 batch Eval, and the simulated FDE case remain out of scope.
 - Incident log masking covers a small reviewed set of assignment and Bearer-token patterns. It is
   a regression guard for the synthetic corpus, not general secret detection or log DLP.
 

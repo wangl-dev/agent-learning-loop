@@ -1,0 +1,1689 @@
+[
+  {
+    "schema_version": "1",
+    "manifest_id": "system-correctness-v1.manifest.v1",
+    "suite_id": "system-correctness-v1",
+    "suite_version": 1,
+    "cells": [
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.atomic-parent-child-migration",
+        "task_id": "dataops.atomic-parent-child-migration",
+        "environment": "dataops",
+        "split": "validation",
+        "tags": [
+          "transaction",
+          "atomicity"
+        ],
+        "seed": 107,
+        "resource_id": "dataops.atomic-parent-child-migration.manifest.v1",
+        "resource_fingerprint": "cb13d666e7251c824fb53ec0eab572b7f12d5f01c49d1be49e64275890168c80",
+        "fixture_id": "dataops.atomic-parent-child-migration.v1",
+        "fixture_fingerprint": "804f150ae565bce9fdb936a101312f2702454250b8c6c57e08fde37343c31afa",
+        "catalog_id": "dataops.atomic-parent-child-migration.actions.v1",
+        "catalog_fingerprint": "c3ce0d41f3ce825ba3dddf95ed94897bb86a47f5400e2ef4adb2d8d8bb605ac8",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.correct-order-status",
+        "task_id": "dataops.correct-order-status",
+        "environment": "dataops",
+        "split": "train",
+        "tags": [
+          "update",
+          "commit"
+        ],
+        "seed": 101,
+        "resource_id": "dataops.correct-order-status.manifest.v1",
+        "resource_fingerprint": "33bb4fe5d72485e8bb533fb3b3f10ec0c89abdbcbc6ea3ec90e8aeddab87e4f4",
+        "fixture_id": "dataops.correct-order-status.v1",
+        "fixture_fingerprint": "96f63147fa869f8793f9394680d4d895f29020d5c6ca65e7981335aaad3a25e3",
+        "catalog_id": "dataops.correct-order-status.actions.v1",
+        "catalog_fingerprint": "f5120302ac86f0fbe9944384a957c7afef38718e5eb037b6cf6ac5ef234898e9",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.detect-stale-version-precondition",
+        "task_id": "dataops.detect-stale-version-precondition",
+        "environment": "dataops",
+        "split": "test",
+        "tags": [
+          "cardinality",
+          "rollback"
+        ],
+        "seed": 109,
+        "resource_id": "dataops.detect-stale-version-precondition.manifest.v1",
+        "resource_fingerprint": "8bc61e2073057d5205d04625a760adc55b3183c7b760e803b5e52ed016091ee9",
+        "fixture_id": "dataops.detect-stale-version-precondition.v1",
+        "fixture_fingerprint": "ddf45973430d4413f6ec231b5e7f204de1511dc4426a02878abba5d9b9798a1a",
+        "catalog_id": "dataops.detect-stale-version-precondition.actions.v1",
+        "catalog_fingerprint": "9386f35abb11d010b423cbd9434557554c1e1465f793cff9a9b9d9894a33013d",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.insert-missing-product-mapping",
+        "task_id": "dataops.insert-missing-product-mapping",
+        "environment": "dataops",
+        "split": "train",
+        "tags": [
+          "insert",
+          "commit"
+        ],
+        "seed": 103,
+        "resource_id": "dataops.insert-missing-product-mapping.manifest.v1",
+        "resource_fingerprint": "b88b3b6f1bfeabc4eeadc595827a6de5034336e702f740a82baf6ded56bb30af",
+        "fixture_id": "dataops.insert-missing-product-mapping.v1",
+        "fixture_fingerprint": "8e00522e5845b59847a433669c02fdfc317a1c24c4093b972a994f779b83472e",
+        "catalog_id": "dataops.insert-missing-product-mapping.actions.v1",
+        "catalog_fingerprint": "9de69ebd396bc53cffc228b5f1279fbf4df11ae57a1b3001d5e5303683130701",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.normalize-legacy-regions",
+        "task_id": "dataops.normalize-legacy-regions",
+        "environment": "dataops",
+        "split": "train",
+        "tags": [
+          "multi-row",
+          "commit"
+        ],
+        "seed": 104,
+        "resource_id": "dataops.normalize-legacy-regions.manifest.v1",
+        "resource_fingerprint": "cfdb26f83c90b718f1a650956fdc1d5989db39239a276d413c35a8a616a3ce3c",
+        "fixture_id": "dataops.normalize-legacy-regions.v1",
+        "fixture_fingerprint": "ae2fe4cf2cebf6924a6eaba97027edec4c0b7d5ae295448e243b3504c9d416cd",
+        "catalog_id": "dataops.normalize-legacy-regions.actions.v1",
+        "catalog_fingerprint": "d29730f7ff69ca1c0497d911f070e5f29a9aad5c04701a69a92a35ade7c056d4",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.preserve-neighbor-tenant",
+        "task_id": "dataops.preserve-neighbor-tenant",
+        "environment": "dataops",
+        "split": "test",
+        "tags": [
+          "scope",
+          "commit"
+        ],
+        "seed": 110,
+        "resource_id": "dataops.preserve-neighbor-tenant.manifest.v1",
+        "resource_fingerprint": "8e70ba74123234372cce0b0d8c6092ac1f482bd698cfc0e7b839c2f9b8f2c76c",
+        "fixture_id": "dataops.preserve-neighbor-tenant.v1",
+        "fixture_fingerprint": "07669c49e368ddcf39187dd96594ad807bec7f8047082a7dfc0405d720ee78b3",
+        "catalog_id": "dataops.preserve-neighbor-tenant.actions.v1",
+        "catalog_fingerprint": "14751967e6ca2f438a9e39688079f68bb8706c2b5bc6fcba967e68af1597b15e",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.reject-transactionless-update",
+        "task_id": "dataops.reject-transactionless-update",
+        "environment": "dataops",
+        "split": "train",
+        "tags": [
+          "rejection",
+          "rollback"
+        ],
+        "seed": 106,
+        "resource_id": "dataops.reject-transactionless-update.manifest.v1",
+        "resource_fingerprint": "ed3c29cd619eaa0507aa3223f96f818396867cb63d07f7e45501079a9de8dfc0",
+        "fixture_id": "dataops.reject-transactionless-update.v1",
+        "fixture_fingerprint": "3bf4abb8f2c7d02d2d25bcdd96b5b32036280fa76372b12d98b62535c7494417",
+        "catalog_id": "dataops.reject-transactionless-update.actions.v1",
+        "catalog_fingerprint": "84a8f971455b2e730ce368fb37b4b8ede0243d5b8c861852d6443573e06faff5",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.rollback-ambiguous-customer-match",
+        "task_id": "dataops.rollback-ambiguous-customer-match",
+        "environment": "dataops",
+        "split": "train",
+        "tags": [
+          "ambiguity",
+          "rollback"
+        ],
+        "seed": 105,
+        "resource_id": "dataops.rollback-ambiguous-customer-match.manifest.v1",
+        "resource_fingerprint": "5fc900576fbf085b37a1ae312d9f17939cb8296b34b00dd0b6d27bf52c6dc6a9",
+        "fixture_id": "dataops.rollback-ambiguous-customer-match.v1",
+        "fixture_fingerprint": "584f0ceac520ad7eeb443759d1e506437b8fdc002726076c4fdb9b9c2e75df1e",
+        "catalog_id": "dataops.rollback-ambiguous-customer-match.actions.v1",
+        "catalog_fingerprint": "6de8ff55ad030466f9e93ff2ad82edb6501513c4f347795af3387b5db6bb63e7",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.rollback-unique-key-conflict",
+        "task_id": "dataops.rollback-unique-key-conflict",
+        "environment": "dataops",
+        "split": "validation",
+        "tags": [
+          "constraint",
+          "rollback"
+        ],
+        "seed": 108,
+        "resource_id": "dataops.rollback-unique-key-conflict.manifest.v1",
+        "resource_fingerprint": "dafe81aaf4e978b412c662bc6a2e2e9239ee1fc217e8022c728d497509a4f3de",
+        "fixture_id": "dataops.rollback-unique-key-conflict.v1",
+        "fixture_fingerprint": "3a83f601994feab326831fdb2d005c3a3b1ec10b80e50616a5a712db2e5cd3e9",
+        "catalog_id": "dataops.rollback-unique-key-conflict.actions.v1",
+        "catalog_fingerprint": "678bb3bc0105b3170b1051e3adf7334bcbc6871f46a14996785e45d30eb360a6",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.dataops.sync-daily-summary",
+        "task_id": "dataops.sync-daily-summary",
+        "environment": "dataops",
+        "split": "train",
+        "tags": [
+          "derived-summary",
+          "commit"
+        ],
+        "seed": 102,
+        "resource_id": "dataops.sync-daily-summary.manifest.v1",
+        "resource_fingerprint": "f485d58d93ba7a7e618ad8863f58043e98872570b4d10bf0da3784a0e7f363be",
+        "fixture_id": "dataops.sync-daily-summary.v1",
+        "fixture_fingerprint": "a0ab1cf165adffd44abde77678fe1c857027609f2267d674c11b1709d938dd7b",
+        "catalog_id": "dataops.sync-daily-summary.actions.v1",
+        "catalog_fingerprint": "92f54dd6460d2406c49ddbfbf826e782f11bc6acb5376593ab58238d31a0d836",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.acknowledge-auto-recovered-search",
+        "task_id": "incident.acknowledge-auto-recovered-search",
+        "environment": "incident",
+        "split": "train",
+        "tags": [
+          "observation",
+          "ack"
+        ],
+        "seed": 1,
+        "resource_id": "incident.acknowledge-auto-recovered-search.manifest.v1",
+        "resource_fingerprint": "75fc1092244d6a1bbe9b20e3f034798daf47118b033682141bd082b5ef9ba60d",
+        "fixture_id": "incident.acknowledge-auto-recovered-search.v1",
+        "fixture_fingerprint": "f080eb2ecb5494d4d49d98915f78bf3cd588127900b8f9617010b0681842dd79",
+        "catalog_id": "incident.acknowledge-auto-recovered-search.actions.v1",
+        "catalog_fingerprint": "6b309750be38a613e13460363221a7490287223bab659d5fb62a2411183fa9df",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.dedupe-notification-restart",
+        "task_id": "incident.dedupe-notification-restart",
+        "environment": "incident",
+        "split": "train",
+        "tags": [
+          "idempotency",
+          "restart"
+        ],
+        "seed": 2,
+        "resource_id": "incident.dedupe-notification-restart.manifest.v1",
+        "resource_fingerprint": "ec31a26cee6bbf6ddce0288e62990b2674a4be2f811631044dcdab061b7ec68d",
+        "fixture_id": "incident.dedupe-notification-restart.v1",
+        "fixture_fingerprint": "a5b1e309e868bfd61ce022f8dffd80fb223d163482636315fcc1d42328fa5c5d",
+        "catalog_id": "incident.dedupe-notification-restart.actions.v1",
+        "catalog_fingerprint": "e47fd9d5e3d26a008606656a414b6c9bc5668d145bdbf7d726200b8864132588",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.enable-catalog-cache-fallback",
+        "task_id": "incident.enable-catalog-cache-fallback",
+        "environment": "incident",
+        "split": "train",
+        "tags": [
+          "config",
+          "approval"
+        ],
+        "seed": 3,
+        "resource_id": "incident.enable-catalog-cache-fallback.manifest.v1",
+        "resource_fingerprint": "62b30f270b6ab6ab4b17a835963a245a0832eb9b1631fd389dd6dc70c0c2fe6b",
+        "fixture_id": "incident.enable-catalog-cache-fallback.v1",
+        "fixture_fingerprint": "d6a52a897eb547845284d61d2bebc2c4a33d1e82379f37f66b82493769dcd54f",
+        "catalog_id": "incident.enable-catalog-cache-fallback.actions.v1",
+        "catalog_fingerprint": "7de3940b1e6f6c421d488cd3792f356271ad0a3930f06f51b7f1789c69c3f838",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.escalate-ambiguous-api-errors",
+        "task_id": "incident.escalate-ambiguous-api-errors",
+        "environment": "incident",
+        "split": "test",
+        "tags": [
+          "escalation",
+          "safe"
+        ],
+        "seed": 4,
+        "resource_id": "incident.escalate-ambiguous-api-errors.manifest.v1",
+        "resource_fingerprint": "be58803c28f6b63aab8c9d3ae2637c835ea441afce2d8e2acdcf28efd3b255bb",
+        "fixture_id": "incident.escalate-ambiguous-api-errors.v1",
+        "fixture_fingerprint": "adbf818e76b4727d2e8bf881adf3c8ad2061f7ddb67da522056d09e5cb75fee7",
+        "catalog_id": "incident.escalate-ambiguous-api-errors.actions.v1",
+        "catalog_fingerprint": "ff3c73b027b33a1948f14a02cd858a00fdcb6602e4e80832a64f72af315c3308",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.escalate-denied-payment-restart",
+        "task_id": "incident.escalate-denied-payment-restart",
+        "environment": "incident",
+        "split": "train",
+        "tags": [
+          "denial",
+          "escalation"
+        ],
+        "seed": 5,
+        "resource_id": "incident.escalate-denied-payment-restart.manifest.v1",
+        "resource_fingerprint": "82d1001687ea295a6f45d5323737283970c1d62bd48dd7fbbf108dd64fb38860",
+        "fixture_id": "incident.escalate-denied-payment-restart.v1",
+        "fixture_fingerprint": "93f3893a37542abf448cec22eb9b50ce5a819b0430210f4df345ac2c5d5a7640",
+        "catalog_id": "incident.escalate-denied-payment-restart.actions.v1",
+        "catalog_fingerprint": "4cb205ddc4357949e96a51e9a2f07bc431d58e9dc51bdfdc575e07cfbf6630db",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.isolate-inventory-config-change",
+        "task_id": "incident.isolate-inventory-config-change",
+        "environment": "incident",
+        "split": "validation",
+        "tags": [
+          "scope",
+          "config"
+        ],
+        "seed": 6,
+        "resource_id": "incident.isolate-inventory-config-change.manifest.v1",
+        "resource_fingerprint": "a39bfa1423d9c4d705eda6c110cde74ce24da4b16a7c5475e1f43b496841736b",
+        "fixture_id": "incident.isolate-inventory-config-change.v1",
+        "fixture_fingerprint": "3f13dfddfc17a7a30df69d929bc5c3b89f1c7c24228a42b548949f160313b676",
+        "catalog_id": "incident.isolate-inventory-config-change.actions.v1",
+        "catalog_fingerprint": "e679103c58955d10c8589d483917c4da772023da47ebf10e97eec9511a2ae9b2",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.recover-auth-dependency-chain",
+        "task_id": "incident.recover-auth-dependency-chain",
+        "environment": "incident",
+        "split": "validation",
+        "tags": [
+          "order",
+          "restart"
+        ],
+        "seed": 7,
+        "resource_id": "incident.recover-auth-dependency-chain.manifest.v1",
+        "resource_fingerprint": "2d10fe3147e64a99c51fa789339b96bf780b281e74577657f995a182d6cfc6e6",
+        "fixture_id": "incident.recover-auth-dependency-chain.v1",
+        "fixture_fingerprint": "f6075d35ac175d171cb7d0fd59af9bc8f6c5778e02446072dbc231fb60969abf",
+        "catalog_id": "incident.recover-auth-dependency-chain.actions.v1",
+        "catalog_fingerprint": "03545f894719e216be7ec687aa71c40666a32ba2a9fde1001203cb812ff7865c",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.reject-premature-checkout-ack",
+        "task_id": "incident.reject-premature-checkout-ack",
+        "environment": "incident",
+        "split": "test",
+        "tags": [
+          "ack",
+          "rejection"
+        ],
+        "seed": 8,
+        "resource_id": "incident.reject-premature-checkout-ack.manifest.v1",
+        "resource_fingerprint": "f66aaf5b032024454d4c0220e49d526779015b94bf1e0cafb3a872994c144bb6",
+        "fixture_id": "incident.reject-premature-checkout-ack.v1",
+        "fixture_fingerprint": "df800f8f131b83a547b8337a602c13128d82672315f2f06973cb391f90873e91",
+        "catalog_id": "incident.reject-premature-checkout-ack.actions.v1",
+        "catalog_fingerprint": "d2d1dc3916f4328f6d6287e6010e174222fba0729147ff3a9af68937429d4d76",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.restart-stuck-order-worker",
+        "task_id": "incident.restart-stuck-order-worker",
+        "environment": "incident",
+        "split": "train",
+        "tags": [
+          "restart",
+          "approval"
+        ],
+        "seed": 9,
+        "resource_id": "incident.restart-stuck-order-worker.manifest.v1",
+        "resource_fingerprint": "11938490cde6ce74b2bbcee721648899069d2a18ee102f66a5586caba0738d05",
+        "fixture_id": "incident.restart-stuck-order-worker.v1",
+        "fixture_fingerprint": "0f1772c2f47e52b9eccb720e3706efbe85bf2e6d4db7e828bee926af74e6f28b",
+        "catalog_id": "incident.restart-stuck-order-worker.actions.v1",
+        "catalog_fingerprint": "e01625c9131457452a38f06cf46fe0d225ea0548706d00035612be3486fa2d49",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.incident.rollback-checkout-canary",
+        "task_id": "incident.rollback-checkout-canary",
+        "environment": "incident",
+        "split": "train",
+        "tags": [
+          "rollback",
+          "config"
+        ],
+        "seed": 10,
+        "resource_id": "incident.rollback-checkout-canary.manifest.v1",
+        "resource_fingerprint": "36b98b215a577272a082f77139ce3b454c360fb9483d567f5025e1accf94cd3c",
+        "fixture_id": "incident.rollback-checkout-canary.v1",
+        "fixture_fingerprint": "5bc9c1834393d53221cb9095465e414665e884e48659876eed521e582abce108",
+        "catalog_id": "incident.rollback-checkout-canary.actions.v1",
+        "catalog_fingerprint": "ace490297c6dc3b5de4ff57ea5ecfde0d87a809af408a3fbf12f735b5ca0d29a",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.build-deploy-manifest",
+        "task_id": "workspace.build-deploy-manifest",
+        "environment": "workspace",
+        "split": "train",
+        "tags": [
+          "workspace",
+          "deployment",
+          "multi-input"
+        ],
+        "seed": 105,
+        "resource_id": "workspace.build-deploy-manifest.manifest.v1",
+        "resource_fingerprint": "71482bde56b8cdf8797152bf2d37fb2588f8f4c54c55014a953f6ddf2396271b",
+        "fixture_id": "workspace.build-deploy-manifest.v1",
+        "fixture_fingerprint": "860b76344e7e505991a24efb7199b0c5d511ae5db793870ca9bcf883176bfdfe",
+        "catalog_id": "workspace.build-deploy-manifest.actions.v1",
+        "catalog_fingerprint": "469e1127df471a830c6772e92f1141f9eafa253d53f389d1ddd90a7577f5c3c7",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.build-summary",
+        "task_id": "workspace.build-summary",
+        "environment": "workspace",
+        "split": "train",
+        "tags": [
+          "workspace",
+          "generation",
+          "multi-input"
+        ],
+        "seed": 101,
+        "resource_id": "workspace.build-summary.manifest.v1",
+        "resource_fingerprint": "ffd0b803cb105b43a297d5b284a3ba82e619fcdea1994d6bfa4185fab5af52b3",
+        "fixture_id": "workspace.build-summary.v1",
+        "fixture_fingerprint": "dd91e35a93fb8a3f860fe439f7a026287b068f6063f59097442608951b8c9158",
+        "catalog_id": "workspace.build-summary.actions.v1",
+        "catalog_fingerprint": "79a52f1f6cef8f91bfdc47e3398b71f7f9a7430bb0f086783e58e5acab79d8af",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.create-owner-record",
+        "task_id": "workspace.create-owner-record",
+        "environment": "workspace",
+        "split": "train",
+        "tags": [
+          "workspace",
+          "record-creation",
+          "ownership"
+        ],
+        "seed": 104,
+        "resource_id": "workspace.create-owner-record.manifest.v1",
+        "resource_fingerprint": "024105bee40857e47f69bc4918635049397ac3f3b76ffc89ec698df0c3d73120",
+        "fixture_id": "workspace.create-owner-record.v1",
+        "fixture_fingerprint": "520b87056b745b5125bbc06122ff4a5f1313bc05d14849dccc986bb6f67fe5e4",
+        "catalog_id": "workspace.create-owner-record.actions.v1",
+        "catalog_fingerprint": "9cbc886f373298182ae5be20fc05a583fc59e50ef474db27ed83334e7ad10617",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.fix-config",
+        "task_id": "workspace.fix-config",
+        "environment": "workspace",
+        "split": "test",
+        "tags": [
+          "workspace",
+          "configuration",
+          "preservation"
+        ],
+        "seed": 109,
+        "resource_id": "workspace.fix-config.manifest.v1",
+        "resource_fingerprint": "8382b019cc108f4fb687647aa1969821028979059166e5767bf4eeac04ad0a9b",
+        "fixture_id": "workspace.fix-config.v1",
+        "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+        "catalog_id": "workspace.fix-config.actions.v1",
+        "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.merge-changelog",
+        "task_id": "workspace.merge-changelog",
+        "environment": "workspace",
+        "split": "train",
+        "tags": [
+          "workspace",
+          "merge",
+          "preservation"
+        ],
+        "seed": 102,
+        "resource_id": "workspace.merge-changelog.manifest.v1",
+        "resource_fingerprint": "f6884f278f53516880e3b025201ca02aa460d28fbffa401dcb5160ac0181eab4",
+        "fixture_id": "workspace.merge-changelog.v1",
+        "fixture_fingerprint": "d8de49d0cea1bfca97b6768a247ce584e071294affc38cca6b19f82bd67a2b47",
+        "catalog_id": "workspace.merge-changelog.actions.v1",
+        "catalog_fingerprint": "0eec16cabbc106c6b4bfadf6c442240cd42d1e37acfae6b856d8423d95b3ed85",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.normalize-checklist",
+        "task_id": "workspace.normalize-checklist",
+        "environment": "workspace",
+        "split": "validation",
+        "tags": [
+          "workspace",
+          "normalization",
+          "scope-control"
+        ],
+        "seed": 108,
+        "resource_id": "workspace.normalize-checklist.manifest.v1",
+        "resource_fingerprint": "9106fd78bf010c6c592e2623eb3e98bc0973f2e08e908509c106a38d08dc1235",
+        "fixture_id": "workspace.normalize-checklist.v1",
+        "fixture_fingerprint": "8527a97c42e34f41c9cfaea89319d70252a2729ae2a5ba850877fac48c15b0fd",
+        "catalog_id": "workspace.normalize-checklist.actions.v1",
+        "catalog_fingerprint": "1d1cf674b009eaa8900c183093a0786673943602729fef4a9ed5ebb0157457b9",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.reconcile-inventory",
+        "task_id": "workspace.reconcile-inventory",
+        "environment": "workspace",
+        "split": "train",
+        "tags": [
+          "workspace",
+          "reconciliation",
+          "tabular-text"
+        ],
+        "seed": 106,
+        "resource_id": "workspace.reconcile-inventory.manifest.v1",
+        "resource_fingerprint": "7f1f45a506fd8f4248f34af8626f4928de9766848136ec290c852b76cc71505a",
+        "fixture_id": "workspace.reconcile-inventory.v1",
+        "fixture_fingerprint": "4030d1f2c64a01a9cab6124383f040d53148a447dbb3fccbc7a38626f9b58a8a",
+        "catalog_id": "workspace.reconcile-inventory.actions.v1",
+        "catalog_fingerprint": "2f3edba707080404e7dd397d2871b0e69940b1b56e27881c9718b5c1dde14979",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.repair-service-map",
+        "task_id": "workspace.repair-service-map",
+        "environment": "workspace",
+        "split": "train",
+        "tags": [
+          "workspace",
+          "mapping",
+          "targeted-repair"
+        ],
+        "seed": 103,
+        "resource_id": "workspace.repair-service-map.manifest.v1",
+        "resource_fingerprint": "98ccc1d879e66c5517ac23a34493c80f9fd3caeb78613ee7c08b77b4f12b2dcd",
+        "fixture_id": "workspace.repair-service-map.v1",
+        "fixture_fingerprint": "03fac1e4f3a4408222d2829978ec3a8320b934cddc29219a70ec00ac7361c1b4",
+        "catalog_id": "workspace.repair-service-map.actions.v1",
+        "catalog_fingerprint": "fddb76b9d102f0ff41c736e5162905497a00651b6306e8ca0454281b555ab41e",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.update-route",
+        "task_id": "workspace.update-route",
+        "environment": "workspace",
+        "split": "test",
+        "tags": [
+          "workspace",
+          "routing",
+          "targeted-update"
+        ],
+        "seed": 110,
+        "resource_id": "workspace.update-route.manifest.v1",
+        "resource_fingerprint": "780bbed1bd2dd811b68f125f7c8b3b679a42479c213ab4dec7a91edb14ef57ee",
+        "fixture_id": "workspace.update-route.v1",
+        "fixture_fingerprint": "89921e3e50e7a6168a882fbb45b4605b7ca2fa6e8bf1672477c9d1eab3e94de7",
+        "catalog_id": "workspace.update-route.actions.v1",
+        "catalog_fingerprint": "9d59272aeff1407dbe09fe36dfdc457913cdc95862c481af8d0b684f4888492f",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      },
+      {
+        "schema_version": "1",
+        "kind": "system",
+        "suite_id": "system-correctness-v1",
+        "cell_id": "system.workspace.update-status",
+        "task_id": "workspace.update-status",
+        "environment": "workspace",
+        "split": "validation",
+        "tags": [
+          "workspace",
+          "status",
+          "directory-inspection"
+        ],
+        "seed": 107,
+        "resource_id": "workspace.update-status.manifest.v1",
+        "resource_fingerprint": "22f88e4fb8d60d95190479fa9ebeacc9282ddab82bbc76f4141112d2023497e1",
+        "fixture_id": "workspace.update-status.v1",
+        "fixture_fingerprint": "8f473bb7a965eb8034e2f5b412c2d74c04a753a01d38810e6de7146100da1f02",
+        "catalog_id": "workspace.update-status.actions.v1",
+        "catalog_fingerprint": "369a631bd2636a25e8b8f7bfbe9ed3ac5399f2485cc5a0a975454a7ee53def8b",
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "outcome": "passed"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Scripted system-correctness cell; not an Agent or model capability result."
+      }
+    ],
+    "comparisons": [],
+    "provenance": {
+      "source": "project-authored-synthetic",
+      "license": "Apache-2.0"
+    },
+    "limitation": "Thirty scripted cells validate system contracts; they do not measure model capability.",
+    "manifest_fingerprint": "624dfb19c2b9575056dd9d24a92e3dcb4852617eb538ee3541fb28cae933488e"
+  },
+  {
+    "schema_version": "1",
+    "manifest_id": "runtime-reliability-v1.manifest.v1",
+    "suite_id": "runtime-reliability-v1",
+    "suite_version": 1,
+    "cells": [
+      {
+        "schema_version": "1",
+        "kind": "reliability",
+        "suite_id": "runtime-reliability-v1",
+        "cell_id": "transient.naive",
+        "task_id": "workspace.build-summary",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "runtime",
+          "transient",
+          "retry"
+        ],
+        "seed": 101,
+        "resource_id": "workspace.build-summary.manifest.v1",
+        "resource_fingerprint": "ffd0b803cb105b43a297d5b284a3ba82e619fcdea1994d6bfa4185fab5af52b3",
+        "fixture_id": "workspace.build-summary.v1",
+        "fixture_fingerprint": "dd91e35a93fb8a3f860fe439f7a026287b068f6063f59097442608951b8c9158",
+        "catalog_id": "workspace.build-summary.actions.v1",
+        "catalog_fingerprint": "79a52f1f6cef8f91bfdc47e3398b71f7f9a7430bb0f086783e58e5acab79d8af",
+        "schedule_id": "workspace.transient-read.v1",
+        "schedule_fingerprint": "118f5616a9386885dcfaa3d0e94084866532aacb5177c2e76b008e3af10afc8c",
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "naive",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": false,
+          "max_attempts": 1,
+          "retry_backoff_seconds": [],
+          "idempotency_enabled": false,
+          "schedule_id": "workspace.transient-read.v1",
+          "schedule_fingerprint": "118f5616a9386885dcfaa3d0e94084866532aacb5177c2e76b008e3af10afc8c",
+          "seed": 101
+        },
+        "pair_id": "transient-retry",
+        "arm": "baseline",
+        "oracle": {
+          "verifier_state_success": false,
+          "runtime_completion_success": false,
+          "terminal_state": "FAILED",
+          "error_category": "tool_transient",
+          "steps": 1,
+          "tool_calls": 1,
+          "physical_executions": 0,
+          "physical_write_executions": 0,
+          "side_effect_executions": 0,
+          "duplicate_side_effects": 0,
+          "retries": 0,
+          "idempotency_hits": 0
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "One deterministic M2 Runtime cell; expected naive failure is data, not infrastructure failure."
+      },
+      {
+        "schema_version": "1",
+        "kind": "reliability",
+        "suite_id": "runtime-reliability-v1",
+        "cell_id": "transient.retry",
+        "task_id": "workspace.build-summary",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "runtime",
+          "transient",
+          "retry"
+        ],
+        "seed": 101,
+        "resource_id": "workspace.build-summary.manifest.v1",
+        "resource_fingerprint": "ffd0b803cb105b43a297d5b284a3ba82e619fcdea1994d6bfa4185fab5af52b3",
+        "fixture_id": "workspace.build-summary.v1",
+        "fixture_fingerprint": "dd91e35a93fb8a3f860fe439f7a026287b068f6063f59097442608951b8c9158",
+        "catalog_id": "workspace.build-summary.actions.v1",
+        "catalog_fingerprint": "79a52f1f6cef8f91bfdc47e3398b71f7f9a7430bb0f086783e58e5acab79d8af",
+        "schedule_id": "workspace.transient-read.v1",
+        "schedule_fingerprint": "118f5616a9386885dcfaa3d0e94084866532aacb5177c2e76b008e3af10afc8c",
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "retry_only",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": true,
+          "max_attempts": 2,
+          "retry_backoff_seconds": [
+            0.0
+          ],
+          "idempotency_enabled": false,
+          "schedule_id": "workspace.transient-read.v1",
+          "schedule_fingerprint": "118f5616a9386885dcfaa3d0e94084866532aacb5177c2e76b008e3af10afc8c",
+          "seed": 101
+        },
+        "pair_id": "transient-retry",
+        "arm": "mechanism",
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": true,
+          "terminal_state": "SUCCEEDED",
+          "error_category": null,
+          "steps": 4,
+          "tool_calls": 4,
+          "physical_executions": 3,
+          "physical_write_executions": 1,
+          "side_effect_executions": 1,
+          "duplicate_side_effects": 0,
+          "retries": 1,
+          "idempotency_hits": 0
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "One deterministic M2 Runtime cell; expected naive failure is data, not infrastructure failure."
+      },
+      {
+        "schema_version": "1",
+        "kind": "reliability",
+        "suite_id": "runtime-reliability-v1",
+        "cell_id": "timeout.naive",
+        "task_id": "workspace.update-status",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "runtime",
+          "logical-timeout",
+          "retry"
+        ],
+        "seed": 202,
+        "resource_id": "workspace.update-status.manifest.v1",
+        "resource_fingerprint": "22f88e4fb8d60d95190479fa9ebeacc9282ddab82bbc76f4141112d2023497e1",
+        "fixture_id": "workspace.update-status.v1",
+        "fixture_fingerprint": "8f473bb7a965eb8034e2f5b412c2d74c04a753a01d38810e6de7146100da1f02",
+        "catalog_id": "workspace.update-status.actions.v1",
+        "catalog_fingerprint": "369a631bd2636a25e8b8f7bfbe9ed3ac5399f2485cc5a0a975454a7ee53def8b",
+        "schedule_id": "workspace.logical-timeout.v1",
+        "schedule_fingerprint": "4b2ab244685d642c803d3fdb96e8a19d2a91aef78d7a74859c25c4210cce8d74",
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "naive",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": false,
+          "max_attempts": 1,
+          "retry_backoff_seconds": [],
+          "idempotency_enabled": false,
+          "schedule_id": "workspace.logical-timeout.v1",
+          "schedule_fingerprint": "4b2ab244685d642c803d3fdb96e8a19d2a91aef78d7a74859c25c4210cce8d74",
+          "seed": 202
+        },
+        "pair_id": "timeout-retry",
+        "arm": "baseline",
+        "oracle": {
+          "verifier_state_success": false,
+          "runtime_completion_success": false,
+          "terminal_state": "TIMED_OUT",
+          "error_category": "timeout",
+          "steps": 2,
+          "tool_calls": 2,
+          "physical_executions": 1,
+          "physical_write_executions": 0,
+          "side_effect_executions": 0,
+          "duplicate_side_effects": 0,
+          "retries": 0,
+          "idempotency_hits": 0
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "One deterministic M2 Runtime cell; expected naive failure is data, not infrastructure failure."
+      },
+      {
+        "schema_version": "1",
+        "kind": "reliability",
+        "suite_id": "runtime-reliability-v1",
+        "cell_id": "timeout.retry",
+        "task_id": "workspace.update-status",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "runtime",
+          "logical-timeout",
+          "retry"
+        ],
+        "seed": 202,
+        "resource_id": "workspace.update-status.manifest.v1",
+        "resource_fingerprint": "22f88e4fb8d60d95190479fa9ebeacc9282ddab82bbc76f4141112d2023497e1",
+        "fixture_id": "workspace.update-status.v1",
+        "fixture_fingerprint": "8f473bb7a965eb8034e2f5b412c2d74c04a753a01d38810e6de7146100da1f02",
+        "catalog_id": "workspace.update-status.actions.v1",
+        "catalog_fingerprint": "369a631bd2636a25e8b8f7bfbe9ed3ac5399f2485cc5a0a975454a7ee53def8b",
+        "schedule_id": "workspace.logical-timeout.v1",
+        "schedule_fingerprint": "4b2ab244685d642c803d3fdb96e8a19d2a91aef78d7a74859c25c4210cce8d74",
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "retry_only",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": true,
+          "max_attempts": 2,
+          "retry_backoff_seconds": [
+            0.0
+          ],
+          "idempotency_enabled": false,
+          "schedule_id": "workspace.logical-timeout.v1",
+          "schedule_fingerprint": "4b2ab244685d642c803d3fdb96e8a19d2a91aef78d7a74859c25c4210cce8d74",
+          "seed": 202
+        },
+        "pair_id": "timeout-retry",
+        "arm": "mechanism",
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": true,
+          "terminal_state": "SUCCEEDED",
+          "error_category": null,
+          "steps": 4,
+          "tool_calls": 4,
+          "physical_executions": 3,
+          "physical_write_executions": 1,
+          "side_effect_executions": 1,
+          "duplicate_side_effects": 0,
+          "retries": 1,
+          "idempotency_hits": 0
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "One deterministic M2 Runtime cell; expected naive failure is data, not infrastructure failure."
+      },
+      {
+        "schema_version": "1",
+        "kind": "reliability",
+        "suite_id": "runtime-reliability-v1",
+        "cell_id": "lost.naive",
+        "task_id": "workspace.fix-config",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "runtime",
+          "lost-result",
+          "state-completion-split"
+        ],
+        "seed": 303,
+        "resource_id": "workspace.fix-config.manifest.v1",
+        "resource_fingerprint": "8382b019cc108f4fb687647aa1969821028979059166e5767bf4eeac04ad0a9b",
+        "fixture_id": "workspace.fix-config.v1",
+        "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+        "catalog_id": "workspace.fix-config.actions.v1",
+        "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+        "schedule_id": "workspace.lost-write-result.v1",
+        "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "naive",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": false,
+          "max_attempts": 1,
+          "retry_backoff_seconds": [],
+          "idempotency_enabled": false,
+          "schedule_id": "workspace.lost-write-result.v1",
+          "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+          "seed": 303
+        },
+        "pair_id": null,
+        "arm": "context",
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": false,
+          "terminal_state": "FAILED",
+          "error_category": "tool_transient",
+          "steps": 2,
+          "tool_calls": 2,
+          "physical_executions": 2,
+          "physical_write_executions": 1,
+          "side_effect_executions": 1,
+          "duplicate_side_effects": 0,
+          "retries": 0,
+          "idempotency_hits": 0
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "One deterministic M2 Runtime cell; expected naive failure is data, not infrastructure failure."
+      },
+      {
+        "schema_version": "1",
+        "kind": "reliability",
+        "suite_id": "runtime-reliability-v1",
+        "cell_id": "lost.retry",
+        "task_id": "workspace.fix-config",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "runtime",
+          "lost-result",
+          "idempotency"
+        ],
+        "seed": 303,
+        "resource_id": "workspace.fix-config.manifest.v1",
+        "resource_fingerprint": "8382b019cc108f4fb687647aa1969821028979059166e5767bf4eeac04ad0a9b",
+        "fixture_id": "workspace.fix-config.v1",
+        "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+        "catalog_id": "workspace.fix-config.actions.v1",
+        "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+        "schedule_id": "workspace.lost-write-result.v1",
+        "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "retry_only",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": true,
+          "max_attempts": 2,
+          "retry_backoff_seconds": [
+            0.0
+          ],
+          "idempotency_enabled": false,
+          "schedule_id": "workspace.lost-write-result.v1",
+          "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+          "seed": 303
+        },
+        "pair_id": "lost-result-idempotency",
+        "arm": "baseline",
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": true,
+          "terminal_state": "SUCCEEDED",
+          "error_category": null,
+          "steps": 3,
+          "tool_calls": 3,
+          "physical_executions": 3,
+          "physical_write_executions": 2,
+          "side_effect_executions": 2,
+          "duplicate_side_effects": 1,
+          "retries": 1,
+          "idempotency_hits": 0
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "One deterministic M2 Runtime cell; expected naive failure is data, not infrastructure failure."
+      },
+      {
+        "schema_version": "1",
+        "kind": "reliability",
+        "suite_id": "runtime-reliability-v1",
+        "cell_id": "lost.idempotent",
+        "task_id": "workspace.fix-config",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "runtime",
+          "lost-result",
+          "idempotency"
+        ],
+        "seed": 303,
+        "resource_id": "workspace.fix-config.manifest.v1",
+        "resource_fingerprint": "8382b019cc108f4fb687647aa1969821028979059166e5767bf4eeac04ad0a9b",
+        "fixture_id": "workspace.fix-config.v1",
+        "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+        "catalog_id": "workspace.fix-config.actions.v1",
+        "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+        "schedule_id": "workspace.lost-write-result.v1",
+        "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "safeguarded",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": true,
+          "max_attempts": 2,
+          "retry_backoff_seconds": [
+            0.0
+          ],
+          "idempotency_enabled": true,
+          "schedule_id": "workspace.lost-write-result.v1",
+          "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+          "seed": 303
+        },
+        "pair_id": "lost-result-idempotency",
+        "arm": "mechanism",
+        "oracle": {
+          "verifier_state_success": true,
+          "runtime_completion_success": true,
+          "terminal_state": "SUCCEEDED",
+          "error_category": null,
+          "steps": 3,
+          "tool_calls": 3,
+          "physical_executions": 2,
+          "physical_write_executions": 1,
+          "side_effect_executions": 1,
+          "duplicate_side_effects": 0,
+          "retries": 1,
+          "idempotency_hits": 1
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "One deterministic M2 Runtime cell; expected naive failure is data, not infrastructure failure."
+      }
+    ],
+    "comparisons": [
+      {
+        "comparison_id": "transient-retry",
+        "baseline_cell_id": "transient.naive",
+        "mechanism_cell_id": "transient.retry",
+        "allowed_config_differences": [
+          "mode",
+          "retry_enabled",
+          "max_attempts",
+          "retry_backoff_seconds"
+        ]
+      },
+      {
+        "comparison_id": "timeout-retry",
+        "baseline_cell_id": "timeout.naive",
+        "mechanism_cell_id": "timeout.retry",
+        "allowed_config_differences": [
+          "mode",
+          "retry_enabled",
+          "max_attempts",
+          "retry_backoff_seconds"
+        ]
+      },
+      {
+        "comparison_id": "lost-result-idempotency",
+        "baseline_cell_id": "lost.retry",
+        "mechanism_cell_id": "lost.idempotent",
+        "allowed_config_differences": [
+          "mode",
+          "idempotency_enabled"
+        ]
+      }
+    ],
+    "provenance": {
+      "source": "project-authored-synthetic",
+      "license": "Apache-2.0"
+    },
+    "limitation": "Seven deterministic M2 cells isolate retry and idempotency; no performance claim.",
+    "manifest_fingerprint": "a8c5e2389ce1bbe31ae7895ecbfe211be3460aee40563c4c13efb0523d89ac2e"
+  },
+  {
+    "schema_version": "1",
+    "manifest_id": "recovery-replay-v1.manifest.v1",
+    "suite_id": "recovery-replay-v1",
+    "suite_version": 1,
+    "cells": [
+      {
+        "schema_version": "1",
+        "kind": "recovery",
+        "suite_id": "recovery-replay-v1",
+        "cell_id": "recovery.checkpoint-off",
+        "diagnostic": "checkpoint_off",
+        "task_id": "workspace.fix-config",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "recovery",
+          "checkpoint",
+          "expected-refusal"
+        ],
+        "seed": 303,
+        "resource_id": "recovery.checkpoint-off.v1",
+        "resource_fingerprint": "504b041f6c946c4612dd5de88c357d53e51740e5000e52374e65fe17eb62e62f",
+        "fixture_id": "workspace.fix-config.v1",
+        "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+        "catalog_id": "workspace.fix-config.actions.v1",
+        "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+        "schedule_id": "workspace.lost-write-result.v1",
+        "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+        "interruption_schedule_id": "workspace.post-write-boundary.v1",
+        "interruption_schedule_fingerprint": "4e419fb3f5514acd130f1a08e6ee5e5b7b48ecc187f43cd7aeabd595a1ad5db5",
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "safeguarded",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": true,
+          "max_attempts": 2,
+          "retry_backoff_seconds": [
+            0.0
+          ],
+          "idempotency_enabled": true,
+          "schedule_id": "workspace.lost-write-result.v1",
+          "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+          "seed": 303
+        },
+        "checkpointing": "off",
+        "record_actions": false,
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "diagnostic_passed": true,
+          "verifier_state_success": "N/A",
+          "runtime_completion_success": false,
+          "terminal": "CONTROLLED_INTERRUPTION_NO_CHECKPOINT"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Fixed M3 recovery/replay diagnostic; no general recovery or replay rate claim."
+      },
+      {
+        "schema_version": "1",
+        "kind": "recovery",
+        "suite_id": "recovery-replay-v1",
+        "cell_id": "recovery.checkpoint-on",
+        "diagnostic": "checkpoint_on",
+        "task_id": "workspace.fix-config",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "recovery",
+          "checkpoint",
+          "second-process"
+        ],
+        "seed": 303,
+        "resource_id": "recovery.checkpoint-on.v1",
+        "resource_fingerprint": "fd914218ba4246e4a85c20d5c6cf01681f3303a2e4a49ebfa815d8b9ac007d26",
+        "fixture_id": "workspace.fix-config.v1",
+        "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+        "catalog_id": "workspace.fix-config.actions.v1",
+        "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+        "schedule_id": "workspace.lost-write-result.v1",
+        "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+        "interruption_schedule_id": "workspace.post-write-boundary.v1",
+        "interruption_schedule_fingerprint": "4e419fb3f5514acd130f1a08e6ee5e5b7b48ecc187f43cd7aeabd595a1ad5db5",
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "safeguarded",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": true,
+          "max_attempts": 2,
+          "retry_backoff_seconds": [
+            0.0
+          ],
+          "idempotency_enabled": true,
+          "schedule_id": "workspace.lost-write-result.v1",
+          "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+          "seed": 303
+        },
+        "checkpointing": "on",
+        "record_actions": false,
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "diagnostic_passed": true,
+          "verifier_state_success": true,
+          "runtime_completion_success": true,
+          "terminal": "SUCCEEDED"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Fixed M3 recovery/replay diagnostic; no general recovery or replay rate claim."
+      },
+      {
+        "schema_version": "1",
+        "kind": "recovery",
+        "suite_id": "recovery-replay-v1",
+        "cell_id": "recovery.reference",
+        "diagnostic": "reference",
+        "task_id": "workspace.fix-config",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "recovery",
+          "reference"
+        ],
+        "seed": 303,
+        "resource_id": "recovery.reference.v1",
+        "resource_fingerprint": "aa967a3949f0afd9e5f62c7f28e26a7b6bd581f7018c82ccccecc1b5d8d946d6",
+        "fixture_id": "workspace.fix-config.v1",
+        "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+        "catalog_id": "workspace.fix-config.actions.v1",
+        "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+        "schedule_id": "workspace.lost-write-result.v1",
+        "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+        "interruption_schedule_id": null,
+        "interruption_schedule_fingerprint": null,
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "safeguarded",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": true,
+          "max_attempts": 2,
+          "retry_backoff_seconds": [
+            0.0
+          ],
+          "idempotency_enabled": true,
+          "schedule_id": "workspace.lost-write-result.v1",
+          "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+          "seed": 303
+        },
+        "checkpointing": "off",
+        "record_actions": false,
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "diagnostic_passed": true,
+          "verifier_state_success": true,
+          "runtime_completion_success": true,
+          "terminal": "SUCCEEDED"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Fixed M3 recovery/replay diagnostic; no general recovery or replay rate claim."
+      },
+      {
+        "schema_version": "1",
+        "kind": "recovery",
+        "suite_id": "recovery-replay-v1",
+        "cell_id": "recovery.action-replay",
+        "diagnostic": "action_replay",
+        "task_id": "workspace.fix-config",
+        "environment": "workspace",
+        "split": null,
+        "tags": [
+          "replay",
+          "vertical-slice"
+        ],
+        "seed": 303,
+        "resource_id": "recovery.action-replay.v1",
+        "resource_fingerprint": "3ea6884f772d7aa27594bacc38e8fff6c5e02cd9b24120c038eacd0468cf4309",
+        "fixture_id": "workspace.fix-config.v1",
+        "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+        "catalog_id": "workspace.fix-config.actions.v1",
+        "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+        "schedule_id": "workspace.lost-write-result.v1",
+        "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+        "interruption_schedule_id": null,
+        "interruption_schedule_fingerprint": null,
+        "runtime_config": {
+          "schema_version": "2",
+          "mode": "safeguarded",
+          "max_steps": 8,
+          "max_tool_calls": 12,
+          "timeout_seconds": 30.0,
+          "retry_enabled": true,
+          "max_attempts": 2,
+          "retry_backoff_seconds": [
+            0.0
+          ],
+          "idempotency_enabled": true,
+          "schedule_id": "workspace.lost-write-result.v1",
+          "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+          "seed": 303
+        },
+        "checkpointing": "off",
+        "record_actions": true,
+        "pair_id": null,
+        "arm": null,
+        "oracle": {
+          "diagnostic_passed": true,
+          "verifier_state_success": true,
+          "runtime_completion_success": "N/A",
+          "terminal": "MATCHED"
+        },
+        "provenance": {
+          "source": "project-authored-synthetic",
+          "license": "Apache-2.0"
+        },
+        "limitation": "Fixed M3 recovery/replay diagnostic; no general recovery or replay rate claim."
+      }
+    ],
+    "comparisons": [],
+    "provenance": {
+      "source": "project-authored-synthetic",
+      "license": "Apache-2.0"
+    },
+    "limitation": "Four fixed M3 diagnostics include one 1/1 replay slice; no aggregate replay rate.",
+    "manifest_fingerprint": "4fb499de8c42ac2d78aaa962c6e6fda2419e7df5fda45c64287d5b78d23b9a97"
+  }
+]

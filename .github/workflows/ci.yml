@@ -108,5 +108,14 @@ jobs:
             --source-run-dir "$RUNNER_TEMP/m3b-source" \
             --output-dir "$RUNNER_TEMP/m3b-replay"
 
+      - name: Run and read-only validate the fixed M5A Eval matrix
+        run: |
+          python -m agent_learning_loop run-eval \
+            --suite all \
+            --source-commit "$GITHUB_SHA" \
+            --output-dir "$RUNNER_TEMP/m5a-eval"
+          python -m agent_learning_loop validate-eval \
+            --run-dir "$RUNNER_TEMP/m5a-eval"
+
       - name: Build distributions
         run: python -m build --no-isolation

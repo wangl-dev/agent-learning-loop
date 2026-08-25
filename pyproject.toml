@@ -50,6 +50,7 @@ agent_learning_loop = [
   "task_manifests/workspace/*.json",
   "task_manifests/incident/*.json",
   "task_manifests/dataops/*.json",
+  "eval_suites/*.json",
 ]
 
 [tool.pytest.ini_options]

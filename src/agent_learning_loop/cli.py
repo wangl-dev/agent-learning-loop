@@ -1,8 +1,9 @@
-"""Command-line entry points for the bounded M1-M4C slices."""
+"""Command-line entry points for the bounded M1-M5A slices."""
 
 from __future__ import annotations
 
 import argparse
+import subprocess
 import sys
 import tempfile
 from collections.abc import Sequence
@@ -112,6 +113,33 @@ def build_parser() -> argparse.ArgumentParser:
         choices=("workspace", "incident", "dataops", "all"),
         default="workspace",
     )
+    run_eval = subparsers.add_parser(
+        "run-eval",
+        help="run one pre-registered M5A Eval suite into a new bundle directory",
+    )
+    run_eval.add_argument(
+        "--suite",
+        required=True,
+        choices=(
+            "system-correctness",
+            "runtime-reliability",
+            "recovery-replay",
+            "all",
+        ),
+    )
+    run_eval.add_argument("--source-commit", required=True)
+    run_eval.add_argument("--output-dir", required=True, type=Path)
+    run_eval.add_argument(
+        "--environment", choices=("workspace", "incident", "dataops")
+    )
+    run_eval.add_argument("--split", choices=("train", "validation", "test"))
+    run_eval.add_argument("--tag")
+    run_eval.add_argument("--pair")
+    validate_eval = subparsers.add_parser(
+        "validate-eval",
+        help="validate an M5A bundle read-only without executing tasks",
+    )
+    validate_eval.add_argument("--run-dir", required=True, type=Path)
     return parser
 
 
@@ -140,6 +168,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _replay_actions(arguments)
     if arguments.command == "validate-corpus":
         return _validate_corpus(arguments.environment)
+    if arguments.command == "run-eval":
+        return _run_eval(arguments)
+    if arguments.command == "validate-eval":
+        return _validate_eval(arguments)
     return 0
 
 
@@ -454,4 +486,49 @@ def _validate_corpus(environment: str) -> int:
         return 0
     except (CorpusValidationError, OSError, ValueError) as exc:
         print(f"validate-corpus validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _run_eval(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.eval_runner import EvalRunError, run_eval
+
+    try:
+        outcome = run_eval(
+            arguments.suite,
+            arguments.source_commit,
+            arguments.output_dir,
+            environment=arguments.environment,
+            split=arguments.split,
+            tag=arguments.tag,
+            pair=arguments.pair,
+        )
+        print(
+            f"Eval bundle: {arguments.output_dir} "
+            f"(selected denominator={outcome.manifest.selection.selected_total}/"
+            f"{outcome.manifest.selection.candidate_total}, exit={outcome.exit_code})"
+        )
+        return outcome.exit_code
+    except (
+        EvalRunError,
+        OSError,
+        RuntimeError,
+        subprocess.SubprocessError,
+        ValueError,
+    ) as exc:
+        print(f"run-eval validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _validate_eval(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.eval_validator import (
+        EvalBundleValidationError,
+        validate_eval_bundle,
+    )
+
+    try:
+        result = validate_eval_bundle(arguments.run_dir)
+        print(result.model_dump_json())
+        return 0
+    except (EvalBundleValidationError, OSError, ValueError) as exc:
+        print(f"validate-eval validation error: {exc}", file=sys.stderr)
         return 2

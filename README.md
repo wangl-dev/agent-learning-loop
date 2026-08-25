@@ -1,8 +1,8 @@
 # Agent Learning Loop
 
-> Status: **M4C DataOps environment / pre-alpha (`0.1.0.dev0`)**. Workspace, Incident, and DataOps
-> each have ten project-authored synthetic tasks with a fixed `6/2/2` split. Scripted runs check
-> system contracts; they are not model benchmarks.
+> Status: **M5A batch evaluator / pre-alpha (`0.1.0.dev0`)**. Workspace, Incident, and DataOps
+> each have ten project-authored synthetic tasks with a fixed `6/2/2` split. The evaluator runs
+> scripted system contracts and fixed Runtime diagnostics; it is not a model benchmark.
 
 Agent Learning Loop studies a narrow question: under the same task, actions, seed, and injected
 failure schedule, which Runtime safeguards improve recovery without causing duplicate side
@@ -14,7 +14,7 @@ Task v1 + scripted Action → Runtime config and state machine → fixed failure
                           → Runtime Event JSONL v2 + Runtime Result JSON v2
 ```
 
-The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.9 in the separate planning
+The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.10 in the separate planning
 repository. Milestones are reviewed against fresh evidence; contract, task, or metric changes are
 versioned instead of being silently absorbed.
 
@@ -130,6 +130,57 @@ must name typed columns and select at least one initial row. The `all` validator
 aggregates the three independent corpus validators as `30/18-6-6`; it does not execute tasks or
 compute a model success rate. [ADR 0008](docs/decisions/0008-m4c-dataops-transaction-contract.md)
 records why this SQLite contract remains separate from Workspace and Incident.
+
+## Batch Eval bundles
+
+M5A pre-registers three fixed suites before execution: 30 system-correctness cells, seven M2
+reliability cells, and four M3 recovery/replay diagnostics. A cell is one fixed matrix entry. The
+seven-cell reliability suite contains three complete ablation pairs: the same task, schedule,
+seed, resource identity, and budget are kept fixed while retry or idempotency is changed. The
+unpaired `lost.naive` context cell remains visible but is never used as one arm of a comparison.
+
+Run all 41 cells with an explicit source commit and a directory that does not already exist:
+
+```powershell
+python -m agent_learning_loop run-eval `
+  --suite all `
+  --source-commit 6006111c0ecd9d80ba405c3fab6fa90155db335d `
+  --output-dir run-output/eval
+
+python -m agent_learning_loop validate-eval --run-dir run-output/eval
+```
+
+`--source-commit` is an explicit caller-supplied identity, not a revision that M5A resolves from
+Git. M5B is responsible for binding a canonical run to a checked Git revision.
+
+`run-eval` exits 0 when every selected result matches its pre-registered oracle, 1 when it writes
+a structurally valid bundle containing an oracle deviation, and 2 for arguments, identity, or
+infrastructure failure. Expected naive Runtime failures can match their oracle and therefore do
+not by themselves produce exit 1. Filters are available only for the system suite; `--pair`
+selects both arms of one registered reliability comparison and rejects an unknown or incomplete
+pair.
+
+Every bundle contains `eval-manifest.json`, `records.jsonl`, `summary.json`, `report.md`, and raw
+evidence under `runs/`. Verifier state success and Runtime completion are separate columns. For
+example, `lost.naive` reaches the expected Workspace state after a lost write result but the
+Runtime fails, so its values are `true` and `false`. Physical executions and physical writes are
+also separate: a read is an execution but not a write. Each rate includes its integer numerator
+and denominator; failures are not removed from the denominator. The Markdown renders environment
+and split counts, aggregate effects, and every pair delta from the same summary. Model, token-cost,
+and model-latency fields are `N/A`, while observed single-run timing is explicitly non-comparable.
+
+`validate-eval` is read-only. It reloads packaged suite and corpus identities, strictly parses the
+complete raw event and audit streams, then starts from each packaged private setup and projects the
+fixed catalog one step at a time in memory. Workspace read/list/write payloads, Incident
+observations/approvals/mutations/terminal results, and DataOps transaction/operation/row/digest
+evidence must exactly match that independent projection before final state and the saved verifier
+are accepted. It then regenerates normalized records, aggregation, and Markdown, checks every raw
+artifact hash, and confirms source bytes did not change. It does not call Policy, an Environment,
+tools, runners, subprocesses, SQLite, a temporary database, or the network. SHA-256 catches
+accidental or inconsistent changes but is not a signature against someone able to rewrite an
+entire bundle. The generated Markdown is a run-local evidence view, not the frozen canonical v0.1
+report.
+[ADR 0009](docs/decisions/0009-m5a-eval-bundle-contract.md) records these boundaries.
 
 Run the same transient-read schedule first with the fail-fast baseline, then with bounded retry
 and idempotency. The naive command is expected to return a nonzero exit code and still write a

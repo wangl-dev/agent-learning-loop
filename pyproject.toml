@@ -51,6 +51,7 @@ agent_learning_loop = [
   "task_manifests/incident/*.json",
   "task_manifests/dataops/*.json",
   "eval_suites/*.json",
+  "fde_cases/*.json",
 ]
 
 [tool.pytest.ini_options]

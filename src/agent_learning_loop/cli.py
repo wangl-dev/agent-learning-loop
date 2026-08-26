@@ -140,6 +140,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="validate an M5A bundle read-only without executing tasks",
     )
     validate_eval.add_argument("--run-dir", required=True, type=Path)
+    run_case = subparsers.add_parser(
+        "run-fde-case",
+        help="run the fixed simulated Incident copilot acceptance case",
+    )
+    run_case.add_argument("--case", required=True)
+    run_case.add_argument("--source-commit", required=True)
+    run_case.add_argument("--output-dir", required=True, type=Path)
+    validate_case = subparsers.add_parser(
+        "validate-fde-case",
+        help="validate a simulated FDE case bundle without executing tasks",
+    )
+    validate_case.add_argument("--run-dir", required=True, type=Path)
     return parser
 
 
@@ -172,6 +184,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _run_eval(arguments)
     if arguments.command == "validate-eval":
         return _validate_eval(arguments)
+    if arguments.command == "run-fde-case":
+        return _run_fde_case(arguments)
+    if arguments.command == "validate-fde-case":
+        return _validate_fde_case(arguments)
     return 0
 
 
@@ -531,4 +547,39 @@ def _validate_eval(arguments: argparse.Namespace) -> int:
         return 0
     except (EvalBundleValidationError, OSError, ValueError) as exc:
         print(f"validate-eval validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _run_fde_case(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.fde_case_runner import FdeCaseRunError, run_fde_case
+
+    try:
+        outcome = run_fde_case(
+            arguments.case,
+            arguments.source_commit,
+            arguments.output_dir,
+        )
+        print(
+            f"FDE case bundle: {arguments.output_dir} "
+            f"(case={outcome.manifest.case_id}, acceptance={outcome.acceptance.overall}, "
+            f"exit={outcome.exit_code})"
+        )
+        return outcome.exit_code
+    except (FdeCaseRunError, OSError, RuntimeError, ValueError) as exc:
+        print(f"run-fde-case validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _validate_fde_case(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.fde_case_validator import (
+        FdeCaseValidationError,
+        validate_fde_case,
+    )
+
+    try:
+        result = validate_fde_case(arguments.run_dir)
+        print(result.model_dump_json())
+        return 0 if result.overall == "accepted" else 1
+    except (FdeCaseValidationError, OSError, ValueError) as exc:
+        print(f"validate-fde-case validation error: {exc}", file=sys.stderr)
         return 2

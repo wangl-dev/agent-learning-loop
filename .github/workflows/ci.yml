@@ -122,5 +122,34 @@ jobs:
           python -m agent_learning_loop validate-eval
           --run-dir reports/v0.1/eval-bundle
 
+      - name: Run and read-only validate the simulated M6A pilot
+        run: |
+          python -m agent_learning_loop run-fde-case \
+            --case incident-copilot-v1 \
+            --source-commit "$GITHUB_SHA" \
+            --output-dir "$RUNNER_TEMP/m6a-pilot"
+          python -m agent_learning_loop validate-fde-case \
+            --run-dir "$RUNNER_TEMP/m6a-pilot"
+          python - "$RUNNER_TEMP/m6a-pilot/acceptance.json" <<'PY'
+          import json
+          import pathlib
+          import sys
+
+          acceptance = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+          assert acceptance["registered_contracts"]["numerator"] == 10
+          assert acceptance["held_out_contracts"]["numerator"] == 4
+          assert acceptance["control_groups"]["numerator"] == 3
+          assert acceptance["incident_safety"]["numerator"] == 10
+          assert acceptance["unauthorized_high_impact_executions"]["count"] == 0
+          assert {
+              acceptance["real_customer_adoption"],
+              acceptance["manual_baseline_time"],
+              acceptance["roi"],
+              acceptance["sla"],
+              acceptance["production_latency"],
+              acceptance["model_performance"],
+          } == {"N/A"}
+          PY
+
       - name: Build distributions
         run: python -m build --no-isolation

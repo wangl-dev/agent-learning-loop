@@ -217,6 +217,23 @@ selected for the v0.1 evidence candidate. It remains subordinate to the full man
 summary, and raw inventory; it is not a standalone screenshot or manually edited scorecard.
 [ADR 0009](docs/decisions/0009-m5a-eval-bundle-contract.md) records these boundaries.
 
+## Simulated executable FDE pilot
+
+M6A wraps the existing ten Incident system cells in one fixed simulated acceptance case. It adds
+three control groups and an outer read-only-verifiable bundle; it does not add a customer,
+deployment, model evaluation, or production claim.
+
+```powershell
+python -m agent_learning_loop run-fde-case `
+  --case incident-copilot-v1 `
+  --source-commit <40-lowercase-hex> `
+  --output-dir run-output/incident-copilot-v1
+python -m agent_learning_loop validate-fde-case --run-dir run-output/incident-copilot-v1
+```
+
+See the [simulated case entry](case_studies/incident_copilot/README.md) for the exact 10-cell,
+4-held-out, 3-control contract and the fields that remain `N/A`.
+
 Run the same transient-read schedule first with the fail-fast baseline, then with bounded retry
 and idempotency. The naive command is expected to return a nonzero exit code and still write a
 machine-readable failure result:

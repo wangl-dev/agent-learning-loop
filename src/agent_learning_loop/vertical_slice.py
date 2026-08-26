@@ -148,8 +148,11 @@ def _execution_failure_verifier() -> VerifierResult:
 
 def _write_outputs(run_directory: Path, events: list[Event], result: RunResult) -> None:
     event_text = "".join(f"{event.model_dump_json()}\n" for event in events)
-    (run_directory / result.events_file).write_text(event_text, encoding="utf-8")
+    (run_directory / result.events_file).write_text(
+        event_text, encoding="utf-8", newline="\n"
+    )
     (run_directory / "result.json").write_text(
         result.model_dump_json(indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )

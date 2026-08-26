@@ -81,7 +81,7 @@ class WorkspaceEnvironment:
         candidate = self._resolve_user_path(path)
         candidate.parent.mkdir(parents=True, exist_ok=True)
         ensure_resolved_within_root(self.root, candidate.resolve())
-        candidate.write_text(content, encoding="utf-8")
+        candidate.write_text(content, encoding="utf-8", newline="\n")
 
     def _resolve_user_path(self, path: str) -> Path:
         requested = Path(path)

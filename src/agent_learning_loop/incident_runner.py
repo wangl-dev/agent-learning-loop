@@ -49,13 +49,16 @@ def run_incident_task(
         outcome=outcome,
         verifier=verifier,
     )
-    (output_directory / "events.jsonl").write_text("\n".join(events) + "\n", encoding="utf-8")
+    (output_directory / "events.jsonl").write_text(
+        "\n".join(events) + "\n", encoding="utf-8", newline="\n"
+    )
     (output_directory / "audit.jsonl").write_text(
         "".join(record.model_dump_json() + "\n" for record in environment.audit),
         encoding="utf-8",
+        newline="\n",
     )
     (output_directory / "result.json").write_text(
-        run_result.model_dump_json(indent=2) + "\n", encoding="utf-8"
+        run_result.model_dump_json(indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     return run_result
 

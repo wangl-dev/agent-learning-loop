@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from agent_learning_loop.eval_runner import run_eval
+from agent_learning_loop.eval_runner import _artifact_sort_key, run_eval
 from agent_learning_loop.eval_validator import validate_eval_bundle
 from agent_learning_loop.runtime import execute_runtime_task as original_execute_runtime_task
 
@@ -20,6 +20,31 @@ def read_records(run_dir: Path) -> list[dict[str, object]]:
         json.loads(line)
         for line in (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines()
     ]
+
+
+def test_artifact_sort_key_uses_relative_posix_casefold_total_order(
+    tmp_path: Path,
+) -> None:
+    runs_dir = tmp_path / "runs"
+    task_dir = runs_dir / "system-correctness-v1" / "workspace.normalize-checklist"
+    paths = [
+        task_dir / "COMMENT.txt",
+        task_dir / "archive" / "previous.md",
+        task_dir / "checklist.md",
+    ]
+
+    ordered = sorted(paths, key=lambda path: _artifact_sort_key(path, runs_dir))
+
+    assert [path.relative_to(runs_dir).as_posix() for path in ordered] == [
+        "system-correctness-v1/workspace.normalize-checklist/archive/previous.md",
+        "system-correctness-v1/workspace.normalize-checklist/checklist.md",
+        "system-correctness-v1/workspace.normalize-checklist/COMMENT.txt",
+    ]
+    comment_key = _artifact_sort_key(task_dir / "COMMENT.txt", runs_dir)
+    comment_relative = (
+        "system-correctness-v1/workspace.normalize-checklist/COMMENT.txt"
+    )
+    assert comment_key == (comment_relative.casefold(), comment_relative)
 
 
 def test_real_system_30_and_reliability_7_suites_write_valid_bundles(

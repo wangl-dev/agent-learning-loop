@@ -59,6 +59,11 @@ def _primary_path(cell: SystemEvalCell | ReliabilityEvalCell) -> str:
     return f"runs/{cell.suite_id}/{cell.cell_id}/result.json"
 
 
+def _artifact_sort_key(path: Path, runs_dir: Path) -> tuple[str, str]:
+    relative = path.relative_to(runs_dir).as_posix()
+    return relative.casefold(), relative
+
+
 def run_eval(
     suite: SuiteSelector,
     source_commit: str,
@@ -177,12 +182,16 @@ def run_eval(
             for comparison in suites[suite_id].comparisons
         ]
         summary = aggregate_eval_records(records, comparisons)
+        runs_dir = output_dir / "runs"
         artifacts = [
             EvalArtifact(
                 path=path.relative_to(output_dir).as_posix(),
                 sha256=sha256_file(path),
             )
-            for path in sorted((output_dir / "runs").rglob("*"))
+            for path in sorted(
+                runs_dir.rglob("*"),
+                key=lambda path: _artifact_sort_key(path, runs_dir),
+            )
             if path.is_file()
         ]
         draft = EvalBundleManifest(

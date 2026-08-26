@@ -1,0 +1,130 @@
+{
+  "schema_version": "1",
+  "suite_ids": [
+    "system-correctness-v1"
+  ],
+  "selected_total": 10,
+  "verifier_state_success": {
+    "numerator": 10,
+    "denominator": 10,
+    "rate": 1.0
+  },
+  "runtime_completion_success": "N/A",
+  "duplicate_side_effects": "N/A",
+  "physical_executions": "N/A",
+  "physical_writes": "N/A",
+  "retries": "N/A",
+  "idempotency_hits": "N/A",
+  "system_slices": [
+    {
+      "dimension": "environment",
+      "value": "incident",
+      "selected": 10,
+      "verifier_passed": 10
+    },
+    {
+      "dimension": "split",
+      "value": "test",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "split",
+      "value": "train",
+      "selected": 6,
+      "verifier_passed": 6
+    },
+    {
+      "dimension": "split",
+      "value": "validation",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "ack",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "approval",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "config",
+      "selected": 3,
+      "verifier_passed": 3
+    },
+    {
+      "dimension": "tag",
+      "value": "denial",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "escalation",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "idempotency",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "observation",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "order",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "rejection",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "restart",
+      "selected": 3,
+      "verifier_passed": 3
+    },
+    {
+      "dimension": "tag",
+      "value": "rollback",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "safe",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "scope",
+      "selected": 1,
+      "verifier_passed": 1
+    }
+  ],
+  "reliability_cells": [],
+  "pair_deltas": [],
+  "diagnostics": [],
+  "oracle_failure_cell_ids": [],
+  "oracle_failures": [],
+  "model": "N/A",
+  "token_cost": "N/A",
+  "latency": "observed/non-comparable"
+}

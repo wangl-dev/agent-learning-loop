@@ -1,0 +1,8 @@
+{"schema_version":"1","tool_name":"request_approval","arguments":{"tool_name":"restart_simulated_service","target":"notifier","arguments":{"service":"notifier"}}}
+{"schema_version":"1","status":"ok","payload":{"approval_id":"notifier-restart","decision":"approved"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"restart_simulated_service","arguments":{"service":"notifier","approval_id":"notifier-restart","operation_id":"notifier-restart-1"}}
+{"schema_version":"1","status":"ok","payload":{"service":"notifier","state":"healthy"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"restart_simulated_service","arguments":{"service":"notifier","approval_id":"notifier-restart","operation_id":"notifier-restart-1"}}
+{"schema_version":"1","status":"ok","payload":{"service":"notifier","state":"healthy"},"error_category":null,"idempotency_hit":true}
+{"schema_version":"1","tool_name":"acknowledge_incident","arguments":{}}
+{"schema_version":"1","status":"ok","payload":{"incident_status":"acknowledged"},"error_category":null,"idempotency_hit":false}

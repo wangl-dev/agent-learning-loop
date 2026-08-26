@@ -1,0 +1,10 @@
+{"schema_version":"1","tool_name":"request_approval","arguments":{"tool_name":"restart_simulated_service","target":"auth-cache","arguments":{"service":"auth-cache"}}}
+{"schema_version":"1","status":"ok","payload":{"approval_id":"auth-cache-restart","decision":"approved"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"restart_simulated_service","arguments":{"service":"auth-cache","approval_id":"auth-cache-restart","operation_id":"auth-cache-restart-1"}}
+{"schema_version":"1","status":"ok","payload":{"service":"auth-cache","state":"healthy"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"request_approval","arguments":{"tool_name":"restart_simulated_service","target":"auth-api","arguments":{"service":"auth-api"}}}
+{"schema_version":"1","status":"ok","payload":{"approval_id":"auth-api-restart","decision":"approved"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"restart_simulated_service","arguments":{"service":"auth-api","approval_id":"auth-api-restart","operation_id":"auth-api-restart-1"}}
+{"schema_version":"1","status":"ok","payload":{"service":"auth-api","state":"healthy"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"acknowledge_incident","arguments":{}}
+{"schema_version":"1","status":"ok","payload":{"incident_status":"acknowledged"},"error_category":null,"idempotency_hit":false}

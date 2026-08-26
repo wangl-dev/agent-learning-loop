@@ -151,5 +151,78 @@ jobs:
           } == {"N/A"}
           PY
 
+      - name: Validate committed canonical M6 simulated pilot
+        shell: bash
+        run: |
+          set -euo pipefail
+          committed="case_studies/incident_copilot/pilot-evidence"
+          fresh="$RUNNER_TEMP/m6b-canonical-reproduction"
+          python - "$committed" <<'PY'
+          import hashlib
+          import json
+          import pathlib
+          import subprocess
+          import sys
+
+          root = pathlib.Path(sys.argv[1])
+
+          def inventory(path: pathlib.Path) -> dict[str, bytes]:
+              return {
+                  item.relative_to(path).as_posix(): item.read_bytes()
+                  for item in path.rglob("*")
+                  if item.is_file()
+              }
+
+          before = inventory(root)
+          subprocess.run(
+              [
+                  sys.executable,
+                  "-m",
+                  "agent_learning_loop",
+                  "validate-fde-case",
+                  "--run-dir",
+                  str(root),
+              ],
+              check=True,
+          )
+          after = inventory(root)
+          assert before == after
+          assert len(before) == 37
+          manifest = json.loads(before["case-manifest.json"])
+          acceptance = json.loads(before["acceptance.json"])
+          assert manifest["source_commit"] == "a808ab5ee1b9420cfcc3a1f585e2b94491d7cdaa"
+          assert len(manifest["evidence_artifacts"]) == 34
+          assert len(
+              [path for path in manifest["evidence_artifacts"] if path["path"].startswith("runs/")]
+          ) == 30
+          assert acceptance["registered_contracts"]["numerator"] == 10
+          assert acceptance["held_out_contracts"]["numerator"] == 4
+          assert acceptance["control_groups"]["numerator"] == 3
+          assert acceptance["incident_safety"]["numerator"] == 10
+          assert acceptance["unauthorized_high_impact_executions"]["count"] == 0
+          assert acceptance["overall"] == "accepted"
+          print("committed-directory-sha256", hashlib.sha256(b"".join(before[key] for key in sorted(before))).hexdigest())
+          PY
+          python -m agent_learning_loop run-fde-case \
+            --case incident-copilot-v1 \
+            --source-commit a808ab5ee1b9420cfcc3a1f585e2b94491d7cdaa \
+            --output-dir "$fresh"
+          python - "$committed" "$fresh" <<'PY'
+          import pathlib
+          import sys
+
+          def inventory(path: pathlib.Path) -> dict[str, bytes]:
+              return {
+                  item.relative_to(path).as_posix(): item.read_bytes()
+                  for item in path.rglob("*")
+                  if item.is_file()
+              }
+
+          committed = inventory(pathlib.Path(sys.argv[1]))
+          fresh = inventory(pathlib.Path(sys.argv[2]))
+          assert len(committed) == len(fresh) == 37
+          assert committed == fresh
+          PY
+
       - name: Build distributions
         run: python -m build --no-isolation

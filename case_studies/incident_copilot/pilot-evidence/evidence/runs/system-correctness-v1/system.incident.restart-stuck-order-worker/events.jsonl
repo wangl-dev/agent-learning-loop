@@ -1,0 +1,8 @@
+{"schema_version":"1","tool_name":"get_service_status","arguments":{"service":"order-worker"}}
+{"schema_version":"1","status":"ok","payload":{"service":"order-worker","state":"stuck"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"request_approval","arguments":{"tool_name":"restart_simulated_service","target":"order-worker","arguments":{"service":"order-worker"}}}
+{"schema_version":"1","status":"ok","payload":{"approval_id":"order-restart","decision":"approved"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"restart_simulated_service","arguments":{"service":"order-worker","approval_id":"order-restart","operation_id":"order-restart-1"}}
+{"schema_version":"1","status":"ok","payload":{"service":"order-worker","state":"healthy"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"acknowledge_incident","arguments":{}}
+{"schema_version":"1","status":"ok","payload":{"incident_status":"acknowledged"},"error_category":null,"idempotency_hit":false}

@@ -223,6 +223,13 @@ M6A wraps the existing ten Incident system cells in one fixed simulated acceptan
 three control groups and an outer read-only-verifiable bundle; it does not add a customer,
 deployment, model evaluation, or production claim.
 
+The canonical simulated pilot generated from public M6A source `a808ab5` is tracked at
+[the case evidence index](case_studies/incident_copilot/README.md). The fastest review opens the
+[generated report](case_studies/incident_copilot/pilot-evidence/report.md) and
+[machine-readable acceptance](case_studies/incident_copilot/pilot-evidence/acceptance.json), then
+runs the read-only command below. The complete 37-file directory—not a copied scorecard—remains the
+evidence boundary. A second pure-wheel run reproduced the same inventory and bytes.
+
 ```powershell
 python -m agent_learning_loop run-fde-case `
   --case incident-copilot-v1 `
@@ -232,7 +239,10 @@ python -m agent_learning_loop validate-fde-case --run-dir run-output/incident-co
 ```
 
 See the [simulated case entry](case_studies/incident_copilot/README.md) for the exact 10-cell,
-4-held-out, 3-control contract and the fields that remain `N/A`.
+4-held-out, 3-control contract, the eight-document delivery index, and the fields that remain
+`N/A`. Ticketing, monitoring, approval, deployment, and service-control systems are not connected;
+the delivery material distinguishes the current offline contract from conditions for any future
+integration.
 
 Run the same transient-read schedule first with the fail-fast baseline, then with bounded retry
 and idempotency. The naive command is expected to return a nonzero exit code and still write a

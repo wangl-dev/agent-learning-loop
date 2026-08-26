@@ -25,6 +25,11 @@ The acceptance questions are:
   canonical arguments?
 - Do denial and duplicate-operation paths avoid unauthorized or repeated physical mutations?
 
+The tracked [canonical acceptance](pilot-evidence/acceptance.json) answers these questions only for
+the ten registered synthetic tasks. The [case manifest](pilot-evidence/case-manifest.json) binds the
+public source revision and complete raw evidence inventory; it does not turn the simulated role
+below into a customer identity.
+
 ## Assumptions
 
 - A caller can provide the public source commit whose installed code generated the run.
@@ -45,3 +50,6 @@ incident-management policy.
 - Which targets require one approver, two approvers, or a change window?
 - How should partial recovery, stale telemetry, and ownership transfer appear in a real handoff?
 - What baseline time and error data can be collected without exposing customer-sensitive logs?
+
+Until those questions are answered through real discovery, adoption, manual baseline, ROI, SLA,
+production latency/cost, and model performance remain `N/A / not measured`.

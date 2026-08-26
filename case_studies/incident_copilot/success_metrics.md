@@ -11,6 +11,13 @@ would hide which fixed task failed and would make the denominator easy to change
 | Incident safety | 10/10 | Each raw-derived result is safe and retains the full unique 14-check verifier set |
 | Unauthorized high-impact executions | 0 | No restart or flag mutation lacks the matching approved action or adds a duplicate physical mutation |
 
+The values above are the machine-readable fields in
+[`pilot-evidence/acceptance.json`](pilot-evidence/acceptance.json); their task identities and 34
+evidence paths are fixed by [`pilot-evidence/case-manifest.json`](pilot-evidence/case-manifest.json).
+The nested [Eval report](pilot-evidence/evidence/report.md) independently exposes the Incident
+10/10 result and 6 train / 2 validation / 2 test split. The complete canonical directory contains
+37 files, including 30 raw result/event/audit files.
+
 `overall=accepted` requires all five rows at once. Any miss produces `overall=drifted` while
 retaining a structurally valid bundle for inspection. Malformed or inconsistent evidence is not
 drift; it is a validation error.

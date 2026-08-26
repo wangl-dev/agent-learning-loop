@@ -1,0 +1,174 @@
+{
+  "schema_version": "1",
+  "case_id": "incident-copilot-v1",
+  "case_version": 1,
+  "scenario_kind": "simulated",
+  "source_commit": "a808ab5ee1b9420cfcc3a1f585e2b94491d7cdaa",
+  "definition_fingerprint": "143c16bf8b953a8ba04cd24fbd7e197ef625fd29f5abed036dfbe4b4117c0def",
+  "selection": {
+    "suite": "system-correctness",
+    "suite_id": "system-correctness-v1",
+    "environment": "incident",
+    "split": null,
+    "tag": null,
+    "pair": null
+  },
+  "cell_ids": [
+    "system.incident.acknowledge-auto-recovered-search",
+    "system.incident.dedupe-notification-restart",
+    "system.incident.enable-catalog-cache-fallback",
+    "system.incident.escalate-ambiguous-api-errors",
+    "system.incident.escalate-denied-payment-restart",
+    "system.incident.isolate-inventory-config-change",
+    "system.incident.recover-auth-dependency-chain",
+    "system.incident.reject-premature-checkout-ack",
+    "system.incident.restart-stuck-order-worker",
+    "system.incident.rollback-checkout-canary"
+  ],
+  "nested_eval_path": "evidence",
+  "nested_eval_fingerprint": "69ab8c3ee16d09ec39571566fe81944e88cec3ffa556b06f535e63990b4eb3d2",
+  "evidence_artifacts": [
+    {
+      "path": "eval-manifest.json",
+      "sha256": "9eefd5003d54b0e06fb547e89acde19e82d18a33b8d10c535e39784ce8555ad3"
+    },
+    {
+      "path": "records.jsonl",
+      "sha256": "57af4554b663b7cc8dde33f65f7e15ca2dc724f85915c26b42665482bfb98d8c"
+    },
+    {
+      "path": "report.md",
+      "sha256": "8e893595265aac250bb4a31f0a77b5414bca5af4ac1ac13a016c374fbfb9ac77"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.acknowledge-auto-recovered-search/audit.jsonl",
+      "sha256": "b7c2665d6b36df5cdc8fd69d0d048ce4d3202dac33ec6635505b4668e04ce5c2"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.acknowledge-auto-recovered-search/events.jsonl",
+      "sha256": "845a9c5495066a78573afd391f19b2226d9a8f79063ee02eba58fdec6b942e10"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.acknowledge-auto-recovered-search/result.json",
+      "sha256": "94f240f15616c2f222b65b1fbd0f08e3f009261ee15be834339b15f836902953"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.dedupe-notification-restart/audit.jsonl",
+      "sha256": "1006268b68edb2c8b824f33f8eb9bba7acf5bcb2672d5f23a03b4f6820574648"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.dedupe-notification-restart/events.jsonl",
+      "sha256": "f82ffcef5e92c68d3342d68780792cbbf4e4d51e51dd7c01fa2ab0f0953c3815"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.dedupe-notification-restart/result.json",
+      "sha256": "9019e60f564517a3f930ee8636825acaec00f0525da971aa245a5dcfae7f95e3"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.enable-catalog-cache-fallback/audit.jsonl",
+      "sha256": "da50133b055adb1d19ccf6223ff8c02673089f3e4cf29490ecc414c4493e682b"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.enable-catalog-cache-fallback/events.jsonl",
+      "sha256": "eb7221570a9c9e0326a4744f7995e06a29fc1b444fc80f8ee8ece69a9aa90673"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.enable-catalog-cache-fallback/result.json",
+      "sha256": "61d9b5587f118f50f9c6d8f51e984560c2978470c21f8c234bf2011f4de594bf"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-ambiguous-api-errors/audit.jsonl",
+      "sha256": "df847ab4c91f394d345270eb0c95df2e89db24ed6d4c7ac5141761f2f76d87d6"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-ambiguous-api-errors/events.jsonl",
+      "sha256": "dd7c9e4b314597c9ea08b86fadea18fb348f6a4743719e7739589fcee0b7ca1d"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-ambiguous-api-errors/result.json",
+      "sha256": "b328308a2e952e1042d85d29aa009d5589e918d752bedf8a5a8d8faf5eaca06f"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-denied-payment-restart/audit.jsonl",
+      "sha256": "3c51c4b908462f0d7fbfcd7c56d449488507cf4f0850b475e80ddac0e74142bc"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-denied-payment-restart/events.jsonl",
+      "sha256": "50bd5e4b464e44e70e4995417501d3c979e93b06a2b023802185e68ec71f2dc3"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-denied-payment-restart/result.json",
+      "sha256": "9058cee5c3596b37cb8fb3bd7d39f28de188390599c160aa6ccb6e059b062833"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.isolate-inventory-config-change/audit.jsonl",
+      "sha256": "ac7869d164fb2853e2242b4ea40b5825ad63e5e406cb4b9651016da6c7e25bf0"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.isolate-inventory-config-change/events.jsonl",
+      "sha256": "cf86ef0e4035c79fefe6444abfe2d46355d6a02c0bcc3484e64f7aaf80d3e291"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.isolate-inventory-config-change/result.json",
+      "sha256": "acb525e0b72addbfc9d17ad44c9a4ddac11332783e3a5c18d03bb35d73e68e30"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.recover-auth-dependency-chain/audit.jsonl",
+      "sha256": "26199b3561dc16469df8eb27e85fb21c68d33bd0d8a5f9ee1af8bd2fc255d9e2"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.recover-auth-dependency-chain/events.jsonl",
+      "sha256": "bd98ede3d424bd6b9938477f9ecaf05a6decd68a928f5e33df73b500a1df01ae"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.recover-auth-dependency-chain/result.json",
+      "sha256": "e478311c4cc7e97093c77b8a3f1d4619ece8727d98c2f80c1eb0e5ef79f72d23"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.reject-premature-checkout-ack/audit.jsonl",
+      "sha256": "ebcbba20e3ceb744eb9d7cdd4d91be88e224b434597aa20ae70eb3da0e9804fc"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.reject-premature-checkout-ack/events.jsonl",
+      "sha256": "38caaee7c0fc7c82d0051797838cd51f5f5b8c4b4bfc1966d1bc7ef04c06c5dc"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.reject-premature-checkout-ack/result.json",
+      "sha256": "7e9e01169bfdac929b83109ccc515a2394fad407a380189fbeb8fa70d0841142"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.restart-stuck-order-worker/audit.jsonl",
+      "sha256": "ff7bcb55c0593e812197ecfa12b8c722c8c540b0ea9cf60e272c2693be9198a8"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.restart-stuck-order-worker/events.jsonl",
+      "sha256": "a867c0a36c455d9f1aa19a27e283c1aa71340b0ce5467831776dc41bbf1f0d38"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.restart-stuck-order-worker/result.json",
+      "sha256": "1d2d345dd37eae03fcb2a5826575012a59b33cc8dcac89dad29b70ab981b2fee"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.rollback-checkout-canary/audit.jsonl",
+      "sha256": "4f24629aa30dd859a5ce0fea9c3d4ad04e9762cd6c476dbe2bc82b9762fca336"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.rollback-checkout-canary/events.jsonl",
+      "sha256": "cc49158a4c86afda63ebb414e52095fe49a92457d476e88e28005e6c2a53ef56"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.rollback-checkout-canary/result.json",
+      "sha256": "bf610a10fd8c37742038743f1856c968a8e654c1a7a085dc874dd0afe51de5a6"
+    },
+    {
+      "path": "summary.json",
+      "sha256": "8b4102394d216ecfb366332bc7de9c514d4364866e1016cb8cae400bb1f21ef9"
+    }
+  ],
+  "evidence_inventory_digest": "3fe21502afdf42da78ce5abbb096474370c63306fc1d75657f0a46c93651ca2f",
+  "acceptance_path": "acceptance.json",
+  "acceptance_sha256": "c5a4723bcc0c87eaacb0584eb81f169dd081695d50592e81967926a76c62b9b9",
+  "report_path": "report.md",
+  "report_sha256": "f7c4525adff908d747c5972caf2c89f01981017ce63b521cb6a4d73a13f59031",
+  "pilot_fingerprint": "8b85ab90346d85cbf1317c88721c5e9733d2bba9f6e823048a0cd5d0a01c0035"
+}

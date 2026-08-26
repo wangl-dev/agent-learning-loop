@@ -1,0 +1,95 @@
+{
+  "schema_version": "1",
+  "run_id": "eval-system-dataops-rollback-unique-key-conflict",
+  "task_id": "dataops.rollback-unique-key-conflict",
+  "split": "validation",
+  "outcome": "passed",
+  "terminal_state": "rolled_back",
+  "attempted_row_count": 0,
+  "committed_row_count": 0,
+  "verifier": {
+    "schema_version": "1",
+    "passed": true,
+    "score": 1.0,
+    "checks": [
+      {
+        "name": "trusted_context",
+        "passed": true,
+        "detail": "trusted_context passed"
+      },
+      {
+        "name": "transaction_identity",
+        "passed": true,
+        "detail": "transaction_identity passed"
+      },
+      {
+        "name": "target_final",
+        "passed": true,
+        "detail": "target_final passed"
+      },
+      {
+        "name": "protected_state",
+        "passed": true,
+        "detail": "protected_state passed"
+      },
+      {
+        "name": "mutation_scope",
+        "passed": true,
+        "detail": "mutation_scope passed"
+      },
+      {
+        "name": "attempted_effects",
+        "passed": true,
+        "detail": "attempted_effects passed"
+      },
+      {
+        "name": "committed_effects",
+        "passed": true,
+        "detail": "committed_effects passed"
+      },
+      {
+        "name": "audit_context_order",
+        "passed": true,
+        "detail": "audit_context_order passed"
+      },
+      {
+        "name": "validation_before_commit",
+        "passed": true,
+        "detail": "validation_before_commit passed"
+      },
+      {
+        "name": "rollback_restoration",
+        "passed": true,
+        "detail": "rollback_restoration passed"
+      },
+      {
+        "name": "operation_idempotency",
+        "passed": true,
+        "detail": "operation_idempotency passed"
+      },
+      {
+        "name": "cardinality_before_write",
+        "passed": true,
+        "detail": "cardinality_before_write passed"
+      },
+      {
+        "name": "terminal_audit_record",
+        "passed": true,
+        "detail": "terminal_audit_record passed"
+      },
+      {
+        "name": "result_consistency",
+        "passed": true,
+        "detail": "result_consistency passed"
+      }
+    ],
+    "run_id": "eval-system-dataops-rollback-unique-key-conflict",
+    "task_id": "dataops.rollback-unique-key-conflict",
+    "terminal_state": "rolled_back",
+    "attempted_row_count": 0,
+    "committed_row_count": 0,
+    "split": "validation"
+  },
+  "events_file": "events.jsonl",
+  "audit_file": "audit.jsonl"
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1",
+  "cell_id": "recovery.reference",
+  "diagnostic": "reference",
+  "passed": true,
+  "verifier_state_success": true,
+  "runtime_completion_success": true,
+  "terminal": "SUCCEEDED",
+  "error_category": null,
+  "source_result": "runs/recovery-replay-v1/recovery.reference/source/result.json",
+  "replay_result": null,
+  "source_unchanged": "N/A",
+  "second_process_used": false,
+  "second_process_exit_code": null,
+  "policy_calls": null,
+  "physical_executions": 2,
+  "physical_write_executions": 1,
+  "duplicate_side_effects": 0,
+  "vertical_slice_matches": null,
+  "vertical_slice_total": null,
+  "reference_match": true
+}

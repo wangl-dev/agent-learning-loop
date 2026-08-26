@@ -1,0 +1,85 @@
+{
+  "schema_version": "3",
+  "run_id": "eval-recovery-action-replay",
+  "task_id": "workspace.fix-config",
+  "terminal_state": "SUCCEEDED",
+  "identity": {
+    "schema_version": "3",
+    "task_id": "workspace.fix-config",
+    "fixture_id": "workspace.fix-config.v1",
+    "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+    "config_fingerprint": "16009354e4cb6df0ffb3b75d4f835275fc0a8a57e4544ca99e447810f6e6c7b8",
+    "failure_schedule_id": "workspace.lost-write-result.v1",
+    "failure_schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+    "interruption_schedule_id": null,
+    "interruption_schedule_fingerprint": null,
+    "checkpointing": "off",
+    "seed": 303
+  },
+  "runtime_config": {
+    "schema_version": "2",
+    "mode": "safeguarded",
+    "max_steps": 8,
+    "max_tool_calls": 12,
+    "timeout_seconds": 30.0,
+    "retry_enabled": true,
+    "max_attempts": 2,
+    "retry_backoff_seconds": [
+      0.0
+    ],
+    "idempotency_enabled": true,
+    "schedule_id": "workspace.lost-write-result.v1",
+    "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+    "seed": 303
+  },
+  "verifier": {
+    "schema_version": "1",
+    "passed": true,
+    "score": 1.0,
+    "checks": [
+      {
+        "name": "required_state",
+        "passed": true,
+        "detail": "required file states matched"
+      },
+      {
+        "name": "unchanged_state",
+        "passed": true,
+        "detail": "protected files stayed unchanged"
+      },
+      {
+        "name": "forbidden_side_effects",
+        "passed": true,
+        "detail": "forbidden paths stayed absent"
+      },
+      {
+        "name": "mutation_scope",
+        "passed": true,
+        "detail": "all mutations stayed in scope"
+      }
+    ]
+  },
+  "usage": {
+    "schema_version": "3",
+    "steps": 3,
+    "tool_calls": 3,
+    "physical_executions": 2,
+    "physical_write_executions": 1,
+    "side_effect_executions": 1,
+    "duplicate_side_effects": 0,
+    "retries": 1,
+    "idempotency_hits": 1,
+    "backoff_seconds": 0.0,
+    "elapsed_seconds": 0.0
+  },
+  "resumed": false,
+  "segment_count": 1,
+  "checkpoint_id": null,
+  "checkpoint_step": null,
+  "journal_record_count": 25,
+  "journal_final_hash": "7b9b763c9592e899cc5525df8b839d663002aaafbf165d112f08c53974646ad8",
+  "events_file": "events.jsonl",
+  "workspace_dir": "workspace",
+  "action_replay_match_rate": "N/A",
+  "limitation": "M3A resumes only a committed post-Observation checkpoint; event replay does not execute actions or promise arbitrary-crash exactly-once behavior."
+}

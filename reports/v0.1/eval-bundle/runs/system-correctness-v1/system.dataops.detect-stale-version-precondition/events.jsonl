@@ -1,0 +1,6 @@
+{"schema_version":"1","tool_name":"begin_transaction","arguments":{"transaction_id":"tx-stale"}}
+{"schema_version":"1","status":"ok","payload":{"transaction_state":"active"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"update_rows","arguments":{"transaction_id":"tx-stale","operation_id":"op-stale","table":"records","where":{"id":1,"version":2},"values":{"value":"stale-write","version":3},"expected_match_count":1}}
+{"schema_version":"1","status":"rejected","payload":{},"error_category":"cardinality_mismatch","idempotency_hit":false}
+{"schema_version":"1","tool_name":"rollback_transaction","arguments":{"transaction_id":"tx-stale","reason_category":"stale_precondition"}}
+{"schema_version":"1","status":"ok","payload":{"terminal_state":"rolled_back","committed_row_count":0},"error_category":null,"idempotency_hit":false}

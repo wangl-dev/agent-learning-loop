@@ -1,0 +1,503 @@
+{
+  "schema_version": "1",
+  "suite_ids": [
+    "system-correctness-v1",
+    "runtime-reliability-v1",
+    "recovery-replay-v1"
+  ],
+  "selected_total": 41,
+  "verifier_state_success": {
+    "numerator": 38,
+    "denominator": 40,
+    "rate": 0.95
+  },
+  "runtime_completion_success": {
+    "numerator": 6,
+    "denominator": 10,
+    "rate": 0.6
+  },
+  "duplicate_side_effects": {
+    "numerator": 1,
+    "denominator": 11,
+    "rate": 0.09090909090909091
+  },
+  "physical_executions": {
+    "numerator": 22,
+    "denominator": 11,
+    "rate": 2.0
+  },
+  "physical_writes": {
+    "numerator": 10,
+    "denominator": 11,
+    "rate": 0.9090909090909091
+  },
+  "retries": {
+    "numerator": 4,
+    "denominator": 7,
+    "rate": 0.5714285714285714
+  },
+  "idempotency_hits": {
+    "numerator": 1,
+    "denominator": 7,
+    "rate": 0.14285714285714285
+  },
+  "system_slices": [
+    {
+      "dimension": "environment",
+      "value": "dataops",
+      "selected": 10,
+      "verifier_passed": 10
+    },
+    {
+      "dimension": "environment",
+      "value": "incident",
+      "selected": 10,
+      "verifier_passed": 10
+    },
+    {
+      "dimension": "environment",
+      "value": "workspace",
+      "selected": 10,
+      "verifier_passed": 10
+    },
+    {
+      "dimension": "split",
+      "value": "test",
+      "selected": 6,
+      "verifier_passed": 6
+    },
+    {
+      "dimension": "split",
+      "value": "train",
+      "selected": 18,
+      "verifier_passed": 18
+    },
+    {
+      "dimension": "split",
+      "value": "validation",
+      "selected": 6,
+      "verifier_passed": 6
+    },
+    {
+      "dimension": "tag",
+      "value": "ack",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "ambiguity",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "approval",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "atomicity",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "cardinality",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "commit",
+      "selected": 5,
+      "verifier_passed": 5
+    },
+    {
+      "dimension": "tag",
+      "value": "config",
+      "selected": 3,
+      "verifier_passed": 3
+    },
+    {
+      "dimension": "tag",
+      "value": "configuration",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "constraint",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "denial",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "deployment",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "derived-summary",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "directory-inspection",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "escalation",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "generation",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "idempotency",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "insert",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "mapping",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "merge",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "multi-input",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "multi-row",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "normalization",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "observation",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "order",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "ownership",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "preservation",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "reconciliation",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "record-creation",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "rejection",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "restart",
+      "selected": 3,
+      "verifier_passed": 3
+    },
+    {
+      "dimension": "tag",
+      "value": "rollback",
+      "selected": 5,
+      "verifier_passed": 5
+    },
+    {
+      "dimension": "tag",
+      "value": "routing",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "safe",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "scope",
+      "selected": 2,
+      "verifier_passed": 2
+    },
+    {
+      "dimension": "tag",
+      "value": "scope-control",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "status",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "tabular-text",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "targeted-repair",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "targeted-update",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "transaction",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "update",
+      "selected": 1,
+      "verifier_passed": 1
+    },
+    {
+      "dimension": "tag",
+      "value": "workspace",
+      "selected": 10,
+      "verifier_passed": 10
+    }
+  ],
+  "reliability_cells": [
+    {
+      "cell_id": "transient.naive",
+      "pair_id": "transient-retry",
+      "arm": "baseline",
+      "terminal": "FAILED",
+      "error_category": "tool_transient",
+      "verifier_state_success": false,
+      "runtime_completion_success": false,
+      "physical_executions": 0,
+      "physical_writes": 0,
+      "duplicate_side_effects": 0,
+      "retries": 0,
+      "idempotency_hits": 0
+    },
+    {
+      "cell_id": "transient.retry",
+      "pair_id": "transient-retry",
+      "arm": "mechanism",
+      "terminal": "SUCCEEDED",
+      "error_category": null,
+      "verifier_state_success": true,
+      "runtime_completion_success": true,
+      "physical_executions": 3,
+      "physical_writes": 1,
+      "duplicate_side_effects": 0,
+      "retries": 1,
+      "idempotency_hits": 0
+    },
+    {
+      "cell_id": "timeout.naive",
+      "pair_id": "timeout-retry",
+      "arm": "baseline",
+      "terminal": "TIMED_OUT",
+      "error_category": "timeout",
+      "verifier_state_success": false,
+      "runtime_completion_success": false,
+      "physical_executions": 1,
+      "physical_writes": 0,
+      "duplicate_side_effects": 0,
+      "retries": 0,
+      "idempotency_hits": 0
+    },
+    {
+      "cell_id": "timeout.retry",
+      "pair_id": "timeout-retry",
+      "arm": "mechanism",
+      "terminal": "SUCCEEDED",
+      "error_category": null,
+      "verifier_state_success": true,
+      "runtime_completion_success": true,
+      "physical_executions": 3,
+      "physical_writes": 1,
+      "duplicate_side_effects": 0,
+      "retries": 1,
+      "idempotency_hits": 0
+    },
+    {
+      "cell_id": "lost.naive",
+      "pair_id": null,
+      "arm": "context",
+      "terminal": "FAILED",
+      "error_category": "tool_transient",
+      "verifier_state_success": true,
+      "runtime_completion_success": false,
+      "physical_executions": 2,
+      "physical_writes": 1,
+      "duplicate_side_effects": 0,
+      "retries": 0,
+      "idempotency_hits": 0
+    },
+    {
+      "cell_id": "lost.retry",
+      "pair_id": "lost-result-idempotency",
+      "arm": "baseline",
+      "terminal": "SUCCEEDED",
+      "error_category": null,
+      "verifier_state_success": true,
+      "runtime_completion_success": true,
+      "physical_executions": 3,
+      "physical_writes": 2,
+      "duplicate_side_effects": 1,
+      "retries": 1,
+      "idempotency_hits": 0
+    },
+    {
+      "cell_id": "lost.idempotent",
+      "pair_id": "lost-result-idempotency",
+      "arm": "mechanism",
+      "terminal": "SUCCEEDED",
+      "error_category": null,
+      "verifier_state_success": true,
+      "runtime_completion_success": true,
+      "physical_executions": 2,
+      "physical_writes": 1,
+      "duplicate_side_effects": 0,
+      "retries": 1,
+      "idempotency_hits": 1
+    }
+  ],
+  "pair_deltas": [
+    {
+      "comparison_id": "transient-retry",
+      "baseline_cell_id": "transient.naive",
+      "mechanism_cell_id": "transient.retry",
+      "completion_delta": 1,
+      "verifier_delta": 1,
+      "duplicate_side_effect_delta": 0,
+      "physical_execution_delta": 3,
+      "physical_write_delta": 1,
+      "retry_delta": 1,
+      "idempotency_hit_delta": 0
+    },
+    {
+      "comparison_id": "timeout-retry",
+      "baseline_cell_id": "timeout.naive",
+      "mechanism_cell_id": "timeout.retry",
+      "completion_delta": 1,
+      "verifier_delta": 1,
+      "duplicate_side_effect_delta": 0,
+      "physical_execution_delta": 2,
+      "physical_write_delta": 1,
+      "retry_delta": 1,
+      "idempotency_hit_delta": 0
+    },
+    {
+      "comparison_id": "lost-result-idempotency",
+      "baseline_cell_id": "lost.retry",
+      "mechanism_cell_id": "lost.idempotent",
+      "completion_delta": 0,
+      "verifier_delta": 0,
+      "duplicate_side_effect_delta": -1,
+      "physical_execution_delta": -1,
+      "physical_write_delta": -1,
+      "retry_delta": 0,
+      "idempotency_hit_delta": 1
+    }
+  ],
+  "diagnostics": [
+    {
+      "cell_id": "recovery.checkpoint-off",
+      "diagnostic": "checkpoint_off",
+      "passed": true,
+      "detail": "fixed recovery diagnostic"
+    },
+    {
+      "cell_id": "recovery.checkpoint-on",
+      "diagnostic": "checkpoint_on",
+      "passed": true,
+      "detail": "fixed recovery diagnostic"
+    },
+    {
+      "cell_id": "recovery.reference",
+      "diagnostic": "reference",
+      "passed": true,
+      "detail": "fixed recovery diagnostic"
+    },
+    {
+      "cell_id": "recovery.action-replay",
+      "diagnostic": "action_replay",
+      "passed": true,
+      "detail": "1/1 vertical-slice diagnostic"
+    }
+  ],
+  "oracle_failure_cell_ids": [],
+  "oracle_failures": [],
+  "model": "N/A",
+  "token_cost": "N/A",
+  "latency": "observed/non-comparable"
+}

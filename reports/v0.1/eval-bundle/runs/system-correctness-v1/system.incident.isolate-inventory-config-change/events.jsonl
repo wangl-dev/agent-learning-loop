@@ -1,0 +1,6 @@
+{"schema_version":"1","tool_name":"request_approval","arguments":{"tool_name":"set_feature_flag","target":"inventory.experimental_sync","arguments":{"key":"inventory.experimental_sync","enabled":false}}}
+{"schema_version":"1","status":"ok","payload":{"approval_id":"inventory-flag-off","decision":"approved"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"set_feature_flag","arguments":{"key":"inventory.experimental_sync","enabled":false,"approval_id":"inventory-flag-off","operation_id":"inventory-flag-off-1"}}
+{"schema_version":"1","status":"ok","payload":{"key":"inventory.experimental_sync","enabled":false},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"acknowledge_incident","arguments":{}}
+{"schema_version":"1","status":"ok","payload":{"incident_status":"acknowledged"},"error_category":null,"idempotency_hit":false}

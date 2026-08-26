@@ -1,0 +1,36 @@
+{
+  "schema_version": "1",
+  "run_id": "eval-system-workspace-update-route",
+  "task_id": "workspace.update-route",
+  "outcome": "passed",
+  "verifier": {
+    "schema_version": "1",
+    "passed": true,
+    "score": 1.0,
+    "checks": [
+      {
+        "name": "required_state",
+        "passed": true,
+        "detail": "required file states matched"
+      },
+      {
+        "name": "unchanged_state",
+        "passed": true,
+        "detail": "protected files stayed unchanged"
+      },
+      {
+        "name": "forbidden_side_effects",
+        "passed": true,
+        "detail": "forbidden paths stayed absent"
+      },
+      {
+        "name": "mutation_scope",
+        "passed": true,
+        "detail": "all mutations stayed in scope"
+      }
+    ]
+  },
+  "events_file": "events.jsonl",
+  "workspace_dir": "workspace",
+  "limitation": "Fault-free M1 system-correctness slice; no reliability or model benchmark claim."
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1",
+  "cell_id": "recovery.action-replay",
+  "diagnostic": "action_replay",
+  "passed": true,
+  "verifier_state_success": true,
+  "runtime_completion_success": "N/A",
+  "terminal": "MATCHED",
+  "error_category": null,
+  "source_result": "runs/recovery-replay-v1/recovery.action-replay/source/result.json",
+  "replay_result": "runs/recovery-replay-v1/recovery.action-replay/replay/replay-result.json",
+  "source_unchanged": true,
+  "second_process_used": false,
+  "second_process_exit_code": null,
+  "policy_calls": 0,
+  "physical_executions": 2,
+  "physical_write_executions": 1,
+  "duplicate_side_effects": 0,
+  "vertical_slice_matches": 1,
+  "vertical_slice_total": 1,
+  "reference_match": true
+}

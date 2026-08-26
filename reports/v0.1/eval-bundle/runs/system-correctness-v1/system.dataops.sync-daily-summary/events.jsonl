@@ -1,0 +1,10 @@
+{"schema_version":"1","tool_name":"query_rows","arguments":{"table":"records","columns":["code","value"],"where":{"tenant_id":"source"},"limit":10}}
+{"schema_version":"1","status":"ok","payload":{"rows":[{"code":"source-a","value":"20"},{"code":"source-b","value":"22"}],"count":2},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"begin_transaction","arguments":{"transaction_id":"tx-summary"}}
+{"schema_version":"1","status":"ok","payload":{"transaction_state":"active"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"update_rows","arguments":{"transaction_id":"tx-summary","operation_id":"op-summary","table":"records","where":{"code":"daily-total"},"values":{"value":"42"},"expected_match_count":1}}
+{"schema_version":"1","status":"ok","payload":{"matched_row_count":1,"changed_row_count":1},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"validate_constraints","arguments":{"transaction_id":"tx-summary"}}
+{"schema_version":"1","status":"ok","payload":{"constraints_valid":true},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"commit_transaction","arguments":{"transaction_id":"tx-summary"}}
+{"schema_version":"1","status":"ok","payload":{"terminal_state":"committed","committed_row_count":1},"error_category":null,"idempotency_hit":false}

@@ -1,0 +1,4 @@
+{"schema_version":"1","tool_name":"read_service_logs","arguments":{"service":"public-api"}}
+{"schema_version":"1","status":"ok","payload":{"service":"public-api","lines":["mixed timeout and client errors"]},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"escalate_incident","arguments":{"reason_category":"ambiguous_evidence"}}
+{"schema_version":"1","status":"ok","payload":{"incident_status":"escalated","reason_category":"ambiguous_evidence"},"error_category":null,"idempotency_hit":false}

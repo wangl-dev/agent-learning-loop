@@ -1,0 +1,3 @@
+api=api.internal:8080
+worker=worker.internal:9000
+metrics=metrics.internal:9090

@@ -1,22 +1,54 @@
 # Agent Learning Loop
 
-> Status: **M5A batch evaluator / pre-alpha (`0.1.0.dev0`)**. Workspace, Incident, and DataOps
-> each have ten project-authored synthetic tasks with a fixed `6/2/2` split. The evaluator runs
-> scripted system contracts and fixed Runtime diagnostics; it is not a model benchmark.
+> Status: **v0.1 evidence candidate / pre-alpha package (`0.1.0.dev0`)**. The published evaluator
+> source is `a00da937`; the fixed 41-cell evidence is reproducible and read-only verifiable. This is
+> not a model benchmark, package release, or production reliability claim.
 
 Agent Learning Loop studies a narrow question: under the same task, actions, seed, and injected
 failure schedule, which Runtime safeguards improve recovery without causing duplicate side
-effects? M1 established the fault-free path. M2 now adds the first controlled comparison:
+effects? It uses three synthetic environments, fixed failure schedules, state verifiers, durable
+recovery, reference replay, and a batch evaluator that keeps expected failures in the denominator:
 
 ```text
-Task v1 + scripted Action → Runtime config and state machine → fixed failure schedule
-                          → retry / run-local idempotency → state Verifier
-                          → Runtime Event JSONL v2 + Runtime Result JSON v2
+Synthetic Task + scripted Action → Runtime config + fixed failure schedule
+                                 → retry / idempotency / checkpoint
+                                 → state Verifier + raw evidence
+                                 → normalized records + paired Eval
 ```
 
-The implementation follows `AGENT_LEARNING_LOOP_PROPOSAL.md` v1.10 in the separate planning
-repository. Milestones are reviewed against fresh evidence; contract, task, or metric changes are
-versioned instead of being silently absorbed.
+The canonical manifest keeps its generator's real package `0.1.0.dev0` and proposal contract
+`1.10`. The separate planning proposal advanced to v1.12 to define the byte-stable M5B evidence boundary;
+M5B did not change the evaluator, suite, oracle, fingerprints, or package version.
+
+## Canonical v0.1 evidence candidate
+
+The fixed bundle was generated from public source commit
+`a00da937e299c99031f7f4711da5dd3eeef50e22`. A second all-suite run in a new directory produced
+the same 167-file inventory and all 421,449 bytes. Its bundle fingerprint is
+`aefc0385680f827bbf45887a1ef335cb93f2826e16539e570f2f56c3028a8856`.
+
+| Evidence view | Exact result | Boundary |
+|---|---:|---|
+| Pre-registered oracle | 41/41 | Includes expected Runtime failures, not 41 successful tasks |
+| Scripted system correctness | 30/30 | Workspace, Incident, DataOps each 10/10; not model quality |
+| Verifier state success | 38/40 | State result where the field is Boolean |
+| Runtime completion | 6/10 | Execution-protocol result where the field is Boolean |
+| Fixed reliability pairs | 3 | Retry pairs recover; idempotency removes one duplicate write |
+| Recovery/replay diagnostics | 4/4 | M3B remains a `1/1 vertical-slice` diagnostic |
+
+The quickest check validates the committed evidence without executing an Environment or tool:
+
+```powershell
+python -m agent_learning_loop validate-eval `
+  --run-dir reports/v0.1/eval-bundle
+```
+
+See the [evidence index](reports/v0.1/README.md), the generated
+[report](reports/v0.1/eval-bundle/report.md), and the concrete
+[failure analysis](reports/v0.1/FAILURE_ANALYSIS.md). The strongest negative result is
+`lost.naive`: its final state verifier is true while Runtime completion is false. The paired
+idempotency mechanism reduces physical writes from 2 to 1 and duplicate side effects from 1 to 0
+for that fixed lost-result schedule. It does not establish production exactly-once behavior.
 
 ## Quick Start
 
@@ -144,14 +176,15 @@ Run all 41 cells with an explicit source commit and a directory that does not al
 ```powershell
 python -m agent_learning_loop run-eval `
   --suite all `
-  --source-commit 6006111c0ecd9d80ba405c3fab6fa90155db335d `
-  --output-dir run-output/eval
+  --source-commit a00da937e299c99031f7f4711da5dd3eeef50e22 `
+  --output-dir run-output/reproduced-v0.1
 
-python -m agent_learning_loop validate-eval --run-dir run-output/eval
+python -m agent_learning_loop validate-eval --run-dir run-output/reproduced-v0.1
 ```
 
 `--source-commit` is an explicit caller-supplied identity, not a revision that M5A resolves from
-Git. M5B is responsible for binding a canonical run to a checked Git revision.
+Git. The canonical evidence binds it to the published M5A source commit and preserves that exact
+identity in the manifest, every normalized record, the evidence index, and repo-level regression.
 
 `run-eval` exits 0 when every selected result matches its pre-registered oracle, 1 when it writes
 a structurally valid bundle containing an oracle deviation, and 2 for arguments, identity, or
@@ -178,8 +211,9 @@ are accepted. It then regenerates normalized records, aggregation, and Markdown,
 artifact hash, and confirms source bytes did not change. It does not call Policy, an Environment,
 tools, runners, subprocesses, SQLite, a temporary database, or the network. SHA-256 catches
 accidental or inconsistent changes but is not a signature against someone able to rewrite an
-entire bundle. The generated Markdown is a run-local evidence view, not the frozen canonical v0.1
-report.
+entire bundle. The generated Markdown under `reports/v0.1/eval-bundle` is the deterministic view
+selected for the v0.1 evidence candidate. It remains subordinate to the full manifest, records,
+summary, and raw inventory; it is not a standalone screenshot or manually edited scorecard.
 [ADR 0009](docs/decisions/0009-m5a-eval-bundle-contract.md) records these boundaries.
 
 Run the same transient-read schedule first with the fail-fast baseline, then with bounded retry
@@ -460,15 +494,16 @@ command creates ignored wheel and source distributions under `dist/`.
   development process from misusing the split.
 - Existing `run-runtime` remains the M2 v2 path and still writes its JSONL at normal run end.
 - The Policy is scripted; there is no model adapter or model-quality claim.
-- The three paired cases are regression evidence, not an M5 batch experiment, statistical report,
-  p50/p95 benchmark, or model evaluation.
+- The three paired cases are seven fixed Runtime cells, not a statistical sample, p50/p95
+  benchmark, or model evaluation. Their exact deltas do not support population-level claims.
 - GitHub Actions checks pushes and pull requests; it is a project gate, not deployment evidence.
 - Incident v1 is a deterministic in-memory safety contract, not a production runbook, real
   authorization system, or model Incident evaluation.
 - DataOps v1 uses task-local temporary SQLite and project-authored fixtures. It is not a production
   database integration, SQL agent, performance benchmark, privacy system, or model DataOps
   evaluation. It does not connect to a real database or retain database files.
-- Post-training export, training, M5 batch Eval, and the simulated FDE case remain out of scope.
+- Post-training export, model training, the simulated FDE case, version tag, and GitHub Release
+  remain out of scope for this evidence candidate.
 - Incident log masking covers a small reviewed set of assignment and Bearer-token patterns. It is
   a regression guard for the synthetic corpus, not general secret detection or log DLP.
 

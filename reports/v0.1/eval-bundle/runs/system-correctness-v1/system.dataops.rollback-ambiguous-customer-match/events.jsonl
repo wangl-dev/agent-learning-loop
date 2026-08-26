@@ -1,0 +1,6 @@
+{"schema_version":"1","tool_name":"begin_transaction","arguments":{"transaction_id":"tx-ambiguous"}}
+{"schema_version":"1","status":"ok","payload":{"transaction_state":"active"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"update_rows","arguments":{"transaction_id":"tx-ambiguous","operation_id":"op-ambiguous","table":"records","where":{"tenant_id":"tenant-a"},"values":{"value":"merged"},"expected_match_count":1}}
+{"schema_version":"1","status":"rejected","payload":{},"error_category":"cardinality_mismatch","idempotency_hit":false}
+{"schema_version":"1","tool_name":"rollback_transaction","arguments":{"transaction_id":"tx-ambiguous","reason_category":"ambiguous_match"}}
+{"schema_version":"1","status":"ok","payload":{"terminal_state":"rolled_back","committed_row_count":0},"error_category":null,"idempotency_hit":false}

@@ -117,5 +117,10 @@ jobs:
           python -m agent_learning_loop validate-eval \
             --run-dir "$RUNNER_TEMP/m5a-eval"
 
+      - name: Validate committed canonical v0.1 evidence
+        run: >-
+          python -m agent_learning_loop validate-eval
+          --run-dir reports/v0.1/eval-bundle
+
       - name: Build distributions
         run: python -m build --no-isolation

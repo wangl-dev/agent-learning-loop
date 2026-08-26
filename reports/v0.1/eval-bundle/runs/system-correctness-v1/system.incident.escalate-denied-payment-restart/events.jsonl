@@ -1,0 +1,4 @@
+{"schema_version":"1","tool_name":"request_approval","arguments":{"tool_name":"restart_simulated_service","target":"payment","arguments":{"service":"payment"}}}
+{"schema_version":"1","status":"rejected","payload":{},"error_category":"approval_denied","idempotency_hit":false}
+{"schema_version":"1","tool_name":"escalate_incident","arguments":{"reason_category":"approval_denied"}}
+{"schema_version":"1","status":"ok","payload":{"incident_status":"escalated","reason_category":"approval_denied"},"error_category":null,"idempotency_hit":false}

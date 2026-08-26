@@ -1,0 +1,4 @@
+Release: M1
+Items:
+- schema
+- workspace

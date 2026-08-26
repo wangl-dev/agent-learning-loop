@@ -1,0 +1,76 @@
+{
+  "schema_version": "1",
+  "checkpoint_id": "09ad1d39e04cc6ba0f41bb572a534cfdd9a9181176fe14eef54195a66ec259f8",
+  "run_id": "eval-recovery-checkpoint-on",
+  "identity": {
+    "schema_version": "3",
+    "task_id": "workspace.fix-config",
+    "fixture_id": "workspace.fix-config.v1",
+    "fixture_fingerprint": "1946b8c1325d02ebdc65714472d8426531e463da88a8604efda609c400cd4103",
+    "config_fingerprint": "16009354e4cb6df0ffb3b75d4f835275fc0a8a57e4544ca99e447810f6e6c7b8",
+    "failure_schedule_id": "workspace.lost-write-result.v1",
+    "failure_schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+    "interruption_schedule_id": "workspace.post-write-boundary.v1",
+    "interruption_schedule_fingerprint": "4e419fb3f5514acd130f1a08e6ee5e5b7b48ecc187f43cd7aeabd595a1ad5db5",
+    "checkpointing": "on",
+    "seed": 303
+  },
+  "runtime_config": {
+    "schema_version": "2",
+    "mode": "safeguarded",
+    "max_steps": 8,
+    "max_tool_calls": 12,
+    "timeout_seconds": 30.0,
+    "retry_enabled": true,
+    "max_attempts": 2,
+    "retry_backoff_seconds": [
+      0.0
+    ],
+    "idempotency_enabled": true,
+    "schedule_id": "workspace.lost-write-result.v1",
+    "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+    "seed": 303
+  },
+  "resume_step": 2,
+  "runtime_state": "OBSERVING",
+  "resume_target": "DECIDING",
+  "usage": {
+    "schema_version": "3",
+    "steps": 2,
+    "tool_calls": 3,
+    "physical_executions": 2,
+    "physical_write_executions": 1,
+    "side_effect_executions": 1,
+    "duplicate_side_effects": 0,
+    "retries": 1,
+    "idempotency_hits": 1,
+    "backoff_seconds": 0.0,
+    "elapsed_seconds": 0.0
+  },
+  "failure_tracker": {
+    "occurrences": [
+      {
+        "tool_name": "read_text",
+        "count": 1
+      },
+      {
+        "tool_name": "write_text",
+        "count": 2
+      }
+    ],
+    "injection_count": 1
+  },
+  "idempotency_entries": [
+    {
+      "key": "59ec92fa7ec93a11fb1794b05aa32d76a47acf6310284b961089ba67397ff6f0",
+      "request_fingerprint": "16cb3dbed1e6ba7d6579f9bc0e646dea21b73aac11d0d3fb47882daf7d3f962f",
+      "tool_name": "write_text",
+      "result_path": "app.conf",
+      "bytes_written": 26
+    }
+  ],
+  "workspace_digest": "843fc4cacbf1285a9272abe9ccf1b228aa55080467f71217cc75fc00288e8ffe",
+  "journal_record_count": 20,
+  "journal_final_hash": "c7efd365a8bb8b0579d6a17a8ebd54646d1ecce092d87880807d6e464068e6b2",
+  "segment": 0
+}

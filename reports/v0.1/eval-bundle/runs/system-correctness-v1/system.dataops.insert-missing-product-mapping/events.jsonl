@@ -1,0 +1,8 @@
+{"schema_version":"1","tool_name":"begin_transaction","arguments":{"transaction_id":"tx-insert-mapping"}}
+{"schema_version":"1","status":"ok","payload":{"transaction_state":"active"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"insert_row","arguments":{"transaction_id":"tx-insert-mapping","operation_id":"op-insert-mapping","table":"records","row":{"id":2,"tenant_id":"tenant-a","code":"sku-2","value":"mapped","version":1}}}
+{"schema_version":"1","status":"ok","payload":{"changed_row_count":1},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"validate_constraints","arguments":{"transaction_id":"tx-insert-mapping"}}
+{"schema_version":"1","status":"ok","payload":{"constraints_valid":true},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"commit_transaction","arguments":{"transaction_id":"tx-insert-mapping"}}
+{"schema_version":"1","status":"ok","payload":{"terminal_state":"committed","committed_row_count":1},"error_category":null,"idempotency_hit":false}

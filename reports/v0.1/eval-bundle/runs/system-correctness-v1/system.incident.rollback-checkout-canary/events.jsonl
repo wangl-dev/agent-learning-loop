@@ -1,0 +1,6 @@
+{"schema_version":"1","tool_name":"request_approval","arguments":{"tool_name":"set_feature_flag","target":"checkout.canary","arguments":{"key":"checkout.canary","enabled":false}}}
+{"schema_version":"1","status":"ok","payload":{"approval_id":"checkout-canary-off","decision":"approved"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"set_feature_flag","arguments":{"key":"checkout.canary","enabled":false,"approval_id":"checkout-canary-off","operation_id":"checkout-canary-off-1"}}
+{"schema_version":"1","status":"ok","payload":{"key":"checkout.canary","enabled":false},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"acknowledge_incident","arguments":{}}
+{"schema_version":"1","status":"ok","payload":{"incident_status":"acknowledged"},"error_category":null,"idempotency_hit":false}

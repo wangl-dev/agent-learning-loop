@@ -1,0 +1,74 @@
+{
+  "schema_version": "2",
+  "run_id": "eval-transient-naive",
+  "task_id": "workspace.build-summary",
+  "terminal_state": "FAILED",
+  "config": {
+    "schema_version": "2",
+    "mode": "naive",
+    "max_steps": 8,
+    "max_tool_calls": 12,
+    "timeout_seconds": 30.0,
+    "retry_enabled": false,
+    "max_attempts": 1,
+    "retry_backoff_seconds": [],
+    "idempotency_enabled": false,
+    "schedule_id": "workspace.transient-read.v1",
+    "schedule_fingerprint": "118f5616a9386885dcfaa3d0e94084866532aacb5177c2e76b008e3af10afc8c",
+    "seed": 101
+  },
+  "error": {
+    "schema_version": "2",
+    "category": "tool_transient",
+    "phase": "executing_tool",
+    "retryable": true,
+    "step_index": 1,
+    "attempt": 1,
+    "tool_name": "read_text",
+    "detail": "controlled transient tool failure"
+  },
+  "verifier": {
+    "schema_version": "1",
+    "passed": false,
+    "score": 0.0,
+    "checks": [
+      {
+        "name": "required_state",
+        "passed": false,
+        "detail": "required file state differed"
+      },
+      {
+        "name": "unchanged_state",
+        "passed": true,
+        "detail": "protected files stayed unchanged"
+      },
+      {
+        "name": "forbidden_side_effects",
+        "passed": true,
+        "detail": "forbidden paths stayed absent"
+      },
+      {
+        "name": "mutation_scope",
+        "passed": true,
+        "detail": "all mutations stayed in scope"
+      }
+    ]
+  },
+  "usage": {
+    "schema_version": "2",
+    "steps": 1,
+    "tool_calls": 1,
+    "physical_executions": 0,
+    "side_effect_executions": 0,
+    "duplicate_side_effects": 0,
+    "retries": 0,
+    "idempotency_hits": 0,
+    "backoff_seconds": 0.0,
+    "elapsed_seconds": 0.0
+  },
+  "schedule_id": "workspace.transient-read.v1",
+  "schedule_fingerprint": "118f5616a9386885dcfaa3d0e94084866532aacb5177c2e76b008e3af10afc8c",
+  "events_file": "events.jsonl",
+  "workspace_dir": "workspace",
+  "limitation": "Controlled synchronous M2 Runtime experiment; no model or production timeout claim."
+}

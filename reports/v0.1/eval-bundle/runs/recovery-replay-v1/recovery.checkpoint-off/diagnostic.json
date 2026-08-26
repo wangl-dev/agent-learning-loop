@@ -1,0 +1,22 @@
+{
+  "schema_version": "1",
+  "cell_id": "recovery.checkpoint-off",
+  "diagnostic": "checkpoint_off",
+  "passed": true,
+  "verifier_state_success": "N/A",
+  "runtime_completion_success": false,
+  "terminal": "CONTROLLED_INTERRUPTION_NO_CHECKPOINT",
+  "error_category": "resume_refused",
+  "source_result": null,
+  "replay_result": null,
+  "source_unchanged": true,
+  "second_process_used": true,
+  "second_process_exit_code": 2,
+  "policy_calls": null,
+  "physical_executions": 2,
+  "physical_write_executions": 1,
+  "duplicate_side_effects": 0,
+  "vertical_slice_matches": null,
+  "vertical_slice_total": null,
+  "reference_match": null
+}

@@ -1,0 +1,6 @@
+{"schema_version":"1","tool_name":"request_approval","arguments":{"tool_name":"set_feature_flag","target":"catalog.cache_fallback","arguments":{"key":"catalog.cache_fallback","enabled":true}}}
+{"schema_version":"1","status":"ok","payload":{"approval_id":"catalog-fallback-on","decision":"approved"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"set_feature_flag","arguments":{"key":"catalog.cache_fallback","enabled":true,"approval_id":"catalog-fallback-on","operation_id":"catalog-fallback-on-1"}}
+{"schema_version":"1","status":"ok","payload":{"key":"catalog.cache_fallback","enabled":true},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"acknowledge_incident","arguments":{}}
+{"schema_version":"1","status":"ok","payload":{"incident_status":"acknowledged"},"error_category":null,"idempotency_hit":false}

@@ -1,0 +1,10 @@
+{"schema_version":"1","tool_name":"update_rows","arguments":{"transaction_id":"tx-guard","operation_id":"op-transactionless","table":"records","where":{"id":1},"values":{"value":"unsafe"},"expected_match_count":1}}
+{"schema_version":"1","status":"rejected","payload":{},"error_category":"transaction_required","idempotency_hit":false}
+{"schema_version":"1","tool_name":"begin_transaction","arguments":{"transaction_id":"tx-guard"}}
+{"schema_version":"1","status":"ok","payload":{"transaction_state":"active"},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"update_rows","arguments":{"transaction_id":"tx-guard","operation_id":"op-guarded-repair","table":"records","where":{"id":1,"tenant_id":"tenant-a"},"values":{"value":"repaired"},"expected_match_count":1}}
+{"schema_version":"1","status":"ok","payload":{"matched_row_count":1,"changed_row_count":1},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"validate_constraints","arguments":{"transaction_id":"tx-guard"}}
+{"schema_version":"1","status":"ok","payload":{"constraints_valid":true},"error_category":null,"idempotency_hit":false}
+{"schema_version":"1","tool_name":"commit_transaction","arguments":{"transaction_id":"tx-guard"}}
+{"schema_version":"1","status":"ok","payload":{"terminal_state":"committed","committed_row_count":1},"error_category":null,"idempotency_hit":false}

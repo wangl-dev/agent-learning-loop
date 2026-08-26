@@ -1,0 +1,3 @@
+- [x] lint
+- [ ] tests
+- [x] package

@@ -1,0 +1,719 @@
+{
+  "schema_version": "1",
+  "source_commit": "a00da937e299c99031f7f4711da5dd3eeef50e22",
+  "package_version": "0.1.0.dev0",
+  "proposal_version": "1.10",
+  "selection": {
+    "suite": "all",
+    "environment": null,
+    "split": null,
+    "tag": null,
+    "pair": null,
+    "candidate_total": 41,
+    "selected_total": 41,
+    "cell_ids": [
+      "system.dataops.atomic-parent-child-migration",
+      "system.dataops.correct-order-status",
+      "system.dataops.detect-stale-version-precondition",
+      "system.dataops.insert-missing-product-mapping",
+      "system.dataops.normalize-legacy-regions",
+      "system.dataops.preserve-neighbor-tenant",
+      "system.dataops.reject-transactionless-update",
+      "system.dataops.rollback-ambiguous-customer-match",
+      "system.dataops.rollback-unique-key-conflict",
+      "system.dataops.sync-daily-summary",
+      "system.incident.acknowledge-auto-recovered-search",
+      "system.incident.dedupe-notification-restart",
+      "system.incident.enable-catalog-cache-fallback",
+      "system.incident.escalate-ambiguous-api-errors",
+      "system.incident.escalate-denied-payment-restart",
+      "system.incident.isolate-inventory-config-change",
+      "system.incident.recover-auth-dependency-chain",
+      "system.incident.reject-premature-checkout-ack",
+      "system.incident.restart-stuck-order-worker",
+      "system.incident.rollback-checkout-canary",
+      "system.workspace.build-deploy-manifest",
+      "system.workspace.build-summary",
+      "system.workspace.create-owner-record",
+      "system.workspace.fix-config",
+      "system.workspace.merge-changelog",
+      "system.workspace.normalize-checklist",
+      "system.workspace.reconcile-inventory",
+      "system.workspace.repair-service-map",
+      "system.workspace.update-route",
+      "system.workspace.update-status",
+      "transient.naive",
+      "transient.retry",
+      "timeout.naive",
+      "timeout.retry",
+      "lost.naive",
+      "lost.retry",
+      "lost.idempotent",
+      "recovery.checkpoint-off",
+      "recovery.checkpoint-on",
+      "recovery.reference",
+      "recovery.action-replay"
+    ]
+  },
+  "suite_fingerprints": {
+    "recovery-replay-v1": "4fb499de8c42ac2d78aaa962c6e6fda2419e7df5fda45c64287d5b78d23b9a97",
+    "runtime-reliability-v1": "a8c5e2389ce1bbe31ae7895ecbfe211be3460aee40563c4c13efb0523d89ac2e",
+    "system-correctness-v1": "624dfb19c2b9575056dd9d24a92e3dcb4852617eb538ee3541fb28cae933488e"
+  },
+  "artifacts": [
+    {
+      "path": "runs/recovery-replay-v1/recovery.action-replay/diagnostic.json",
+      "sha256": "97920ffc6643a44f7286fdb97766c3ceb9647a15bc8006e4dedacbfb4cc9853b"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.action-replay/replay/replay-result.json",
+      "sha256": "795f05f665f4b2096b17060d93e78cef38ef186f5370d270e9b9a8ae9823af63"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.action-replay/replay/workspace/app.conf",
+      "sha256": "4f722a0dd0ce4acfdb18962fb412987746e76b06cd138d5579eaa63898dbc720"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.action-replay/replay/workspace/notes.txt",
+      "sha256": "b0572907238f11e8bf64ef8757a809c16602cf5a143879617a5024c9e2e82ed0"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.action-replay/source/actions.jsonl",
+      "sha256": "698e66b4a03878a36817280758e59933b522bcd485725d38e9f45d92a4a69bfc"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.action-replay/source/events.jsonl",
+      "sha256": "ad7eca55c5e74a1edc04248dbf7f0238238ec996909f4e1a426fa687386d7751"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.action-replay/source/result.json",
+      "sha256": "94660b2af9872d91afaa0d009725b803d3c736d0c1cfb2da50ffc36db230b818"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.action-replay/source/workspace/app.conf",
+      "sha256": "4f722a0dd0ce4acfdb18962fb412987746e76b06cd138d5579eaa63898dbc720"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.action-replay/source/workspace/notes.txt",
+      "sha256": "b0572907238f11e8bf64ef8757a809c16602cf5a143879617a5024c9e2e82ed0"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-off/diagnostic.json",
+      "sha256": "f0d042109e8711023217540ba2529d319a0475807c50ba6e94bae0fe7e9bdd04"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-off/source/events.jsonl",
+      "sha256": "47e0ecbbc35f517cc63d81e20f6dda868bc558914af50a3b673df5ae4f833bfe"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-off/source/workspace/app.conf",
+      "sha256": "4f722a0dd0ce4acfdb18962fb412987746e76b06cd138d5579eaa63898dbc720"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-off/source/workspace/notes.txt",
+      "sha256": "b0572907238f11e8bf64ef8757a809c16602cf5a143879617a5024c9e2e82ed0"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-on/diagnostic.json",
+      "sha256": "3cb7deaa04497f2a9073a0a2e3de53f62d0ad7381069e6ccef61aa274b8af331"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-on/source/checkpoint.json",
+      "sha256": "0b45b83fb3858e60af28314ecb6d5da735958d7b192a3942fb2b68653d790761"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-on/source/events.jsonl",
+      "sha256": "9cc28693323cf97f3d20855717c8081ded5012c97b25929df65a2a5d7679d228"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-on/source/result.json",
+      "sha256": "4ac359054623b95adba4853e24e1442ddbe4489b8d3327589e620461ce78c56c"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-on/source/workspace/app.conf",
+      "sha256": "4f722a0dd0ce4acfdb18962fb412987746e76b06cd138d5579eaa63898dbc720"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.checkpoint-on/source/workspace/notes.txt",
+      "sha256": "b0572907238f11e8bf64ef8757a809c16602cf5a143879617a5024c9e2e82ed0"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.reference/diagnostic.json",
+      "sha256": "68c758c7558df89333fdd12455daaa36d935c91985b6693e03646fee3b2b5489"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.reference/source/events.jsonl",
+      "sha256": "2fefdfe576ed134cd30533037ea601ed58f22bc344bfc3f77aaf1cacde05bc81"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.reference/source/result.json",
+      "sha256": "d4a5caeae895e69e9f658a47f7b81fd38a3e35cd69c3e7f6255e79baa38dc367"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.reference/source/workspace/app.conf",
+      "sha256": "4f722a0dd0ce4acfdb18962fb412987746e76b06cd138d5579eaa63898dbc720"
+    },
+    {
+      "path": "runs/recovery-replay-v1/recovery.reference/source/workspace/notes.txt",
+      "sha256": "b0572907238f11e8bf64ef8757a809c16602cf5a143879617a5024c9e2e82ed0"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.idempotent/events.jsonl",
+      "sha256": "0c8f75ced0eaec164276840ddeaeb884765d6020e7060c2fb06bc47c71c73f05"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.idempotent/result.json",
+      "sha256": "22723be7b007cdaf7a1bdd6613eb7fa7f90445b523883df994db430fa2fbb39a"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.idempotent/workspace/app.conf",
+      "sha256": "4f722a0dd0ce4acfdb18962fb412987746e76b06cd138d5579eaa63898dbc720"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.idempotent/workspace/notes.txt",
+      "sha256": "b0572907238f11e8bf64ef8757a809c16602cf5a143879617a5024c9e2e82ed0"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.naive/events.jsonl",
+      "sha256": "1a74786d519cf2f7c96a6d6beba491835d1caac61eb84520e39d773146d86bb1"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.naive/result.json",
+      "sha256": "8635cbc14dc4a8d9f7298dae7ad2f93b4409ca3f6a9035850e396df8d5b7895a"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.naive/workspace/app.conf",
+      "sha256": "4f722a0dd0ce4acfdb18962fb412987746e76b06cd138d5579eaa63898dbc720"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.naive/workspace/notes.txt",
+      "sha256": "b0572907238f11e8bf64ef8757a809c16602cf5a143879617a5024c9e2e82ed0"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.retry/events.jsonl",
+      "sha256": "8b64bc5711707b9669e1cd2df4f04c3dad639ac2b6e055e8850d2594eebf478a"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.retry/result.json",
+      "sha256": "ac60849d08e646c331d3b95fac62489bfc423b75c9c0de39b5533ec738c6fd0f"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.retry/workspace/app.conf",
+      "sha256": "4f722a0dd0ce4acfdb18962fb412987746e76b06cd138d5579eaa63898dbc720"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/lost.retry/workspace/notes.txt",
+      "sha256": "b0572907238f11e8bf64ef8757a809c16602cf5a143879617a5024c9e2e82ed0"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/timeout.naive/events.jsonl",
+      "sha256": "6c8cbe9877a1d2a5dcffc5d70f216cba117317f78ea8465ea4f0098fb59fa86a"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/timeout.naive/result.json",
+      "sha256": "22b9f095fc85773b1beb09e232d0c9e3a4a0f926422c4aa160fb8cd89768eb37"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/timeout.naive/workspace/state/audit.log",
+      "sha256": "59134a4054b27a3fc30e1ac81d9b9168dc0561f65982151324a021fe8ce88d06"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/timeout.naive/workspace/state/status.txt",
+      "sha256": "52d26753462488ad21852bc6718e21b84835f53765304d0a1e1b89d05a2a71b1"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/timeout.retry/events.jsonl",
+      "sha256": "12bbf3d57479614ca565cde322de97ed22f57ce16ec527286c842cfded0c9ac6"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/timeout.retry/result.json",
+      "sha256": "999006362aecb0d4db297b48a77297340481fb885834f7a3cd3b1629ecb60f24"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/timeout.retry/workspace/state/audit.log",
+      "sha256": "59134a4054b27a3fc30e1ac81d9b9168dc0561f65982151324a021fe8ce88d06"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/timeout.retry/workspace/state/status.txt",
+      "sha256": "ed1a545bb85e55816bbf9566b028b2a0bc456b88f49f6f266c0401048824194b"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/transient.naive/events.jsonl",
+      "sha256": "f3f4fdfff2bab610fae53b8ace01cd0bf6ddd3f54e61d28382959f0d02b44e0b"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/transient.naive/result.json",
+      "sha256": "5ff60bab5be0a168b1ca0725f509b381b286de0f4850ec42490cc640702764e4"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/transient.naive/workspace/input/items.txt",
+      "sha256": "cf74d81d15806ca5909337a5458e2e2f82f7bec6afe04b2cf0baee7f30153f7a"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/transient.naive/workspace/input/title.txt",
+      "sha256": "bad3c9104df04771c5cae83c48602e1279c44e1f980283cfdc18a530ca31486f"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/transient.retry/events.jsonl",
+      "sha256": "61a05fa83e7eff966c0aaeeb8df766fdd8fc0863bd9118ac79cb60673fa8a3b0"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/transient.retry/result.json",
+      "sha256": "73fcc4d21384f90cce15cdb6d2584f370885f3b73af034c5735755b6dac458c3"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/transient.retry/workspace/input/items.txt",
+      "sha256": "cf74d81d15806ca5909337a5458e2e2f82f7bec6afe04b2cf0baee7f30153f7a"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/transient.retry/workspace/input/title.txt",
+      "sha256": "bad3c9104df04771c5cae83c48602e1279c44e1f980283cfdc18a530ca31486f"
+    },
+    {
+      "path": "runs/runtime-reliability-v1/transient.retry/workspace/output/summary.txt",
+      "sha256": "fcde31f39a94885f497ed960b85d948e69dbffe83fb1e2dc2e790e28375d0ab5"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.atomic-parent-child-migration/audit.jsonl",
+      "sha256": "908387877d296abe81ad88dbe1adbf9f2248b43ff70a273233f8a74955806854"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.atomic-parent-child-migration/events.jsonl",
+      "sha256": "e7b002d82ee602489703f060c04f993f8cb3df6b862c94217f3791247a9b3da0"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.atomic-parent-child-migration/result.json",
+      "sha256": "47e161c15dd32b809c9d98f677d62ccacecf0b181000c213642a39e179220184"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.correct-order-status/audit.jsonl",
+      "sha256": "3e807d3fb67b765a9777677d075687110c71400d41ea8cc362a4a254fb809d55"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.correct-order-status/events.jsonl",
+      "sha256": "25aa493a223f529b7117971b9840f876010ec9d51f2a2728155d5565e2161196"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.correct-order-status/result.json",
+      "sha256": "5b79f859f5983fd99c4d332ceacb321cef27a31c823cf3ae0a12902a0c0ad219"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.detect-stale-version-precondition/audit.jsonl",
+      "sha256": "b0addf406991b0c16789e3ed7b8e6d4eff29a1b72845b4e917da8397dc649d2f"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.detect-stale-version-precondition/events.jsonl",
+      "sha256": "dfa9a2bbf59bc780e782fde94cda95ed68cd85d3bda924994abae482ddf208f8"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.detect-stale-version-precondition/result.json",
+      "sha256": "3a2e11ae5aac15b6ffba5bff3aaf6b4e7cd084e1d7b8f26c9f44489328a03f9d"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.insert-missing-product-mapping/audit.jsonl",
+      "sha256": "e0c2eb308adde42188eb4bd4c85625cf2108a1f73c886ad2525b12aa3045cf53"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.insert-missing-product-mapping/events.jsonl",
+      "sha256": "839c46422e5b16a5f0f00ce102358ecd5849d7d147916f5b891656f4ba30a342"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.insert-missing-product-mapping/result.json",
+      "sha256": "9d218cfebb9659b911197bd71fa67a3641fa274b70def7eca3141929a93abde7"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.normalize-legacy-regions/audit.jsonl",
+      "sha256": "957d955147959ecb54b50f4a002cb780cf7398af66227232d4a9b5809ee34561"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.normalize-legacy-regions/events.jsonl",
+      "sha256": "0ad0147deff608ad3dc46eb0f05d8d948b4a680c4707907fae34a02e7689bf13"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.normalize-legacy-regions/result.json",
+      "sha256": "b6d18247d158acfd487749b30137f553411f9fa88db0157537152597ae9f692f"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.preserve-neighbor-tenant/audit.jsonl",
+      "sha256": "6c7acbfa0a19ca2ff646e3ac48eb6abe42f24209c10ced23b0c43c6d1b777309"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.preserve-neighbor-tenant/events.jsonl",
+      "sha256": "8edeb19642c75a3962e1e1211d54e172edd72516aee18cb26ba36a9fd9ef718e"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.preserve-neighbor-tenant/result.json",
+      "sha256": "af72dfb781d78ae57073715ca9e140168364b5ea639b3a27d663fd633e3e2b0a"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.reject-transactionless-update/audit.jsonl",
+      "sha256": "4c43f7d76134a76dc47e0540da4f005b1dd46bc19c2b4ef9060e912f57bda0eb"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.reject-transactionless-update/events.jsonl",
+      "sha256": "bc74458027d0f16505ac61c04d1a99daa1eb09fda1667130e31eb52524bacc00"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.reject-transactionless-update/result.json",
+      "sha256": "7dd926fed241ac81b2613f0b0f4678b039047c6b1a1e42f4a0edc82cfb75f877"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.rollback-ambiguous-customer-match/audit.jsonl",
+      "sha256": "7cc05a8c700bce847c047178d99e5238af5fce8f2b99ea5499fd96eda6998c4a"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.rollback-ambiguous-customer-match/events.jsonl",
+      "sha256": "906e1d1b96d0bf050658cb27ed77b05759a8c961439b00273b96b44f7e14f56e"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.rollback-ambiguous-customer-match/result.json",
+      "sha256": "6edeeeec0a36bb961fc80f035db056f9a8e930398f195d2e0c0d0eee3052a2ff"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.rollback-unique-key-conflict/audit.jsonl",
+      "sha256": "31420ae4d2cd7e76a65e4496a0e3bea42e22b324b70b4814317ec671f40fcb0e"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.rollback-unique-key-conflict/events.jsonl",
+      "sha256": "b2e1f96f37a1696d9220545ff351d9617e491026fb56acb873c3152d685dadbe"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.rollback-unique-key-conflict/result.json",
+      "sha256": "fdc9e66061bdc9a1f49107321a6941d500798f811e5518488ed8644ce9e80bdf"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.sync-daily-summary/audit.jsonl",
+      "sha256": "3bedf9a047ad68227bf7adeafd98f98a435f2b6eae7e03130acd407706665912"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.sync-daily-summary/events.jsonl",
+      "sha256": "8ab70e335c88c9826c3cad4a526181ef4e5a202aa7716394d7e67f3dfedce83f"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.dataops.sync-daily-summary/result.json",
+      "sha256": "50aecbcbda409506b3f314eb43552d8cc48db6ec68d9e90af1a0a3ced4896072"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.acknowledge-auto-recovered-search/audit.jsonl",
+      "sha256": "b7c2665d6b36df5cdc8fd69d0d048ce4d3202dac33ec6635505b4668e04ce5c2"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.acknowledge-auto-recovered-search/events.jsonl",
+      "sha256": "845a9c5495066a78573afd391f19b2226d9a8f79063ee02eba58fdec6b942e10"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.acknowledge-auto-recovered-search/result.json",
+      "sha256": "94f240f15616c2f222b65b1fbd0f08e3f009261ee15be834339b15f836902953"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.dedupe-notification-restart/audit.jsonl",
+      "sha256": "1006268b68edb2c8b824f33f8eb9bba7acf5bcb2672d5f23a03b4f6820574648"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.dedupe-notification-restart/events.jsonl",
+      "sha256": "f82ffcef5e92c68d3342d68780792cbbf4e4d51e51dd7c01fa2ab0f0953c3815"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.dedupe-notification-restart/result.json",
+      "sha256": "9019e60f564517a3f930ee8636825acaec00f0525da971aa245a5dcfae7f95e3"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.enable-catalog-cache-fallback/audit.jsonl",
+      "sha256": "da50133b055adb1d19ccf6223ff8c02673089f3e4cf29490ecc414c4493e682b"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.enable-catalog-cache-fallback/events.jsonl",
+      "sha256": "eb7221570a9c9e0326a4744f7995e06a29fc1b444fc80f8ee8ece69a9aa90673"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.enable-catalog-cache-fallback/result.json",
+      "sha256": "61d9b5587f118f50f9c6d8f51e984560c2978470c21f8c234bf2011f4de594bf"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-ambiguous-api-errors/audit.jsonl",
+      "sha256": "df847ab4c91f394d345270eb0c95df2e89db24ed6d4c7ac5141761f2f76d87d6"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-ambiguous-api-errors/events.jsonl",
+      "sha256": "dd7c9e4b314597c9ea08b86fadea18fb348f6a4743719e7739589fcee0b7ca1d"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-ambiguous-api-errors/result.json",
+      "sha256": "b328308a2e952e1042d85d29aa009d5589e918d752bedf8a5a8d8faf5eaca06f"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-denied-payment-restart/audit.jsonl",
+      "sha256": "3c51c4b908462f0d7fbfcd7c56d449488507cf4f0850b475e80ddac0e74142bc"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-denied-payment-restart/events.jsonl",
+      "sha256": "50bd5e4b464e44e70e4995417501d3c979e93b06a2b023802185e68ec71f2dc3"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.escalate-denied-payment-restart/result.json",
+      "sha256": "9058cee5c3596b37cb8fb3bd7d39f28de188390599c160aa6ccb6e059b062833"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.isolate-inventory-config-change/audit.jsonl",
+      "sha256": "ac7869d164fb2853e2242b4ea40b5825ad63e5e406cb4b9651016da6c7e25bf0"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.isolate-inventory-config-change/events.jsonl",
+      "sha256": "cf86ef0e4035c79fefe6444abfe2d46355d6a02c0bcc3484e64f7aaf80d3e291"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.isolate-inventory-config-change/result.json",
+      "sha256": "acb525e0b72addbfc9d17ad44c9a4ddac11332783e3a5c18d03bb35d73e68e30"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.recover-auth-dependency-chain/audit.jsonl",
+      "sha256": "26199b3561dc16469df8eb27e85fb21c68d33bd0d8a5f9ee1af8bd2fc255d9e2"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.recover-auth-dependency-chain/events.jsonl",
+      "sha256": "bd98ede3d424bd6b9938477f9ecaf05a6decd68a928f5e33df73b500a1df01ae"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.recover-auth-dependency-chain/result.json",
+      "sha256": "e478311c4cc7e97093c77b8a3f1d4619ece8727d98c2f80c1eb0e5ef79f72d23"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.reject-premature-checkout-ack/audit.jsonl",
+      "sha256": "ebcbba20e3ceb744eb9d7cdd4d91be88e224b434597aa20ae70eb3da0e9804fc"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.reject-premature-checkout-ack/events.jsonl",
+      "sha256": "38caaee7c0fc7c82d0051797838cd51f5f5b8c4b4bfc1966d1bc7ef04c06c5dc"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.reject-premature-checkout-ack/result.json",
+      "sha256": "7e9e01169bfdac929b83109ccc515a2394fad407a380189fbeb8fa70d0841142"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.restart-stuck-order-worker/audit.jsonl",
+      "sha256": "ff7bcb55c0593e812197ecfa12b8c722c8c540b0ea9cf60e272c2693be9198a8"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.restart-stuck-order-worker/events.jsonl",
+      "sha256": "a867c0a36c455d9f1aa19a27e283c1aa71340b0ce5467831776dc41bbf1f0d38"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.restart-stuck-order-worker/result.json",
+      "sha256": "1d2d345dd37eae03fcb2a5826575012a59b33cc8dcac89dad29b70ab981b2fee"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.rollback-checkout-canary/audit.jsonl",
+      "sha256": "4f24629aa30dd859a5ce0fea9c3d4ad04e9762cd6c476dbe2bc82b9762fca336"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.rollback-checkout-canary/events.jsonl",
+      "sha256": "cc49158a4c86afda63ebb414e52095fe49a92457d476e88e28005e6c2a53ef56"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.incident.rollback-checkout-canary/result.json",
+      "sha256": "bf610a10fd8c37742038743f1856c968a8e654c1a7a085dc874dd0afe51de5a6"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-deploy-manifest/events.jsonl",
+      "sha256": "10fee0b67e739787ced77c3749e86ae47aa59d0b1402f4f4ea9a4345d1d0644b"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-deploy-manifest/result.json",
+      "sha256": "ec5a89dc621522cd08051c2fb5fbdf2beb48400bf1ddb7c42860fe0cc522b4e7"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-deploy-manifest/workspace/deploy/image.txt",
+      "sha256": "404f336fecefb1ecd5bc73ed5c20beaf6bb2d61b85259ba1c3b9a10cf9661aa9"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-deploy-manifest/workspace/deploy/notes.txt",
+      "sha256": "0cf76352827d3b6b5ef5cd32cc13c5e12fca845f6fd7ce4e8ecdf109c306b5e8"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-deploy-manifest/workspace/deploy/replicas.txt",
+      "sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-deploy-manifest/workspace/deploy/service.txt",
+      "sha256": "47d18abb7f67a57d97fdb6dc8f69f4e0c6f640a7fe4cb8d19d2352d80d20c49f"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-deploy-manifest/workspace/output/deploy.manifest",
+      "sha256": "b300dc9acdc8fc15f7fb1a3c85221ace9fa5dc6f338ed80756aeb98e56608c10"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-summary/events.jsonl",
+      "sha256": "5c14ac904d70b171d6a6e4bb51f109c2d5f8d60b2ccf941f5871ff9d145ce796"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-summary/result.json",
+      "sha256": "bc5c4e50a0df8131ade85f66cf7dae5138425c6970f4b1b6299dc65cd575d538"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-summary/workspace/input/items.txt",
+      "sha256": "cf74d81d15806ca5909337a5458e2e2f82f7bec6afe04b2cf0baee7f30153f7a"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-summary/workspace/input/title.txt",
+      "sha256": "bad3c9104df04771c5cae83c48602e1279c44e1f980283cfdc18a530ca31486f"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.build-summary/workspace/output/summary.txt",
+      "sha256": "fcde31f39a94885f497ed960b85d948e69dbffe83fb1e2dc2e790e28375d0ab5"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.create-owner-record/events.jsonl",
+      "sha256": "9434e06508c8f8d47011a2c00619bf125b1b630a2d0e5caad39b0742e7db428b"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.create-owner-record/result.json",
+      "sha256": "82488452ebe9ea0e543e11f04211250f1645f0bd945d9cae439c16951c886926"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.create-owner-record/workspace/policy/owner-format.txt",
+      "sha256": "4d1c880d5d4505b952499ebcfe502f320f695ac26e5672332b87f77c1997f054"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.create-owner-record/workspace/services/payments/OWNER",
+      "sha256": "3162e4641726fe92abf3f1c504c1bce9de8e2e7290fbb69e4666ec9f1572bf8c"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.create-owner-record/workspace/teams/payments.txt",
+      "sha256": "2d0012752c86c9b49cb1c4e0ec680020efa8c496878111a0baa13b0336aaf4f0"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.fix-config/events.jsonl",
+      "sha256": "1dfef22a8363dbcf9fb6c10114b73aa13681540e44fa460cb616c899303f4996"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.fix-config/result.json",
+      "sha256": "7afc13048c02d36ac59f82ad6af25b1ddd009ef5b2a75d9cfc03da80b8a68e07"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.fix-config/workspace/app.conf",
+      "sha256": "4f722a0dd0ce4acfdb18962fb412987746e76b06cd138d5579eaa63898dbc720"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.fix-config/workspace/notes.txt",
+      "sha256": "b0572907238f11e8bf64ef8757a809c16602cf5a143879617a5024c9e2e82ed0"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.merge-changelog/events.jsonl",
+      "sha256": "7afd772371fd497f7b75be94df29f610ffa999f2e297d274c1a50929f096e0a8"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.merge-changelog/result.json",
+      "sha256": "ab8d8ac4e0fee92cc16755eb8710106e12457c2fc3b195e995d3f3e986ecd167"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.merge-changelog/workspace/CHANGELOG.md",
+      "sha256": "df07006bd4a62294ad5836402754064e9a24948edcb4d859dc3607d107890453"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.merge-changelog/workspace/fragments/v1.4.md",
+      "sha256": "9423e0050f19e65d03b8dadf102328e85b7b06aa63127e4e3a3bb6c2710e4328"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.merge-changelog/workspace/fragments/v1.5.md",
+      "sha256": "601a6f0523e8f51dd33fd200931d0752a47d6573410ee6c58dc741423f6f643e"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.merge-changelog/workspace/notes/release-owner.txt",
+      "sha256": "bd6ec4a15532a81403696366f1f492e33a50d415a5dd48d098214f2bfb5bbf03"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.normalize-checklist/events.jsonl",
+      "sha256": "62014361c2db02e0f31b672207c51c9783cc1b4754fbc6d86fe4f306556f2509"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.normalize-checklist/result.json",
+      "sha256": "6c0284503f4e9056a91c30dbaae6022cf6aefacfbdaa3277ce30ed1a170cad46"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.normalize-checklist/workspace/archive/previous.md",
+      "sha256": "20718aad46281926eee4ce9e88ac7d60419a7d74d177fe9f273c776a45216d65"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.normalize-checklist/workspace/checklist.md",
+      "sha256": "cb0cab0806bb1f7ec665f9a7bf6e5c29d5270967635f04888791aa5ad21aa81e"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.normalize-checklist/workspace/COMMENT.txt",
+      "sha256": "c22e3bc16d24cd4fcbec6ac393762bb8373e41f4b4b12302061ff1569c2560fd"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.reconcile-inventory/events.jsonl",
+      "sha256": "6fff2a0c201e7bc7668f2348066ea8ae69efd9882f2bac7bc8bfe3338c8c2370"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.reconcile-inventory/result.json",
+      "sha256": "2349c92abacebefc4cc2a9f4c3a841df0eebf99f848ecb1d8ce34482dba8ba95"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.reconcile-inventory/workspace/inventory/adjustments.csv",
+      "sha256": "b8e7ff30767bae3d82341ee518cb358eceeb6ce8572c9a6a6385d5ce8c846f27"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.reconcile-inventory/workspace/inventory/audit.txt",
+      "sha256": "75307ed22e220c1e8a5a028be0fc07aa19d7bc37389322a61e8d6e2673d5216b"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.reconcile-inventory/workspace/inventory/counts.csv",
+      "sha256": "64c614da6bb05545045b8411fe96704d03bc4e4761cedc888e0f4100d596d8a3"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.reconcile-inventory/workspace/output/reconciled.csv",
+      "sha256": "1e3ad7a65d841eec2e5440fe6eef5f2b891daf40631bfe6b91c2a9b24a9ee534"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.repair-service-map/events.jsonl",
+      "sha256": "aa2b3d0689be12a62ec970fdce549914b4776268eb7742fb09ad78b3caacd737"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.repair-service-map/result.json",
+      "sha256": "d944d6ecd7e96fd410706257487e0a5fc8939afcc04282f745a843271ff4209a"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.repair-service-map/workspace/config/operator-note.txt",
+      "sha256": "bdaea943f985c681b9a48b3717f406047b6bc6a8e9ae8d1a71a59d6dfec0bd04"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.repair-service-map/workspace/config/services.map",
+      "sha256": "b228acb17d7b1e9ddaa38beb913c9aa2510ae004d70f6fd27f20f75bf4c54618"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.update-route/events.jsonl",
+      "sha256": "871816fb72e2a2ba4334652b5cbc9247e9cb51a29f5b91c9d128209b52a52b0d"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.update-route/result.json",
+      "sha256": "d1e410de0098bf127a0438752033d5f89a5957f292b42d59205574509928c90a"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.update-route/workspace/routes.conf",
+      "sha256": "0a6803ddd41bd9feeb609e8cb9c8b78fb089d7f495d5f63c4b911d5ad966df6a"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.update-route/workspace/routes.notes",
+      "sha256": "d73498d85c58dd6139c323b7f6f70595c518104bfdba160b22147ba1e70ee2d9"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.update-status/events.jsonl",
+      "sha256": "26cf23f13ab7118a0330c3c4b3561afc3313df598814afed8d372ece59fe3f0e"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.update-status/result.json",
+      "sha256": "74ebe7868914ea7969cbf2f57201c0c1f9719e1c19f30e5cf07c6dcfb3e80ef9"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.update-status/workspace/state/audit.log",
+      "sha256": "59134a4054b27a3fc30e1ac81d9b9168dc0561f65982151324a021fe8ce88d06"
+    },
+    {
+      "path": "runs/system-correctness-v1/system.workspace.update-status/workspace/state/status.txt",
+      "sha256": "ed1a545bb85e55816bbf9566b028b2a0bc456b88f49f6f266c0401048824194b"
+    }
+  ],
+  "bundle_fingerprint": "aefc0385680f827bbf45887a1ef335cb93f2826e16539e570f2f56c3028a8856",
+  "limitation": "SHA-256 detects damage and inconsistent artifacts; it is not a signature against an actor who can rewrite the whole bundle."
+}

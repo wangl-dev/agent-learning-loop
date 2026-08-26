@@ -1,0 +1,64 @@
+{
+  "schema_version": "1",
+  "source_run_id": "eval-recovery-action-replay",
+  "task_id": "workspace.fix-config",
+  "fixture_id": "workspace.fix-config.v1",
+  "catalog_id": "workspace.fix-config.actions.v1",
+  "catalog_fingerprint": "b525ee02e439264500f7020abe5c02d8fd344651d91d4b3651686f210d0cf7c4",
+  "source_event_final_hash": "7b9b763c9592e899cc5525df8b839d663002aaafbf165d112f08c53974646ad8",
+  "source_action_final_hash": "551250cc84d37a05f0298ef6fac0ac0f59c84196cb5c842385226c5532662bf6",
+  "source_result_summary_digest": "349d3de881db84ae18683d3a8148a05b6af11220b825cc26ad088162fa4fa156",
+  "actions_resolved": 2,
+  "actions_total": 2,
+  "step_digests_matched": 2,
+  "step_digests_total": 2,
+  "source_final_workspace_digest": "843fc4cacbf1285a9272abe9ccf1b228aa55080467f71217cc75fc00288e8ffe",
+  "replay_final_workspace_digest": "843fc4cacbf1285a9272abe9ccf1b228aa55080467f71217cc75fc00288e8ffe",
+  "source_verifier_digest": "bee5b64811db6491ae4d21507a207f81159f82d168c8687607caae624037d2ca",
+  "replay_verifier_digest": "bee5b64811db6491ae4d21507a207f81159f82d168c8687607caae624037d2ca",
+  "verifier": {
+    "schema_version": "1",
+    "passed": true,
+    "score": 1.0,
+    "checks": [
+      {
+        "name": "required_state",
+        "passed": true,
+        "detail": "required file states matched"
+      },
+      {
+        "name": "unchanged_state",
+        "passed": true,
+        "detail": "protected files stayed unchanged"
+      },
+      {
+        "name": "forbidden_side_effects",
+        "passed": true,
+        "detail": "forbidden paths stayed absent"
+      },
+      {
+        "name": "mutation_scope",
+        "passed": true,
+        "detail": "all mutations stayed in scope"
+      }
+    ]
+  },
+  "usage": {
+    "schema_version": "1",
+    "tool_calls": 2,
+    "physical_executions": 2,
+    "physical_write_executions": 1,
+    "side_effect_executions": 1,
+    "duplicate_side_effects": 0
+  },
+  "final_snapshot_match": true,
+  "verifier_match": true,
+  "task_match": true,
+  "source_unchanged": true,
+  "policy_calls": 0,
+  "action_replay_match_rate": 1.0,
+  "vertical_slice_matches": 1,
+  "vertical_slice_total": 1,
+  "workspace_dir": "workspace",
+  "limitation": "M3B replays only validated logical action references in a new Workspace; it does not rerun Policy, retry failures, resume checkpoints, or promise arbitrary action replay."
+}

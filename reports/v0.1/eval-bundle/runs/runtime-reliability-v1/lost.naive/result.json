@@ -1,0 +1,74 @@
+{
+  "schema_version": "2",
+  "run_id": "eval-lost-naive",
+  "task_id": "workspace.fix-config",
+  "terminal_state": "FAILED",
+  "config": {
+    "schema_version": "2",
+    "mode": "naive",
+    "max_steps": 8,
+    "max_tool_calls": 12,
+    "timeout_seconds": 30.0,
+    "retry_enabled": false,
+    "max_attempts": 1,
+    "retry_backoff_seconds": [],
+    "idempotency_enabled": false,
+    "schedule_id": "workspace.lost-write-result.v1",
+    "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+    "seed": 303
+  },
+  "error": {
+    "schema_version": "2",
+    "category": "tool_transient",
+    "phase": "executing_tool",
+    "retryable": true,
+    "step_index": 2,
+    "attempt": 1,
+    "tool_name": "write_text",
+    "detail": "controlled tool result loss after successful execution"
+  },
+  "verifier": {
+    "schema_version": "1",
+    "passed": true,
+    "score": 1.0,
+    "checks": [
+      {
+        "name": "required_state",
+        "passed": true,
+        "detail": "required file states matched"
+      },
+      {
+        "name": "unchanged_state",
+        "passed": true,
+        "detail": "protected files stayed unchanged"
+      },
+      {
+        "name": "forbidden_side_effects",
+        "passed": true,
+        "detail": "forbidden paths stayed absent"
+      },
+      {
+        "name": "mutation_scope",
+        "passed": true,
+        "detail": "all mutations stayed in scope"
+      }
+    ]
+  },
+  "usage": {
+    "schema_version": "2",
+    "steps": 2,
+    "tool_calls": 2,
+    "physical_executions": 2,
+    "side_effect_executions": 1,
+    "duplicate_side_effects": 0,
+    "retries": 0,
+    "idempotency_hits": 0,
+    "backoff_seconds": 0.0,
+    "elapsed_seconds": 0.0
+  },
+  "schedule_id": "workspace.lost-write-result.v1",
+  "schedule_fingerprint": "6720ea76647c9a8ec587852bd18f78919ae3d5ce0baf0d27c5637bf6d333f5ce",
+  "events_file": "events.jsonl",
+  "workspace_dir": "workspace",
+  "limitation": "Controlled synchronous M2 Runtime experiment; no model or production timeout claim."
+}

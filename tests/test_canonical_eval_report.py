@@ -19,8 +19,8 @@ from agent_learning_loop.eval_validator import validate_eval_bundle
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 BUNDLE_ROOT = REPO_ROOT / "reports" / "v0.1" / "eval-bundle"
-SOURCE_COMMIT = "a00da937e299c99031f7f4711da5dd3eeef50e22"
-BUNDLE_FINGERPRINT = "aefc0385680f827bbf45887a1ef335cb93f2826e16539e570f2f56c3028a8856"
+SOURCE_COMMIT = "9dca2508aff1a772cbdc9452f9ae1bb85925a2b9"
+BUNDLE_FINGERPRINT = "b038c84c83b121484ed527a67503f78039741e225cca6898f5a2e6974cb24833"
 SUITE_FINGERPRINTS = {
     "system-correctness-v1": "624dfb19c2b9575056dd9d24a92e3dcb4852617eb538ee3541fb28cae933488e",
     "runtime-reliability-v1": "a8c5e2389ce1bbe31ae7895ecbfe211be3460aee40563c4c13efb0523d89ac2e",
@@ -247,7 +247,9 @@ def test_readme_numbers_are_derived_from_canonical_models() -> None:
     assert "reports/v0.1/FAILURE_ANALYSIS.md" in root_readme
     assert "1/1 vertical-slice" in root_readme
     assert SOURCE_COMMIT in adr
-    assert "published M5A.1 evaluator-plus-portability commit" in adr
+    assert "published M5A.2 evaluator commit" in adr
+    assert "M5A.1 LF/Git" in adr
+    assert "M5A.2 artifact-ordering" in adr
 
 
 def test_canonical_bundle_has_no_private_database_or_machine_artifact() -> None:

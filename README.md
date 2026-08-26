@@ -1,7 +1,7 @@
 # Agent Learning Loop
 
 > Status: **v0.1 evidence candidate / pre-alpha package (`0.1.0.dev0`)**. The published evaluator
-> source is `a00da937`; the fixed 41-cell evidence is reproducible and read-only verifiable. This is
+> source is `9dca250`; the fixed 41-cell evidence is reproducible and read-only verifiable. This is
 > not a model benchmark, package release, or production reliability claim.
 
 Agent Learning Loop studies a narrow question: under the same task, actions, seed, and injected
@@ -17,15 +17,15 @@ Synthetic Task + scripted Action → Runtime config + fixed failure schedule
 ```
 
 The canonical manifest keeps its generator's real package `0.1.0.dev0` and proposal contract
-`1.10`. The separate planning proposal advanced to v1.12 to define the byte-stable M5B evidence boundary;
+`1.10`. The separate planning proposal advanced to v1.13 to define the final M5B attribution boundary;
 M5B did not change the evaluator, suite, oracle, fingerprints, or package version.
 
 ## Canonical v0.1 evidence candidate
 
 The fixed bundle was generated from public source commit
-`a00da937e299c99031f7f4711da5dd3eeef50e22`. A second all-suite run in a new directory produced
+`9dca2508aff1a772cbdc9452f9ae1bb85925a2b9`. A second all-suite run in a new directory produced
 the same 167-file inventory and all 421,449 bytes. Its bundle fingerprint is
-`aefc0385680f827bbf45887a1ef335cb93f2826e16539e570f2f56c3028a8856`.
+`b038c84c83b121484ed527a67503f78039741e225cca6898f5a2e6974cb24833`.
 
 | Evidence view | Exact result | Boundary |
 |---|---:|---|
@@ -176,15 +176,16 @@ Run all 41 cells with an explicit source commit and a directory that does not al
 ```powershell
 python -m agent_learning_loop run-eval `
   --suite all `
-  --source-commit a00da937e299c99031f7f4711da5dd3eeef50e22 `
+  --source-commit 9dca2508aff1a772cbdc9452f9ae1bb85925a2b9 `
   --output-dir run-output/reproduced-v0.1
 
 python -m agent_learning_loop validate-eval --run-dir run-output/reproduced-v0.1
 ```
 
 `--source-commit` is an explicit caller-supplied identity, not a revision that M5A resolves from
-Git. The canonical evidence binds it to the published M5A source commit and preserves that exact
-identity in the manifest, every normalized record, the evidence index, and repo-level regression.
+Git. The canonical evidence binds it to the published M5A.2 evaluator commit, which includes the
+M5A.1 LF/Git byte-portability and M5A.2 artifact-ordering fixes. It preserves that exact identity
+in the manifest, every normalized record, the evidence index, and repo-level regression.
 
 `run-eval` exits 0 when every selected result matches its pre-registered oracle, 1 when it writes
 a structurally valid bundle containing an oracle deviation, and 2 for arguments, identity, or

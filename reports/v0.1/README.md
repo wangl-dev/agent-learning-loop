@@ -1,6 +1,6 @@
 # v0.1 canonical evidence candidate
 
-This directory freezes one complete run of the published M5A evaluator. Here, "canonical" means
+This directory freezes one complete run of the published M5A.2 evaluator. Here, "canonical" means
 the run selected as this repository's v0.1 baseline. It does not mean an industry benchmark,
 statistical significance, or a model-quality result.
 
@@ -12,13 +12,13 @@ repo-level test repeats that execution and compares every file byte for byte.
 
 | Field | Value |
 |---|---|
-| Source commit | `a00da937e299c99031f7f4711da5dd3eeef50e22` |
+| Source commit | `9dca2508aff1a772cbdc9452f9ae1bb85925a2b9` |
 | Generator package | `0.1.0.dev0` |
 | Generator proposal contract | `1.10` |
 | Selection | `all`, 41 of 41 registered cells |
 | Raw artifacts in manifest | 163 |
 | Complete bundle inventory | 167 files, 421,449 bytes |
-| Bundle fingerprint | `aefc0385680f827bbf45887a1ef335cb93f2826e16539e570f2f56c3028a8856` |
+| Bundle fingerprint | `b038c84c83b121484ed527a67503f78039741e225cca6898f5a2e6974cb24833` |
 
 Suite fingerprints:
 
@@ -40,7 +40,7 @@ python -m agent_learning_loop validate-eval `
   --run-dir reports/v0.1/eval-bundle
 ```
 
-The expected result is `valid`, source commit `a00da937...`, selected cells `41`, source bytes
+The expected result is `valid`, source commit `9dca250...`, selected cells `41`, source bytes
 unchanged, and execution calls `0`.
 
 ## Full reproduction
@@ -50,7 +50,7 @@ Run the same fixed selection into a directory that does not already exist:
 ```powershell
 python -m agent_learning_loop run-eval `
   --suite all `
-  --source-commit a00da937e299c99031f7f4711da5dd3eeef50e22 `
+  --source-commit 9dca2508aff1a772cbdc9452f9ae1bb85925a2b9 `
   --output-dir run-output/reproduced-v0.1
 
 python -m agent_learning_loop validate-eval `

@@ -1,6 +1,6 @@
 {
   "schema_version": "1",
-  "source_commit": "a00da937e299c99031f7f4711da5dd3eeef50e22",
+  "source_commit": "9dca2508aff1a772cbdc9452f9ae1bb85925a2b9",
   "package_version": "0.1.0.dev0",
   "proposal_version": "1.10",
   "selection": {
@@ -714,6 +714,6 @@
       "sha256": "ed1a545bb85e55816bbf9566b028b2a0bc456b88f49f6f266c0401048824194b"
     }
   ],
-  "bundle_fingerprint": "aefc0385680f827bbf45887a1ef335cb93f2826e16539e570f2f56c3028a8856",
+  "bundle_fingerprint": "b038c84c83b121484ed527a67503f78039741e225cca6898f5a2e6974cb24833",
   "limitation": "SHA-256 detects damage and inconsistent artifacts; it is not a signature against an actor who can rewrite the whole bundle."
 }

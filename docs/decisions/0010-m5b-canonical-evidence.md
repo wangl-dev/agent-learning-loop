@@ -5,9 +5,9 @@
 
 ## Context
 
-The M5A evaluator and its M5A.1 byte-portability correction were public before selecting a v0.1
-report. The evidence source is fixed to commit
-`a00da937e299c99031f7f4711da5dd3eeef50e22`. That ordering separates the measuring program from
+The M5A evaluator, its M5A.1 LF/Git byte-portability correction, and its M5A.2 artifact-ordering
+correction were public before finalizing the v0.1 report. The evidence source is fixed to commit
+`9dca2508aff1a772cbdc9452f9ae1bb85925a2b9`. That ordering separates the measuring program from
 the evidence later chosen for publication. A copied summary table would still be weak evidence:
 it would not preserve the registered denominator, raw results, suite identity, or renderer input,
 and a reader could not check whether expected failures were removed.
@@ -19,7 +19,8 @@ different measuring program and break the attribution boundary.
 ## Decision
 
 Commit the complete, unedited 41-cell output directory under `reports/v0.1/eval-bundle`. Fix its
-source commit to the published M5A.1 evaluator-plus-portability commit. Keep all four top-level
+source commit to the published M5A.2 evaluator commit, which includes the M5A.1 LF/Git
+byte-portability and M5A.2 artifact-ordering fixes. Keep all four top-level
 models and the 163 manifest-listed raw artifacts rather than extracting a preferred table or
 screenshot.
 

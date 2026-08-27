@@ -1,4 +1,4 @@
-"""Command-line entry points for the bounded M1-M5A slices."""
+"""Command-line entry points for the bounded M1-M7A slices."""
 
 from __future__ import annotations
 
@@ -152,6 +152,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="validate a simulated FDE case bundle without executing tasks",
     )
     validate_case.add_argument("--run-dir", required=True, type=Path)
+    export_sft = subparsers.add_parser(
+        "export-sft-candidates",
+        help="export the fixed train-only scripted-oracle SFT development candidate",
+    )
+    export_sft.add_argument("--eval-bundle", required=True, type=Path)
+    export_sft.add_argument("--output-dir", required=True, type=Path)
+    validate_sft = subparsers.add_parser(
+        "validate-sft-candidates",
+        help="validate an SFT candidate against its source Eval without execution",
+    )
+    validate_sft.add_argument("--bundle", required=True, type=Path)
+    validate_sft.add_argument("--eval-bundle", required=True, type=Path)
     return parser
 
 
@@ -188,6 +200,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _run_fde_case(arguments)
     if arguments.command == "validate-fde-case":
         return _validate_fde_case(arguments)
+    if arguments.command == "export-sft-candidates":
+        return _export_sft_candidates(arguments)
+    if arguments.command == "validate-sft-candidates":
+        return _validate_sft_candidates(arguments)
     return 0
 
 
@@ -582,4 +598,49 @@ def _validate_fde_case(arguments: argparse.Namespace) -> int:
         return 0 if result.overall == "accepted" else 1
     except (FdeCaseValidationError, OSError, ValueError) as exc:
         print(f"validate-fde-case validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _export_sft_candidates(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.sft_exporter import (
+        SftExportError,
+        SftExportInfrastructureError,
+        export_sft_candidates,
+    )
+
+    try:
+        outcome = export_sft_candidates(arguments.eval_bundle, arguments.output_dir)
+        print(
+            f"SFT candidate: {arguments.output_dir} "
+            f"(eligible={outcome.manifest.sample_count}, "
+            "workspace/incident/dataops=6/6/6, held-out-excluded=12, files=4)"
+        )
+        return 0
+    except SftExportError as exc:
+        print(f"export-sft-candidates validation error: {exc}", file=sys.stderr)
+        return 1
+    except (SftExportInfrastructureError, OSError, RuntimeError, ValueError) as exc:
+        print(f"export-sft-candidates infrastructure error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _validate_sft_candidates(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.sft_validator import (
+        SftCandidateInfrastructureError,
+        SftCandidateValidationError,
+        validate_sft_candidates,
+    )
+
+    try:
+        result = validate_sft_candidates(arguments.bundle, arguments.eval_bundle)
+        print(result.model_dump_json())
+        return 0
+    except SftCandidateInfrastructureError as exc:
+        print(f"validate-sft-candidates infrastructure error: {exc}", file=sys.stderr)
+        return 2
+    except SftCandidateValidationError as exc:
+        print(f"validate-sft-candidates validation error: {exc}", file=sys.stderr)
+        return 1
+    except (OSError, RuntimeError, ValueError) as exc:
+        print(f"validate-sft-candidates infrastructure error: {exc}", file=sys.stderr)
         return 2

@@ -217,6 +217,47 @@ selected for the v0.1 evidence candidate. It remains subordinate to the full man
 summary, and raw inventory; it is not a standalone screenshot or manually edited scorecard.
 [ADR 0009](docs/decisions/0009-m5a-eval-bundle-contract.md) records these boundaries.
 
+## Scripted-oracle SFT development candidates
+
+M7A can project a complete 30-cell system-correctness Eval bundle into 18 train-only SFT
+demonstrations: six Workspace, six Incident, and six DataOps. A normalizer is the small adapter that
+turns each environment's raw event shape into the same provider-neutral sequence of
+`assistant_action` followed by its actual `tool_result`. The remaining 12 validation/test tasks are
+counted as excluded (`6/6`); their instructions, actions, results, and fixture content are not copied.
+
+Generate the source evidence first, then export into a new temporary directory and validate it
+against that same source:
+
+```powershell
+python -m agent_learning_loop run-eval `
+  --suite system-correctness `
+  --source-commit 8c58ddc31cd2f6a29d152394212bc7b6651e0b32 `
+  --output-dir run-output/m7a-source-eval
+
+python -m agent_learning_loop export-sft-candidates `
+  --eval-bundle run-output/m7a-source-eval `
+  --output-dir run-output/m7a-sft-candidate
+
+python -m agent_learning_loop validate-sft-candidates `
+  --bundle run-output/m7a-sft-candidate `
+  --eval-bundle run-output/m7a-source-eval
+```
+
+The output has exactly four UTF-8/LF files: a manifest, `samples.jsonl`, a quality report, and
+deterministic Markdown. The manifest marks `development_candidate` and leaves `exporter_commit`
+null because M7A does not publish a canonical dataset. Validation first runs the normal read-only
+Eval validator, then rebuilds all 18 samples from packaged public resources and raw action/result
+evidence. It compares exact bytes without calling an Environment, Policy, tool, runner, subprocess,
+SQLite, socket, network service, model API, or GPU.
+
+Samples contain public task context and observations that the scripted policy actually saw.
+Fixture setup/answers, verifier output, Incident/DataOps audit records, run IDs, machine paths,
+secrets, held-out content, reliability/recovery cells, and action-catalog references remain out.
+Runtime comparison arms are ablations of retry/idempotency mechanisms, not chosen/rejected answers,
+so M7A emits zero DPO or preference pairs. These 18 synthetic demonstrations define an export and
+leakage contract; they are not a training run or evidence that a model improved. [ADR 0013](docs/decisions/0013-m7a-sft-data-contract.md)
+records that boundary.
+
 ## Simulated executable FDE pilot
 
 M6A wraps the existing ten Incident system cells in one fixed simulated acceptance case. It adds

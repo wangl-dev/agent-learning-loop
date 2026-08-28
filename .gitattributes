@@ -1,2 +1,3 @@
 reports/v0.1/eval-bundle/** -text
 case_studies/incident_copilot/pilot-evidence/** -text
+datasets/sft-development-v1/candidate/** -text

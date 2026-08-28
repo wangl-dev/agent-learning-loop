@@ -201,6 +201,91 @@ jobs:
           assert quality["preference_pairs"] == 0
           PY
 
+      - name: Validate committed canonical M7 SFT candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          committed="datasets/sft-development-v1/candidate"
+          source_eval="$RUNNER_TEMP/m7b-source-eval"
+          fresh="$RUNNER_TEMP/m7b-fresh-candidate"
+          source_before="$RUNNER_TEMP/m7b-source-before.json"
+          python -m agent_learning_loop run-eval \
+            --suite system-correctness \
+            --source-commit 8a4016a9c154238cd7e5df5d1a3ed8fd194dd10d \
+            --output-dir "$source_eval"
+          python - "$source_eval" "$source_before" <<'PY'
+          import hashlib
+          import json
+          import pathlib
+          import sys
+
+          source = pathlib.Path(sys.argv[1])
+          inventory = {
+              path.relative_to(source).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in source.rglob("*")
+              if path.is_file()
+          }
+          pathlib.Path(sys.argv[2]).write_text(
+              json.dumps(inventory, sort_keys=True, separators=(",", ":")),
+              encoding="utf-8",
+              newline="\n",
+          )
+          PY
+          python -m agent_learning_loop validate-sft-candidates \
+            --bundle "$committed" \
+            --eval-bundle "$source_eval"
+          python -m agent_learning_loop export-sft-candidates \
+            --eval-bundle "$source_eval" \
+            --output-dir "$fresh"
+          python - "$source_eval" "$source_before" "$committed" "$fresh" <<'PY'
+          import hashlib
+          import json
+          import pathlib
+          import sys
+
+          source = pathlib.Path(sys.argv[1])
+          before = json.loads(pathlib.Path(sys.argv[2]).read_text(encoding="utf-8"))
+          after = {
+              path.relative_to(source).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in source.rglob("*")
+              if path.is_file()
+          }
+
+          def inventory(root: pathlib.Path) -> dict[str, bytes]:
+              return {
+                  path.relative_to(root).as_posix(): path.read_bytes()
+                  for path in root.rglob("*")
+                  if path.is_file()
+              }
+
+          committed = inventory(pathlib.Path(sys.argv[3]))
+          fresh = inventory(pathlib.Path(sys.argv[4]))
+          assert before == after
+          assert committed == fresh
+          assert set(committed) == {
+              "dataset-manifest.json",
+              "samples.jsonl",
+              "quality-report.json",
+              "report.md",
+          }
+          assert sum(map(len, committed.values())) == 60_967
+          assert all(b"\r" not in payload for payload in committed.values())
+          manifest = json.loads(committed["dataset-manifest.json"])
+          quality = json.loads(committed["quality-report.json"])
+          assert manifest["source_commit"] == "8a4016a9c154238cd7e5df5d1a3ed8fd194dd10d"
+          assert manifest["sample_count"] == 18
+          assert manifest["environment_counts"] == {
+              "workspace": 6,
+              "incident": 6,
+              "dataops": 6,
+          }
+          assert manifest["held_out_excluded"] == {"validation": 6, "test": 6}
+          assert quality["execution_calls"] == 0
+          assert quality["model_generated_samples"] == 0
+          assert quality["preference_pairs"] == 0
+          assert quality["source_bytes_unchanged"] is True
+          PY
+
       - name: Validate committed canonical v0.1 evidence
         run: >-
           python -m agent_learning_loop validate-eval

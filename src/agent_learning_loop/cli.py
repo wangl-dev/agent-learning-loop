@@ -1,4 +1,4 @@
-"""Command-line entry points for the bounded M1-M7A slices."""
+"""Command-line entry points for the bounded M1-M7C-A slices."""
 
 from __future__ import annotations
 
@@ -164,6 +164,24 @@ def build_parser() -> argparse.ArgumentParser:
     )
     validate_sft.add_argument("--bundle", required=True, type=Path)
     validate_sft.add_argument("--eval-bundle", required=True, type=Path)
+    run_probe = subparsers.add_parser(
+        "run-model-probe",
+        help="predict validation next actions without executing model output",
+    )
+    run_probe.add_argument("--eval-bundle", required=True, type=Path)
+    run_probe.add_argument("--output-dir", required=True, type=Path)
+    run_probe.add_argument("--backend", required=True, choices=("fake", "qwen3"))
+    run_probe.add_argument(
+        "--model-id",
+        choices=("Qwen/Qwen3-0.6B", "Qwen/Qwen3-1.7B"),
+    )
+    run_probe.add_argument("--snapshot-dir", type=Path)
+    validate_probe = subparsers.add_parser(
+        "validate-model-probe",
+        help="reconstruct a model probe read-only without model or tool execution",
+    )
+    validate_probe.add_argument("--bundle", required=True, type=Path)
+    validate_probe.add_argument("--eval-bundle", required=True, type=Path)
     return parser
 
 
@@ -204,6 +222,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _export_sft_candidates(arguments)
     if arguments.command == "validate-sft-candidates":
         return _validate_sft_candidates(arguments)
+    if arguments.command == "run-model-probe":
+        return _run_model_probe(arguments)
+    if arguments.command == "validate-model-probe":
+        return _validate_model_probe(arguments)
     return 0
 
 
@@ -643,4 +665,43 @@ def _validate_sft_candidates(arguments: argparse.Namespace) -> int:
         return 1
     except (OSError, RuntimeError, ValueError) as exc:
         print(f"validate-sft-candidates infrastructure error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _run_model_probe(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.model_probe_backend import ModelProbeBackendError
+    from agent_learning_loop.model_probe_runner import ModelProbeRunError, run_model_probe
+
+    try:
+        outcome = run_model_probe(
+            arguments.eval_bundle,
+            arguments.output_dir,
+            backend_kind=arguments.backend,
+            seed=17,
+            model_id=arguments.model_id,
+            snapshot_dir=arguments.snapshot_dir,
+        )
+        print(
+            f"Model probe: {arguments.output_dir} "
+            f"(status={outcome.status}, tasks={outcome.summary.task_total}, "
+            f"prefixes={outcome.summary.prefix_total}, executions=0)"
+        )
+        return 0
+    except (ModelProbeBackendError, ModelProbeRunError, OSError, ValueError) as exc:
+        print(f"run-model-probe validation error: {exc}", file=sys.stderr)
+        return 2
+
+
+def _validate_model_probe(arguments: argparse.Namespace) -> int:
+    from agent_learning_loop.model_probe_validator import (
+        ModelProbeValidationError,
+        validate_model_probe,
+    )
+
+    try:
+        result = validate_model_probe(arguments.bundle, arguments.eval_bundle)
+        print(result.model_dump_json())
+        return 0
+    except (ModelProbeValidationError, OSError, ValueError) as exc:
+        print(f"validate-model-probe validation error: {exc}", file=sys.stderr)
         return 2

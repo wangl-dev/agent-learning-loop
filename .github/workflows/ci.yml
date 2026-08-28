@@ -286,6 +286,46 @@ jobs:
           assert quality["source_bytes_unchanged"] is True
           PY
 
+      - name: Run deterministic M7C-A validation next-action probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_eval="$RUNNER_TEMP/m7ca-source-eval"
+          probe="$RUNNER_TEMP/m7ca-fake-probe"
+          source_commit="$(
+            python -c \
+              'from agent_learning_loop.model_probe_specs import load_probe_contract; print(load_probe_contract().public_source_commit)'
+          )"
+          python -m agent_learning_loop run-eval \
+            --suite system-correctness \
+            --split validation \
+            --source-commit "$source_commit" \
+            --output-dir "$source_eval"
+          python -m agent_learning_loop run-model-probe \
+            --eval-bundle "$source_eval" \
+            --output-dir "$probe" \
+            --backend fake
+          python -m agent_learning_loop validate-model-probe \
+            --bundle "$probe" \
+            --eval-bundle "$source_eval"
+          python - "$probe/summary.json" <<'PY'
+          import json
+          import pathlib
+          import sys
+
+          summary = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+          assert summary["task_total"] == 6
+          assert summary["prefix_total"] == 21
+          assert summary["environment_task_counts"] == {
+              "workspace": 2,
+              "incident": 2,
+              "dataops": 2,
+          }
+          assert summary["exact_match_prefixes"] == 21
+          assert summary["all_prefix_exact_tasks"] == 6
+          assert summary["execution_calls"] == 0
+          PY
+
       - name: Validate committed canonical v0.1 evidence
         run: >-
           python -m agent_learning_loop validate-eval

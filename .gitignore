@@ -24,6 +24,18 @@ coverage.xml
 htmlcov/
 /run-output/
 
+# Local model probe caches and weights stay outside the repository
+.cache/huggingface/
+.huggingface/
+huggingface/
+model-cache/
+models/
+weights/
+checkpoints/
+*.safetensors
+pytorch_model*.bin
+*.gguf
+
 # Editors and operating systems
 .idea/
 .vscode/

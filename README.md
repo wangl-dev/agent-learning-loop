@@ -273,6 +273,48 @@ improved. [ADR 0013](docs/decisions/0013-m7a-sft-data-contract.md) records the e
 [ADR 0014](docs/decisions/0014-m7b-canonical-candidate-and-human-gate.md) records the public-wheel
 attribution and separate human gate.
 
+## Validation next-action local-model probe
+
+M7C-A adds a provider-neutral prediction boundary without replacing any existing scripted Policy.
+It rebuilds the two validation tasks per environment from a normal validation-only source Eval and
+creates 21 independent action prefixes. Each prefix receives the correct oracle history and asks
+for exactly one next tool call. The current reference action is validator-only, and the predicted
+action is parsed but never executed.
+
+The core installation still depends only on Pydantic. CI uses a deterministic fake backend to run
+and read-only validate all six tasks without Torch, Transformers, a GPU, a model download, network,
+or tool execution:
+
+```powershell
+python -m agent_learning_loop run-eval `
+  --suite system-correctness `
+  --split validation `
+  --source-commit <40-lowercase-hex> `
+  --output-dir run-output/m7ca-source-eval
+python -m agent_learning_loop run-model-probe `
+  --eval-bundle run-output/m7ca-source-eval `
+  --output-dir run-output/m7ca-fake-probe `
+  --backend fake
+python -m agent_learning_loop validate-model-probe `
+  --bundle run-output/m7ca-fake-probe `
+  --eval-bundle run-output/m7ca-source-eval
+```
+
+The separate [local Qwen3 setup](docs/model-probe-setup.md) locks the official Qwen3-0.6B and
+Qwen3-1.7B revisions, Apache-2.0 license bytes, chat-template hash, Transformers 4.53.3, PyTorch
+2.7.1 CUDA 12.6 wheel, BF16 single-GPU execution, and seed 17. Model cache, raw prompts,
+generations, and real smoke bundles stay in system temporary storage. A Qwen3-1.7B CUDA OOM is
+reported as zero-action capacity evidence only before any successful generation, not hidden by
+CPU, quantization, or offload fallback. A later OOM fails and removes partial output. The packaged
+contract also fixes the public source commit; message-content reference leakage and internally
+impossible completed-Qwen finish/token/CUDA/VRAM fields fail closed. Runtime consistency is not a
+cryptographic hardware attestation.
+
+These results are validation next-action feasibility only. They do not read test-task content,
+measure end-to-end task success or performance, select a production model, create a training-ready
+dataset, or show SFT/DPO improvement. [ADR 0015](docs/decisions/0015-m7ca-local-model-probe-contract.md)
+records the isolation and evidence boundary.
+
 ## Simulated executable FDE pilot
 
 M6A wraps the existing ten Incident system cells in one fixed simulated acceptance case. It adds

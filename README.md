@@ -14,7 +14,7 @@ fixed failure schedule
   -> batch evaluation and failure analysis
 ```
 
-## Start here
+## Evidence at a glance
 
 The latest public [CI run](https://github.com/wangl-dev/agent-learning-loop/actions/runs/33159157569)
 completed with Linux `563 passed`. This is repository-test evidence, not a benchmark score.
@@ -32,8 +32,8 @@ executed. The `1/10` and `4/10` observations are single-run feasibility evidence
 benchmark. Raw prompts, generations, weights, caches, and real-smoke bundles are not tracked.
 
 - **30 seconds:** read the table and [failure analysis](reports/v0.1/FAILURE_ANALYSIS.md).
-- **10 minutes:** follow the causal [technical tour](docs/technical-tour.md).
-- **30 minutes:** run the commands below, then validate committed evidence read-only.
+- **10 minutes:** trace the runtime and evidence chain in the [technical tour](docs/technical-tour.md).
+- **30 minutes:** run one synthetic task, then validate committed evidence without execution.
 
 ## Quick start
 
@@ -72,7 +72,7 @@ idempotency safeguard is enabled. This is one paired Runtime observation under o
 schedule, not a production exactly-once claim; the [failure analysis](reports/v0.1/FAILURE_ANALYSIS.md)
 keeps its raw evidence and limits visible.
 
-## Inspect the primary artifacts
+## Evidence and reproduction
 
 - [Evidence index](reports/v0.1/README.md), [report](reports/v0.1/eval-bundle/report.md), and [failure analysis](reports/v0.1/FAILURE_ANALYSIS.md).
 - [Simulated Incident pilot](case_studies/incident_copilot/README.md) and [acceptance](case_studies/incident_copilot/pilot-evidence/acceptance.json).

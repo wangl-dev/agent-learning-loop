@@ -1,7 +1,8 @@
 # Technical tour
 
-This tour follows the evidence chain without turning a fixed scripted experiment into a production
-agent or model-quality claim.
+Use this map to follow one fixed failure schedule into the Runtime, its recorded evidence, and the
+later data/probe artifacts. It does not turn a scripted experiment into a production agent or a
+model-quality claim.
 
 ```text
 failure schedule
@@ -14,7 +15,7 @@ failure schedule
 
 ## Code map
 
-This is the smallest useful source map for following the chain above:
+These links are the code entry points behind the chain above:
 
 - [failure schedules](../src/agent_learning_loop/failure_schedules.py), [Runtime](../src/agent_learning_loop/runtime.py), and [durable Runtime](../src/agent_learning_loop/durable_runtime.py);
 - [Workspace](../src/agent_learning_loop/workspace.py), [Incident runner](../src/agent_learning_loop/incident_runner.py), and [DataOps runner](../src/agent_learning_loop/dataops_runner.py);
@@ -23,8 +24,8 @@ This is the smallest useful source map for following the chain above:
 - [simulated FDE runner](../src/agent_learning_loop/fde_case_runner.py) and [FDE validator](../src/agent_learning_loop/fde_case_validator.py);
 - [model-probe runner](../src/agent_learning_loop/model_probe_runner.py), [strict parser](../src/agent_learning_loop/model_probe_parser.py), and [probe validator](../src/agent_learning_loop/model_probe_validator.py).
 
-The map is intentionally not a file inventory: each link is an entry point needed to trace one
-evidence boundary.
+This is not a file inventory. Each link marks the first place to inspect a specific evidence
+boundary.
 
 ## Failure schedule and controlled tools
 
